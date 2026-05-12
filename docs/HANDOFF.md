@@ -17,7 +17,7 @@
 - 현재 브랜치: `git branch --show-current`로 확인
 - 기준 커밋: `git rev-parse --short HEAD`로 확인
 - 제품/서비스: 로컬 RAG 기반 문서 초안 생성 시스템
-- 현재 상태: `ragSystem` 소스 복사와 하네스 문서 전환 1차 완료
+- 현재 상태: `ragSystem` 소스 복사, 하네스 문서 전환, 초기 기준 커밋 생성 완료
 - 주요 목표: `.paul` 기반 운영 지식을 `docs/` 체계로 옮기고 이후 개선 작업을 Codex 방식으로 이어간다
 
 ## Working Rules
@@ -36,6 +36,7 @@
 - `template-repo` 기반 `docs/`, `scripts/`, `.githooks/` 골격을 적용했다.
 - `.paul`의 프로젝트 정의와 로드맵을 `README.md`, `ARCHITECTURE.md`, `docs/PLANS.md`, 제품 명세와 실행 계획으로 재구성했다.
 - `bash scripts/validate-docs.sh` 통과와 플레이스홀더 제거 확인을 마쳤다.
+- Git 저장소를 초기화하고 초기 기준 커밋을 만들었다.
 
 ## Current Gaps
 
@@ -46,7 +47,7 @@
 
 ## Suggested Next Work
 
-1. Git 저장소를 초기화하거나 기존 원격과 연결해 branch 기반 운영 루프를 활성화한다.
+1. 다음 실제 작업용 브랜치를 만든다.
 2. `python3 -m venv .venv`와 `pip install -r requirements.txt`로 실행 환경을 복구한다.
 3. `uvicorn api.main:app --port 8000`, `streamlit run app.py`, `python eval/pipeline.py --metric retrieval` 기준의 실제 검증 계획을 만든다.
 4. `docs/architecture.md`와 `ARCHITECTURE.md`의 중복을 정리하고 장기적으로 하나의 아키텍처 소스로 통합한다.

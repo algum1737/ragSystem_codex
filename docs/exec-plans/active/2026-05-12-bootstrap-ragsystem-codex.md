@@ -50,6 +50,7 @@
 - 상위 문서 재작성 완료
 - `bash scripts/validate-docs.sh` 통과
 - 플레이스홀더 검색 `rg '<[A-Z_]+>' .` 결과 없음
+- Git 초기화와 초기 기준 커밋 완료
 
 ## Open Work
 
