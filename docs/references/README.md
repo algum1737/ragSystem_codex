@@ -10,3 +10,4 @@
 - `RAG_PERFORMANCE_REPORT.md`
 - `LLM_TUNING_METHODS.md`
 - `gemmna4-analysis.md`
+- [Embedding Model Cache Setup](./embedding-model-cache.md)

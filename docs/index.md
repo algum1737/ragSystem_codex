@@ -26,10 +26,12 @@
 - [제품 명세](./product-specs/terms-rag-system.md)
 - [원본 아키텍처 문서](./architecture.md)
 - [서버 기동 가이드](./서버_기동_가이드.md)
+- [임베딩 모델 캐시 절차](./references/embedding-model-cache.md)
 
 ## Active Work
 
 - [Bootstrap And Migration Plan](./exec-plans/active/2026-05-12-bootstrap-ragsystem-codex.md)
+- [Runtime Validation Plan](./exec-plans/active/2026-05-12-runtime-validation.md)
 
 ## Completed Work
 

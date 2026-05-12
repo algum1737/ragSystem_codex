@@ -18,6 +18,12 @@
   - 목표: 소스 프로젝트와 하네스 운영 체계를 결합한다.
   - 상태: Active
 
+### Runtime Validation
+
+- `2026-05-12-runtime-validation.md`
+  - 목표: 실행 환경을 복구하고 API, UI, eval smoke test를 수행한다.
+  - 상태: Active
+
 ### Follow-Up Candidates
 
 - 런타임 환경 복구와 smoke test 계획
