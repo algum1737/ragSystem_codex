@@ -11,6 +11,7 @@
 5. `docs/PLANS.md`
 6. `docs/product-specs/terms-rag-system.md`
 7. `docs/exec-plans/active/2026-05-12-bootstrap-ragsystem-codex.md`
+8. `docs/exec-plans/active/2026-05-12-runtime-validation.md`
 
 ## Current Baseline
 
@@ -37,20 +38,30 @@
 - `.paul`의 프로젝트 정의와 로드맵을 `README.md`, `ARCHITECTURE.md`, `docs/PLANS.md`, 제품 명세와 실행 계획으로 재구성했다.
 - `bash scripts/validate-docs.sh` 통과와 플레이스홀더 제거 확인을 마쳤다.
 - Git 저장소를 초기화하고 초기 기준 커밋을 만들었다.
+- 런타임 검증용 실행 계획을 추가했고 작업 브랜치 `feature/runtime-validation`에서 다음 단계를 시작했다.
+- `.venv` 생성과 의존성 설치를 완료했고 `pip check`와 경량 import 검증을 통과했다.
+- FastAPI smoke test에서 `multilingual-e5-large` 로컬 캐시 부재로 인해 Hugging Face 접근이 필요했고, 오프라인 환경 때문에 앱 startup이 완료되지 않았다.
+- `EmbeddingEngine`을 lazy initialization으로 바꿔 오프라인에서도 FastAPI startup과 `/health` 확인이 가능해졌다.
+- Streamlit 앱도 startup과 HTTP 200 응답까지 확인했다.
+- eval retrieval smoke test는 코드 오류 없이 실행됐고, 현재는 비어 있는 Chroma DB 때문에 조기 종료한다.
+- 임베딩 모델 사전 다운로드 절차를 `docs/references/embedding-model-cache.md`에 문서화했다.
+- `multilingual-e5-large` 모델 캐시를 실제로 준비했고, 오프라인 강제 모드에서도 `dim 1024` 로드를 확인했다.
+- `SentenceTransformer` import 지연과 stale collection handle 복구를 적용해 `/stats`와 retrieval eval이 정상화됐다.
+- 전체 eval도 실행됐지만 Ollama 미기동으로 accuracy/faithfulness는 비어 있었고, retrieval만 `0.48`로 산출됐다.
+- 권한 상승으로 전체 eval을 다시 실행해 `precision@k_mean=0.48`, `accuracy_mean=0.575`, `faithfulness_mean=0.7`을 확인했다.
 
 ## Current Gaps
 
-- 현재 폴더에 `.git`이 없어 브랜치/커밋 기반 handoff 루프는 아직 활성화되지 않았다.
-- Python 가상환경과 의존성 설치는 아직 수행하지 않았다.
-- 서버 기동, API, Streamlit, 평가 스크립트의 런타임 검증은 아직 하지 않았다.
+- `/stats`는 현재 `count=89`를 반환한다.
+- retrieval eval은 현재 `precision@k_mean=0.48`로 정상 완료된다.
+- 최신 full eval 리포트는 `eval/results/eval_20260512_182410.json`에 저장되어 있다.
+- 검색/인제스천/평가 경로에 필요한 임베딩 모델 캐시는 준비됐다.
 - 코드 내부의 명칭과 문서 상 제품 정의 사이에 일부 정리되지 않은 표현이 남아 있다.
 
 ## Suggested Next Work
 
-1. 다음 실제 작업용 브랜치를 만든다.
-2. `python3 -m venv .venv`와 `pip install -r requirements.txt`로 실행 환경을 복구한다.
-3. `uvicorn api.main:app --port 8000`, `streamlit run app.py`, `python eval/pipeline.py --metric retrieval` 기준의 실제 검증 계획을 만든다.
-4. `docs/architecture.md`와 `ARCHITECTURE.md`의 중복을 정리하고 장기적으로 하나의 아키텍처 소스로 통합한다.
+1. 필요하면 Cross-Encoder 모델 캐시도 준비해 reranking까지 완전 오프라인으로 맞춘다.
+2. `docs/architecture.md`와 `ARCHITECTURE.md`의 중복을 정리하고 장기적으로 하나의 아키텍처 소스로 통합한다.
 
 ## Handoff Prompt
 
@@ -65,6 +76,7 @@
 5. docs/PLANS.md
 6. docs/product-specs/terms-rag-system.md
 7. docs/exec-plans/active/2026-05-12-bootstrap-ragsystem-codex.md
+8. docs/exec-plans/active/2026-05-12-runtime-validation.md
 
 현재 기준:
 - branch: `git branch --show-current`

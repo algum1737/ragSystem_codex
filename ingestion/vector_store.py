@@ -3,6 +3,7 @@ from pathlib import Path
 
 import chromadb
 import numpy as np
+from chromadb.errors import NotFoundError
 
 from .chunker import Chunk
 
@@ -15,12 +16,23 @@ DEFAULT_DB_PATH = "./chroma_db"
 class VectorStore:
     def __init__(self, db_path: str = DEFAULT_DB_PATH, collection_name: str = DEFAULT_COLLECTION):
         self._client = chromadb.PersistentClient(path=db_path)
+        self.collection_name = collection_name
         self._collection = self._client.get_or_create_collection(
             name=collection_name,
             metadata={"hnsw:space": "cosine"},
         )
-        self.collection_name = collection_name
         logger.info("VectorStore 초기화: collection=%s, db=%s", collection_name, db_path)
+
+    def _ensure_collection(self):
+        try:
+            self._collection.count()
+        except NotFoundError:
+            logger.warning("컬렉션 핸들 유실 감지 — 재생성: %s", self.collection_name)
+            self._collection = self._client.get_or_create_collection(
+                name=self.collection_name,
+                metadata={"hnsw:space": "cosine"},
+            )
+        return self._collection
 
     def add_chunks(self, chunks: list[Chunk], embeddings: list[np.ndarray]) -> int:
         if not chunks:
@@ -33,7 +45,8 @@ class VectorStore:
         documents = [c.text for c in chunks]
         metadatas = [{**c.metadata, "source_path": c.source_path} for c in chunks]
         vectors = [e.tolist() for e in embeddings]
-        self._collection.upsert(
+        collection = self._ensure_collection()
+        collection.upsert(
             ids=ids,
             embeddings=vectors,
             documents=documents,
@@ -43,7 +56,8 @@ class VectorStore:
         return len(chunks)
 
     def similarity_search(self, query_embedding: np.ndarray, k: int = 5, where: dict | None = None) -> list[dict]:
-        count = self._collection.count()
+        collection = self._ensure_collection()
+        count = collection.count()
         if count == 0:
             return []
         n_results = min(k, count)
@@ -54,11 +68,11 @@ class VectorStore:
         if where:
             query_kwargs["where"] = where
         try:
-            results = self._collection.query(**query_kwargs)
+            results = collection.query(**query_kwargs)
         except Exception:
             try:
                 query_kwargs["n_results"] = 1
-                results = self._collection.query(**query_kwargs)
+                results = collection.query(**query_kwargs)
             except Exception:
                 return []
         output = []
@@ -72,7 +86,8 @@ class VectorStore:
         return output
 
     def get_stats(self) -> dict:
-        return {"count": self._collection.count(), "collection_name": self.collection_name}
+        collection = self._ensure_collection()
+        return {"count": collection.count(), "collection_name": self.collection_name}
 
     def reset(self) -> None:
         self._client.delete_collection(self.collection_name)
