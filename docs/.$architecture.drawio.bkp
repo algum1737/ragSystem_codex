@@ -1,0 +1,187 @@
+<mxfile host="Electron">
+  <diagram name="ragSystem Architecture" id="ragSystem-arch">
+    <mxGraphModel dx="1184" dy="881" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="grp_input" parent="1" style="swimlane;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;" value="📥 입력" vertex="1">
+          <mxGeometry height="200" width="260" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="doc_proposals" parent="grp_input" style="rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="📄 기존 제안서&#xa;PDF / Word / HWP" vertex="1">
+          <mxGeometry height="50" width="220" x="20" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="doc_rfp" parent="grp_input" style="rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="📋 RFP 문서" vertex="1">
+          <mxGeometry height="40" width="220" x="20" y="115" as="geometry" />
+        </mxCell>
+        <mxCell id="doc_template" parent="grp_input" style="rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="🎨 PPT 템플릿 (.pptx)" vertex="1">
+          <mxGeometry height="25" width="220" x="20" y="165" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_ingest" parent="1" style="swimlane;startSize=30;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;" value="🔄 인제스천 파이프라인 (ingestion/)" vertex="1">
+          <mxGeometry height="320" width="280" x="380" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="parsers" parent="grp_ingest" style="rounded=1;whiteSpace=wrap;fillColor=#f9f9f9;strokeColor=#666666;fontSize=10;" value="문서 파서&#xa;PdfParser / DocxParser / HwpParser&#xa;parsers/" vertex="1">
+          <mxGeometry height="55" width="240" x="20" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="chunker" parent="grp_ingest" style="rounded=1;whiteSpace=wrap;fillColor=#f9f9f9;strokeColor=#666666;fontSize=10;" value="텍스트 청킹&#xa;TextChunker · Chunk&#xa;chunker.py" vertex="1">
+          <mxGeometry height="50" width="240" x="20" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="embedder" parent="grp_ingest" style="rounded=1;whiteSpace=wrap;fillColor=#f9f9f9;strokeColor=#666666;fontSize=10;" value="임베딩&#xa;EmbeddingEngine&#xa;paraphrase-multilingual-mpnet-base-v2" vertex="1">
+          <mxGeometry height="55" width="240" x="20" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="vectorstore" parent="grp_ingest" style="rounded=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" value="🗄️ Chroma VectorStore&#xa;(cosine 유사도 · upsert · source_path)" vertex="1">
+          <mxGeometry height="45" width="240" x="20" y="265" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="grp_ingest" source="parsers" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#82b366;" target="chunker">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="grp_ingest" source="chunker" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#82b366;" target="embedder">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="grp_ingest" source="embedder" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#82b366;" target="vectorstore">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_rag" parent="1" style="swimlane;startSize=30;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;fontSize=13;" value="🤖 RAG 파이프라인 (retriever/)" vertex="1">
+          <mxGeometry height="320" width="280" x="740" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="rfp_analysis" parent="grp_rag" style="rounded=1;whiteSpace=wrap;fillColor=#f9f9f9;strokeColor=#666666;fontSize=10;" value="RFP 섹션 분석&#xa;(섹션별 질의 생성)" vertex="1">
+          <mxGeometry height="50" width="240" x="20" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="similarity_search" parent="grp_rag" style="rounded=1;whiteSpace=wrap;fillColor=#f9f9f9;strokeColor=#666666;fontSize=10;" value="유사도 검색&#xa;VectorStore.similarity_search()&#xa;Top-K 관련 청크 반환" vertex="1">
+          <mxGeometry height="55" width="240" x="20" y="115" as="geometry" />
+        </mxCell>
+        <mxCell id="rag_engine" parent="grp_rag" style="rounded=1;whiteSpace=wrap;fillColor=#f9f9f9;strokeColor=#666666;fontSize=10;" value="프롬프트 조립&#xa;RAGEngine&#xa;(컨텍스트 + 질문 → 프롬프트)" vertex="1">
+          <mxGeometry height="55" width="240" x="20" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="ollama_llm" parent="grp_rag" style="rounded=1;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" value="🧠 LLM 답변 생성&#xa;OllamaLLM + Gemma 4&#xa;(localhost:11434)" vertex="1">
+          <mxGeometry height="45" width="240" x="20" y="265" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="grp_rag" source="rfp_analysis" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d79b00;" target="similarity_search">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="grp_rag" source="similarity_search" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d79b00;" target="rag_engine">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="grp_rag" source="rag_engine" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d79b00;" target="ollama_llm">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_ppt" parent="1" style="swimlane;startSize=30;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=13;" value="📊 PPT 초안 생성 (generator/ · Phase 6)" vertex="1">
+          <mxGeometry height="200" width="280" x="1100" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ppt_sections" parent="grp_ppt" style="rounded=1;whiteSpace=wrap;fillColor=#f9f9f9;strokeColor=#666666;fontSize=10;" value="섹션별 내용 수집&#xa;(RAG 답변 취합)" vertex="1">
+          <mxGeometry height="45" width="240" x="20" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="ppt_gen" parent="grp_ppt" style="rounded=1;whiteSpace=wrap;fillColor=#f9f9f9;strokeColor=#666666;fontSize=10;" value="PPTGenerator&#xa;python-pptx&#xa;템플릿 슬라이드 자동 채우기" vertex="1">
+          <mxGeometry height="50" width="240" x="20" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="ppt_output" parent="grp_ppt" style="rounded=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=12;" value="📊 제안서_초안.pptx" vertex="1">
+          <mxGeometry height="20" width="240" x="20" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="grp_ppt" source="ppt_sections" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;" target="ppt_gen">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="grp_ppt" source="ppt_gen" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#82b366;strokeWidth=2;" target="ppt_output">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_interface" parent="1" style="swimlane;startSize=30;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=13;" value="🖥️ 인터페이스" vertex="1">
+          <mxGeometry height="130" width="820" x="40" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="cli_ingest" parent="grp_interface" style="rounded=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="⌨️ ingest.py&#xa;CLI 인제스천" vertex="1">
+          <mxGeometry height="60" width="160" x="20" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="cli_query" parent="grp_interface" style="rounded=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="⌨️ query.py&#xa;CLI 질의" vertex="1">
+          <mxGeometry height="60" width="160" x="200" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="fastapi" parent="grp_interface" style="rounded=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="🌐 FastAPI&#xa;REST API (Phase 4)" vertex="1">
+          <mxGeometry height="60" width="160" x="400" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="webui" parent="grp_interface" style="rounded=1;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" value="💻 Web UI&#xa;(Phase 5)" vertex="1">
+          <mxGeometry height="60" width="160" x="600" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="e18" edge="1" parent="grp_interface" source="webui" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#666666;dashed=1;" target="fastapi">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_external" parent="1" style="swimlane;startSize=30;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontStyle=1;fontSize=13;" value="⚙️ 외부 런타임 (로컬)" vertex="1">
+          <mxGeometry height="160" width="280" x="1100" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="ext_ollama" parent="grp_external" style="rounded=1;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" value="🦙 Ollama&#xa;localhost:11434&#xa;Gemma 4 (27b)" vertex="1">
+          <mxGeometry height="45" width="240" x="20" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ext_chroma" parent="grp_external" style="rounded=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" value="🗄️ ChromaDB&#xa;./chroma_db (파일 기반)" vertex="1">
+          <mxGeometry height="40" width="240" x="20" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="doc_proposals" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;" target="parsers">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="doc_rfp" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d79b00;" target="rfp_analysis">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="340" y="175" />
+              <mxPoint x="340" y="10" />
+              <mxPoint x="690" y="10" />
+              <mxPoint x="690" y="110" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="vectorstore" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#9673a6;" target="similarity_search">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="730" y="340" />
+              <mxPoint x="730" y="175" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="ollama_llm" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;" target="ppt_sections">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1080" y="327" />
+              <mxPoint x="1080" y="270" />
+              <mxPoint x="1430" y="270" />
+              <mxPoint x="1430" y="107" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="doc_template" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;" target="ppt_gen">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="330" y="215" />
+              <mxPoint x="330" y="390" />
+              <mxPoint x="1060" y="390" />
+              <mxPoint x="1060" y="175" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="ollama_llm" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;dashed=1;" target="ext_ollama">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="880" y="520" />
+              <mxPoint x="1430" y="520" />
+              <mxPoint x="1430" y="363" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="1" source="vectorstore" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#9673a6;dashed=1;" target="ext_chroma">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="327" />
+              <mxPoint x="700" y="380" />
+              <mxPoint x="1240" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e16" edge="1" parent="1" source="cli_ingest" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;dashed=1;" target="grp_ingest">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e17" edge="1" parent="1" source="cli_query" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d79b00;dashed=1;" target="grp_rag">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="930" y="495" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_V6AzlmBA_N6aQgrPyXZ-1" edge="1" parent="1" source="ppt_output" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ext_ollama" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

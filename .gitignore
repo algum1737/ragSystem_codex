@@ -1,0 +1,16 @@
+.DS_Store
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+chroma_db/
+*.log
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+*.swp
+*.swo
