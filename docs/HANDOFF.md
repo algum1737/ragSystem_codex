@@ -33,6 +33,7 @@
 ## Working Rules
 
 - 큰 작업은 구현 전에 `docs/exec-plans/active/`에 실행 계획을 작성한다.
+- 실행 계획에는 작업 시작 전에 `Pre-flight checks`, `Automated tests`, `Manual/Runtime QA`, `Skipped/Not Run` 검증 계약을 고정하고 완료 시 `Validation Result`로 결과를 대조한다.
 - 작업 완료 시 완료 범위, 남은 작업 여부, 검증 결과를 계획 문서에 남긴다.
 - 완료된 계획은 `docs/exec-plans/completed/`로 이동하고 `docs/index.md`와 이 문서를 갱신한다.
 - 구현 변경은 사용자가 명시적으로 승인한 경우에만 수행한다.
