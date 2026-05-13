@@ -10,11 +10,13 @@
 4. `docs/index.md`
 5. `docs/PLANS.md`
 6. `docs/product-specs/terms-rag-system.md`
-7. `docs/exec-plans/active/2026-05-13-quality-baseline-improvement.md`
-8. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
-9. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
-10. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
-11. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
+7. `docs/references/quality-baseline-analysis.md`
+8. `docs/exec-plans/active/2026-05-13-eval-harness-alignment.md`
+9. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
+10. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
+11. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
+12. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
+13. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
 
 ## Current Baseline
 
@@ -61,6 +63,9 @@
 - 루트 `ARCHITECTURE.md`를 canonical 요약 문서로 정리하고, `docs/architecture.md`를 상세 Mermaid 다이어그램 문서로 분리했다.
 - `docs/architecture.md`의 오래된 모델명, 벡터 차원, Phase 표기를 현재 코드 기준으로 갱신했다.
 - 다음 작업으로 품질 기준선 개선 active plan을 생성했다.
+- 최신 평가 리포트 `eval/results/eval_20260513_100727.json`을 분석해 낮은 점수 원인을 분류했다.
+- 분석 결과를 `docs/references/quality-baseline-analysis.md`에 기록했다.
+- 첫 개선 실험은 검색 튜닝이 아니라 평가 하네스 정렬로 정했다.
 
 ## Current Gaps
 
@@ -74,9 +79,9 @@
 
 ## Suggested Next Work
 
-1. 최신 평가 리포트 `eval/results/eval_20260513_100727.json`을 분석해 낮은 점수 원인을 분류한다.
-2. 첫 품질 개선 실험 후보와 성공 기준을 정한다.
-3. 이후 구현 작업은 `main`에서 새 브랜치를 만들고 active 실행 계획을 먼저 작성한다.
+1. `eval/pipeline.py`의 retrieval 지표를 실제 `RAGEngine` 검색 경로와 맞춘다.
+2. `vector_precision@k`, `rag_precision@k`, `source_coverage@k`, `not_found_rate`를 추가한다.
+3. `.venv/bin/python eval/pipeline.py --all`로 새 기준선 리포트를 생성한다.
 
 ## Handoff Prompt
 
@@ -90,11 +95,13 @@
 4. docs/index.md
 5. docs/PLANS.md
 6. docs/product-specs/terms-rag-system.md
-7. docs/exec-plans/active/2026-05-13-quality-baseline-improvement.md
-8. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
-9. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
-10. docs/exec-plans/completed/2026-05-12-runtime-validation.md
-11. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
+7. docs/references/quality-baseline-analysis.md
+8. docs/exec-plans/active/2026-05-13-eval-harness-alignment.md
+9. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
+10. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
+11. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
+12. docs/exec-plans/completed/2026-05-12-runtime-validation.md
+13. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
 
 현재 기준:
 - branch: `git branch --show-current`

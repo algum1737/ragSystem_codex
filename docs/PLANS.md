@@ -40,6 +40,12 @@
 
 - `2026-05-13-quality-baseline-improvement.md`
   - 목표: 최신 평가 기준선을 분석하고 첫 품질 개선 실험을 정한다.
+  - 상태: Completed
+
+### Eval Harness Alignment
+
+- `2026-05-13-eval-harness-alignment.md`
+  - 목표: 평가 retrieval 지표를 실제 RAG 검색 경로와 맞춘다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -51,7 +57,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-13-quality-baseline-improvement.md`
+- `exec-plans/active/2026-05-13-eval-harness-alignment.md`
 
 ## Completed Plans
 
@@ -59,3 +65,4 @@
 - `exec-plans/completed/2026-05-12-runtime-validation.md`
 - `exec-plans/completed/2026-05-13-cross-encoder-offline.md`
 - `exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
+- `exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
