@@ -30,10 +30,10 @@
 
 ## Active Work
 
-- [Bootstrap And Migration Plan](./exec-plans/active/2026-05-12-bootstrap-ragsystem-codex.md)
-- [Runtime Validation Plan](./exec-plans/active/2026-05-12-runtime-validation.md)
-- [Cross-Encoder Offline Setup Plan](./exec-plans/active/2026-05-13-cross-encoder-offline.md)
+- [Architecture Document Consolidation Plan](./exec-plans/active/2026-05-13-architecture-doc-consolidation.md)
 
 ## Completed Work
 
-- 완료된 실행 계획은 `exec-plans/completed/`로 이동한 뒤 여기에 링크한다.
+- [Bootstrap And Migration Plan](./exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md)
+- [Runtime Validation Plan](./exec-plans/completed/2026-05-12-runtime-validation.md)
+- [Cross-Encoder Offline Setup Plan](./exec-plans/completed/2026-05-13-cross-encoder-offline.md)

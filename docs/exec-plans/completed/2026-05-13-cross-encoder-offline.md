@@ -35,10 +35,6 @@
 - 오프라인 강제 모드에서 `CrossEncoder` 인스턴스 생성이 성공해야 한다.
 - `bash scripts/validate-docs.sh`가 통과해야 한다.
 
-## Open Work
-
-- 결과를 handoff와 계획 문서에 반영
-
 ## Progress
 
 - `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` 다운로드 완료
@@ -60,3 +56,10 @@
   - `accuracy_mean: 0.525`
   - `faithfulness_mean: 0.8`
   - Cross-Encoder 로드 실패 경고 없음
+
+## Completion
+
+- 완료일: 2026-05-13
+- PR #2로 `main`에 머지 완료했다.
+- 결과를 `docs/HANDOFF.md`, `docs/PLANS.md`, `docs/index.md`에 반영했다.
+- 남은 작업 없음.

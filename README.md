@@ -3,8 +3,8 @@
 이 리포지터리는 특정 카테고리 문서를 인제스천해 검색하고, 로컬 LLM으로 내용을 생성한 뒤, 사용자 지정 템플릿 기반 문서 초안을 만드는 로컬 RAG 시스템을 Codex 운영 방식으로 이어가기 위한 작업 공간이다.
 
 현재 상태:
-- 코드베이스 상태: `ragSystem` 소스 프로젝트를 현재 폴더로 복사했고 런타임 산출물은 제외했다.
-- 주요 목표: 기존 기능을 유지하면서 `.paul` 기반 운영 기록을 하네스 문서 체계로 전환한다.
+- 코드베이스 상태: `ragSystem` 소스 프로젝트 이전, 하네스 문서 전환, 런타임 검증, 로컬 모델 캐시 검증을 완료했다.
+- 주요 목표: 기존 기능을 유지하면서 문서와 검증 루프를 Codex 운영 방식으로 이어간다.
 - 핵심 제약: 완전 로컬 실행, 한국어 문서 중심, 외부 API 미사용, 템플릿 기반 출력.
 
 핵심 기능:
@@ -26,4 +26,4 @@
 - [ARCHITECTURE.md](./ARCHITECTURE.md)
 - [docs/index.md](./docs/index.md)
 - [docs/HANDOFF.md](./docs/HANDOFF.md)
-- [현재 실행 계획](./docs/exec-plans/active/2026-05-12-bootstrap-ragsystem-codex.md)
+- [현재 실행 계획](./docs/exec-plans/active/2026-05-13-architecture-doc-consolidation.md)

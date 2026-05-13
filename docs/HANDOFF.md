@@ -10,16 +10,17 @@
 4. `docs/index.md`
 5. `docs/PLANS.md`
 6. `docs/product-specs/terms-rag-system.md`
-7. `docs/exec-plans/active/2026-05-12-bootstrap-ragsystem-codex.md`
-8. `docs/exec-plans/active/2026-05-12-runtime-validation.md`
-9. `docs/exec-plans/active/2026-05-13-cross-encoder-offline.md`
+7. `docs/exec-plans/active/2026-05-13-architecture-doc-consolidation.md`
+8. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
+9. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
+10. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
 
 ## Current Baseline
 
 - 현재 브랜치: `git branch --show-current`로 확인
 - 기준 커밋: `git rev-parse --short HEAD`로 확인
 - 제품/서비스: 로컬 RAG 기반 문서 초안 생성 시스템
-- 현재 상태: `ragSystem` 소스 복사, 하네스 문서 전환, 초기 기준 커밋 생성 완료
+- 현재 상태: `ragSystem` 소스 복사, 하네스 문서 전환, 런타임 검증, 임베딩/Cross-Encoder 오프라인 캐시 검증 완료
 - 주요 목표: `.paul` 기반 운영 지식을 `docs/` 체계로 옮기고 이후 개선 작업을 Codex 방식으로 이어간다
 
 ## Working Rules
@@ -53,6 +54,9 @@
 - Cross-Encoder 모델까지 오프라인화하기 위한 새 실행 계획을 추가했고 `feature/cross-encoder-offline` 브랜치에서 작업을 시작했다.
 - `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` 캐시를 준비했고 오프라인 강제 모드 로드도 확인했다.
 - Cross-Encoder 캐시 준비 후 full eval을 재실행했고, 로드 실패 경고 없이 `precision@k_mean=0.48`, `accuracy_mean=0.525`, `faithfulness_mean=0.8`을 확인했다.
+- PR #2 `feature/cross-encoder-offline`을 `main`에 머지했고 로컬 `main`도 `origin/main`과 일치한다.
+- 완료된 bootstrap, runtime validation, cross-encoder offline 실행 계획을 `docs/exec-plans/completed/`로 이동했다.
+- 다음 작업으로 아키텍처 문서 통합 active plan을 생성했다.
 
 ## Current Gaps
 
@@ -67,6 +71,7 @@
 ## Suggested Next Work
 
 1. `docs/architecture.md`와 `ARCHITECTURE.md`의 중복을 정리하고 장기적으로 하나의 아키텍처 소스로 통합한다.
+2. 이후 새 작업은 `main`에서 새 브랜치를 만들고 active 실행 계획을 먼저 작성한다.
 
 ## Handoff Prompt
 
@@ -80,9 +85,10 @@
 4. docs/index.md
 5. docs/PLANS.md
 6. docs/product-specs/terms-rag-system.md
-7. docs/exec-plans/active/2026-05-12-bootstrap-ragsystem-codex.md
-8. docs/exec-plans/active/2026-05-12-runtime-validation.md
-9. docs/exec-plans/active/2026-05-13-cross-encoder-offline.md
+7. docs/exec-plans/active/2026-05-13-architecture-doc-consolidation.md
+8. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
+9. docs/exec-plans/completed/2026-05-12-runtime-validation.md
+10. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
 
 현재 기준:
 - branch: `git branch --show-current`

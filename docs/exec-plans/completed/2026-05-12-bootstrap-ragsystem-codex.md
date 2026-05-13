@@ -52,7 +52,9 @@
 - 플레이스홀더 검색 `rg '<[A-Z_]+>' .` 결과 없음
 - Git 초기화와 초기 기준 커밋 완료
 
-## Open Work
+## Completion
 
-- 런타임 검증 범위를 별도 계획으로 분리할지 결정
-- 가상환경 복구 후 API, Streamlit, 평가 스크립트 실제 실행 검증
+- 완료일: 2026-05-13
+- 런타임 검증 범위는 `2026-05-12-runtime-validation.md`로 분리했다.
+- 가상환경, API, Streamlit, 평가 스크립트 검증은 후속 runtime validation 계획에서 완료했다.
+- 남은 작업 없음.
