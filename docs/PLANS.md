@@ -99,6 +99,10 @@
 
 ### Follow-Up Candidates
 
+- 검색 품질 개선 계획
+  - 현재 기준: `precision@k_mean=0.48`, `rag_precision@k_mean=0.54`
+  - 1차 목표: 검색/재랭킹/청킹 점검으로 `precision@k_mean`을 `0.60+`까지 끌어올릴 수 있는 개선안을 수립한다.
+  - 진행 순서: GitHub Actions CI 완료 후 새 active plan으로 승격한다.
 - 런타임 환경 복구와 smoke test 계획
 - 평가 파이프라인 실제 실행과 기준선 재확인
 - 문서 명칭 정리와 아키텍처 문서 통합
