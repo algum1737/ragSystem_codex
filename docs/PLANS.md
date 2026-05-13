@@ -52,6 +52,12 @@
 
 - `2026-05-13-answer-quality-improvement.md`
   - 목표: 검색 이후 답변 품질과 평가셋 정합성 문제를 개선한다.
+  - 상태: Completed
+
+### Eval Accuracy Calibration
+
+- `2026-05-13-eval-accuracy-calibration.md`
+  - 목표: keyword exact-match에 치우친 accuracy 평가를 보정한다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -63,7 +69,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-13-answer-quality-improvement.md`
+- `exec-plans/active/2026-05-13-eval-accuracy-calibration.md`
 
 ## Completed Plans
 
@@ -73,3 +79,4 @@
 - `exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
 - `exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
 - `exec-plans/completed/2026-05-13-eval-harness-alignment.md`
+- `exec-plans/completed/2026-05-13-answer-quality-improvement.md`
