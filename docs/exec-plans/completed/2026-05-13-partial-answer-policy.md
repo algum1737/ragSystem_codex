@@ -58,10 +58,26 @@
 
 ## Validation Result
 
-- 아직 실행 전.
+- `.venv/bin/python -m py_compile retriever/engine.py`: 통과
+- `bash scripts/validate-docs.sh`: 통과
+- `.venv/bin/python eval/pipeline.py --all`: 통과
+- 최신 리포트: `eval/results/eval_20260513_164755.json`
+- 지표 변화:
+  - `not_found_rate: 0.2 -> 0.1`
+  - `faithfulness_mean: 0.8 -> 0.8`
+  - `accuracy_mean: 0.7 -> 0.675`
+  - `source_coverage@k_mean: 0.925 -> 0.925`
+- `tc-04`는 no-answer에서 partial-answer로 개선됐다.
+- `tc-01`은 환불 정책 근거 부족으로 no-answer 유지가 타당하다.
+- tradeoff: 부분 답변 정책으로 `not_found_rate`는 개선됐지만, `tc-01`의 keyword accuracy 변동 때문에 전체 `accuracy_mean`은 소폭 하락했다.
 
 ## Open Work
 
-- 구현 변경 승인
-- partial-answer 프롬프트 설계
-- full eval 재실행
+- 없음
+
+## Completion
+
+- 완료일: 2026-05-13
+- 질문 일부에만 근거가 있을 때 확인된 내용과 확인되지 않은 내용을 분리하도록 프롬프트를 개선했다.
+- faithfulness를 유지하면서 `not_found_rate`를 낮췄다.
+- 남은 작업 없음.

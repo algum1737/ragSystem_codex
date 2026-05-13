@@ -89,6 +89,12 @@
 
 - `2026-05-13-partial-answer-policy.md`
   - 목표: 근거가 일부 있을 때 no-answer 대신 부분 답변을 하도록 정책을 정한다.
+  - 상태: Completed
+
+### GitHub Actions CI
+
+- `2026-05-13-github-actions-ci.md`
+  - 목표: PR에서 최소 checks가 실행되도록 GitHub Actions를 추가한다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -100,7 +106,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-13-partial-answer-policy.md`
+- `exec-plans/active/2026-05-13-github-actions-ci.md`
 
 ## Completed Plans
 
@@ -112,3 +118,4 @@
 - `exec-plans/completed/2026-05-13-eval-harness-alignment.md`
 - `exec-plans/completed/2026-05-13-answer-quality-improvement.md`
 - `exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
+- `exec-plans/completed/2026-05-13-partial-answer-policy.md`

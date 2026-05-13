@@ -32,7 +32,7 @@
 
 ## Active Work
 
-- [Partial Answer Policy Plan](./exec-plans/active/2026-05-13-partial-answer-policy.md)
+- [GitHub Actions CI Plan](./exec-plans/active/2026-05-13-github-actions-ci.md)
 
 ## Completed Work
 
@@ -44,3 +44,4 @@
 - [Eval Harness Alignment Plan](./exec-plans/completed/2026-05-13-eval-harness-alignment.md)
 - [Answer Quality Improvement Plan](./exec-plans/completed/2026-05-13-answer-quality-improvement.md)
 - [Eval Accuracy Calibration Plan](./exec-plans/completed/2026-05-13-eval-accuracy-calibration.md)
+- [Partial Answer Policy Plan](./exec-plans/completed/2026-05-13-partial-answer-policy.md)
