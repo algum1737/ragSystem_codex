@@ -27,10 +27,11 @@
 - [아키텍처 다이어그램](./architecture.md)
 - [서버 기동 가이드](./서버_기동_가이드.md)
 - [임베딩 모델 캐시 절차](./references/embedding-model-cache.md)
+- [품질 기준선 분석](./references/quality-baseline-analysis.md)
 
 ## Active Work
 
-- [Quality Baseline Improvement Plan](./exec-plans/active/2026-05-13-quality-baseline-improvement.md)
+- [Eval Harness Alignment Plan](./exec-plans/active/2026-05-13-eval-harness-alignment.md)
 
 ## Completed Work
 
@@ -38,3 +39,4 @@
 - [Runtime Validation Plan](./exec-plans/completed/2026-05-12-runtime-validation.md)
 - [Cross-Encoder Offline Setup Plan](./exec-plans/completed/2026-05-13-cross-encoder-offline.md)
 - [Architecture Document Consolidation Plan](./exec-plans/completed/2026-05-13-architecture-doc-consolidation.md)
+- [Quality Baseline Improvement Plan](./exec-plans/completed/2026-05-13-quality-baseline-improvement.md)

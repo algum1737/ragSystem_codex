@@ -37,6 +37,36 @@
 
 ## Open Work
 
-- 최신 평가 리포트 분석
-- 실패 케이스 분류
-- 첫 개선 실험 후보 선정
+- 없음
+
+## Progress
+
+- 최신 평가 리포트 `eval/results/eval_20260513_100727.json`을 분석했다.
+- 평가 데이터셋 `eval/test_cases.json`과 평가 파이프라인 `eval/pipeline.py`를 확인했다.
+- 로컬 Chroma DB 기준 chunk/source 분포를 확인했다.
+- 분석 결과를 `docs/references/quality-baseline-analysis.md`에 기록했다.
+
+## Findings
+
+- 현재 `precision@k`는 vector-only 검색을 측정한다.
+- 실제 답변 생성은 `RAGEngine`에서 vector search, BM25, RRF, Cross-Encoder reranking을 조합한다.
+- 따라서 첫 개선 실험은 검색 파라미터 튜닝보다 평가 하네스 정렬이 우선이다.
+- `tc-01`, `tc-04`는 문서 근거 부족 또는 질문/데이터셋 불일치 가능성이 높다.
+- 여러 케이스는 답변은 맞지만 source 중복과 keyword 문자열 평가 때문에 점수가 낮게 나온다.
+
+## Recommended Next Experiment
+
+- `eval/pipeline.py`에 실제 RAG 검색 경로 기준 retrieval 지표를 추가한다.
+- 기존 vector-only precision은 유지하되 `vector_precision@k`로 이름을 분리한다.
+- `rag_precision@k`, `source_coverage@k`, `not_found_rate`를 추가한다.
+
+## Verification Notes
+
+- `bash scripts/validate-docs.sh` 통과
+
+## Completion
+
+- 완료일: 2026-05-13
+- 최신 기준선의 낮은 점수 원인을 분류했다.
+- 첫 개선 실험 후보와 성공 기준을 정했다.
+- 남은 작업 없음.
