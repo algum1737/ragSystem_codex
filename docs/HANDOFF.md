@@ -10,18 +10,19 @@
 4. `docs/index.md`
 5. `docs/PLANS.md`
 6. `docs/product-specs/terms-rag-system.md`
-7. `docs/references/quality-baseline-analysis.md`
-8. `docs/references/answer-quality-analysis.md`
-9. `docs/exec-plans/active/2026-05-13-github-actions-ci.md`
-10. `docs/exec-plans/completed/2026-05-13-partial-answer-policy.md`
-11. `docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
-12. `docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md`
-13. `docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md`
-14. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
-15. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
-16. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
-17. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
-18. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
+7. `docs/manual-deployment-guide.md`
+8. `docs/references/quality-baseline-analysis.md`
+9. `docs/references/answer-quality-analysis.md`
+10. `docs/exec-plans/active/2026-05-13-github-actions-ci.md`
+11. `docs/exec-plans/completed/2026-05-13-partial-answer-policy.md`
+12. `docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
+13. `docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md`
+14. `docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md`
+15. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
+16. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
+17. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
+18. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
+19. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
 
 ## Current Baseline
 
@@ -89,6 +90,7 @@
 - 전체 평가를 재실행해 `eval/results/eval_20260513_164755.json`을 저장했다.
 - `not_found_rate`는 `0.2 -> 0.1`로 개선됐고 `faithfulness_mean=0.8`은 유지됐다.
 - `accuracy_mean`은 `0.7 -> 0.675`로 소폭 하락했으며, 이는 `tc-01` no-answer 표현 변화에 따른 keyword accuracy 변동이다.
+- Ubuntu 20.04.5 LTS 서버에 Git 없이 수동 배포하고 이후 수정 사항을 재반영하는 절차를 `docs/manual-deployment-guide.md`에 정리했다.
 
 ## Current Gaps
 
@@ -118,18 +120,19 @@
 4. docs/index.md
 5. docs/PLANS.md
 6. docs/product-specs/terms-rag-system.md
-7. docs/references/quality-baseline-analysis.md
-8. docs/references/answer-quality-analysis.md
-9. docs/exec-plans/active/2026-05-13-github-actions-ci.md
-10. docs/exec-plans/completed/2026-05-13-partial-answer-policy.md
-11. docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md
-12. docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md
-13. docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md
-14. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
-15. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
-16. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
-17. docs/exec-plans/completed/2026-05-12-runtime-validation.md
-18. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
+7. docs/manual-deployment-guide.md
+8. docs/references/quality-baseline-analysis.md
+9. docs/references/answer-quality-analysis.md
+10. docs/exec-plans/active/2026-05-13-github-actions-ci.md
+11. docs/exec-plans/completed/2026-05-13-partial-answer-policy.md
+12. docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md
+13. docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md
+14. docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md
+15. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
+16. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
+17. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
+18. docs/exec-plans/completed/2026-05-12-runtime-validation.md
+19. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
 
 현재 기준:
 - branch: `git branch --show-current`
