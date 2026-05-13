@@ -24,6 +24,12 @@
   - 목표: 실행 환경을 복구하고 API, UI, eval smoke test를 수행한다.
   - 상태: Active
 
+### Cross-Encoder Offline Setup
+
+- `2026-05-13-cross-encoder-offline.md`
+  - 목표: reranking 모델 캐시를 준비해 완전 오프라인 경로를 맞춘다.
+  - 상태: Active
+
 ### Follow-Up Candidates
 
 - 런타임 환경 복구와 smoke test 계획

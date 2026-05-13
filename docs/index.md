@@ -32,6 +32,7 @@
 
 - [Bootstrap And Migration Plan](./exec-plans/active/2026-05-12-bootstrap-ragsystem-codex.md)
 - [Runtime Validation Plan](./exec-plans/active/2026-05-12-runtime-validation.md)
+- [Cross-Encoder Offline Setup Plan](./exec-plans/active/2026-05-13-cross-encoder-offline.md)
 
 ## Completed Work
 
