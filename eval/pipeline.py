@@ -69,6 +69,25 @@ class RAGEvaluator:
         intersection = retrieved_basenames & relevant_basenames
         return len(intersection) / k
 
+    def source_coverage_at_k(
+        self,
+        retrieved_sources: list[str],
+        relevant_sources: list[str],
+        k: int,
+    ) -> float | None:
+        if not relevant_sources:
+            return None
+        retrieved_basenames = {unicodedata.normalize("NFC", os.path.basename(s)) for s in retrieved_sources[:k]}
+        relevant_basenames = {unicodedata.normalize("NFC", os.path.basename(s)) for s in relevant_sources}
+        if not relevant_basenames:
+            return None
+        return len(retrieved_basenames & relevant_basenames) / len(relevant_basenames)
+
+    def _is_not_found_answer(self, answer: str | None) -> bool:
+        if not answer:
+            return False
+        return "찾을 수 없습니다" in answer
+
     def answer_accuracy(self, answer: str, expected_keywords: list[str]) -> float | None:
         if not expected_keywords:
             return None
@@ -121,30 +140,52 @@ class RAGEvaluator:
                 "id": case["id"],
                 "question": case["question"],
                 "precision_at_k": None,
+                "vector_precision_at_k": None,
+                "rag_precision_at_k": None,
+                "source_coverage_at_k": None,
                 "answer_accuracy": None,
                 "faithfulness": None,
+                "not_found": None,
             }
 
             if "retrieval" in metrics:
                 retrieved = self._retrieval_query(case["question"], doc_type=case.get("doc_type"))
+                case_result["vector_retrieved_sources"] = retrieved
+                # Backward-compatible alias for older report consumers.
                 case_result["retrieved_sources"] = retrieved
-                case_result["precision_at_k"] = self.precision_at_k(
+                vector_precision = self.precision_at_k(
                     retrieved, case.get("relevant_sources", []), self._top_k
                 )
+                case_result["vector_precision_at_k"] = vector_precision
+                # Backward-compatible metric alias for older reports.
+                case_result["precision_at_k"] = vector_precision
 
             if need_llm:
                 try:
                     rag_result = self._get_engine().query(case["question"])
                     answer = rag_result.get("answer", "")
                     context_texts = [s["text"] for s in rag_result.get("sources", [])]
+                    rag_sources = [s.get("source_path", "") for s in rag_result.get("sources", [])]
                     case_result["answer"] = answer
+                    case_result["rag_retrieved_sources"] = rag_sources
+                    case_result["not_found"] = self._is_not_found_answer(answer)
                 except Exception as e:
                     logger.warning("RAG query 실패 (케이스 %s): %s", case["id"], e)
                     answer = None
                     context_texts = []
+                    rag_sources = []
             else:
                 answer = None
                 context_texts = []
+                rag_sources = []
+
+            if "retrieval" in metrics and rag_sources:
+                case_result["rag_precision_at_k"] = self.precision_at_k(
+                    rag_sources, case.get("relevant_sources", []), self._top_k
+                )
+                case_result["source_coverage_at_k"] = self.source_coverage_at_k(
+                    rag_sources, case.get("relevant_sources", []), self._top_k
+                )
 
             if "accuracy" in metrics and answer is not None:
                 case_result["answer_accuracy"] = self.answer_accuracy(
@@ -164,8 +205,12 @@ class RAGEvaluator:
             "total_cases": len(cases),
             "metrics_evaluated": metrics,
             "precision@k_mean": _mean("precision_at_k"),
+            "vector_precision@k_mean": _mean("vector_precision_at_k"),
+            "rag_precision@k_mean": _mean("rag_precision_at_k"),
+            "source_coverage@k_mean": _mean("source_coverage_at_k"),
             "accuracy_mean": _mean("answer_accuracy"),
             "faithfulness_mean": _mean("faithfulness"),
+            "not_found_rate": _mean("not_found"),
         }
 
         print("\n=== 평가 요약 ===")

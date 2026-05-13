@@ -39,6 +39,35 @@
 
 ## Open Work
 
-- 구현 변경 승인
-- 평가 파이프라인 수정
-- full eval 재실행
+- 없음
+
+## Progress
+
+- `eval/pipeline.py`의 기존 vector-only precision을 `vector_precision_at_k`로 분리했다.
+- 기존 `precision_at_k`와 `retrieved_sources`는 과거 리포트 소비 코드 호환을 위해 alias로 유지했다.
+- 실제 `RAGEngine.query()` 결과 source 기준 `rag_precision_at_k`를 추가했다.
+- relevant source의 unique coverage를 보는 `source_coverage_at_k`를 추가했다.
+- 답변의 `찾을 수 없습니다` 포함 여부를 요약하는 `not_found`와 `not_found_rate`를 추가했다.
+- full eval을 재실행해 새 리포트를 저장했다.
+
+## Verification Notes
+
+- `.venv/bin/python -m py_compile eval/pipeline.py` 통과
+- `bash scripts/validate-docs.sh` 통과
+- `.venv/bin/python eval/pipeline.py --all` 통과
+- 최신 리포트: `eval/results/eval_20260513_134658.json`
+- 최신 지표:
+  - `precision@k_mean: 0.48`
+  - `vector_precision@k_mean: 0.48`
+  - `rag_precision@k_mean: 0.54`
+  - `source_coverage@k_mean: 0.925`
+  - `accuracy_mean: 0.625`
+  - `faithfulness_mean: 0.8`
+  - `not_found_rate: 0.2`
+
+## Completion
+
+- 완료일: 2026-05-13
+- retrieval 평가 지표와 실제 RAG 검색 경로를 분리해서 계측할 수 있게 했다.
+- 다음 품질 개선 판단 기준은 `rag_precision@k`, `source_coverage@k`, `not_found_rate`를 함께 본다.
+- 남은 작업 없음.

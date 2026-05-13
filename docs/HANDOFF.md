@@ -11,12 +11,13 @@
 5. `docs/PLANS.md`
 6. `docs/product-specs/terms-rag-system.md`
 7. `docs/references/quality-baseline-analysis.md`
-8. `docs/exec-plans/active/2026-05-13-eval-harness-alignment.md`
-9. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
-10. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
-11. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
-12. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
-13. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
+8. `docs/exec-plans/active/2026-05-13-answer-quality-improvement.md`
+9. `docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md`
+10. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
+11. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
+12. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
+13. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
+14. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
 
 ## Current Baseline
 
@@ -66,22 +67,25 @@
 - 최신 평가 리포트 `eval/results/eval_20260513_100727.json`을 분석해 낮은 점수 원인을 분류했다.
 - 분석 결과를 `docs/references/quality-baseline-analysis.md`에 기록했다.
 - 첫 개선 실험은 검색 튜닝이 아니라 평가 하네스 정렬로 정했다.
+- `eval/pipeline.py`에 `vector_precision@k`, `rag_precision@k`, `source_coverage@k`, `not_found_rate`를 추가했다.
+- 전체 평가를 재실행해 `eval/results/eval_20260513_134658.json`을 저장했다.
+- 새 기준선은 `vector_precision@k_mean=0.48`, `rag_precision@k_mean=0.54`, `source_coverage@k_mean=0.925`, `accuracy_mean=0.625`, `faithfulness_mean=0.8`, `not_found_rate=0.2`다.
 
 ## Current Gaps
 
 - `/stats`는 현재 `count=89`를 반환한다.
 - retrieval eval은 현재 `precision@k_mean=0.48`로 정상 완료된다.
-- 최신 full eval 리포트는 `eval/results/eval_20260512_182410.json`에 저장되어 있다.
-- Cross-Encoder 캐시 반영 후 최신 리포트는 `eval/results/eval_20260513_100727.json`에 저장되어 있다.
+- 최신 full eval 리포트는 `eval/results/eval_20260513_134658.json`에 저장되어 있다.
+- 이전 Cross-Encoder 캐시 반영 리포트는 `eval/results/eval_20260513_100727.json`에 저장되어 있다.
 - 검색/인제스천/평가 경로에 필요한 임베딩 모델 캐시는 준비됐다.
 - Cross-Encoder reranking 캐시도 준비됐다.
 - 코드 내부의 명칭과 문서 상 제품 정의 사이에 일부 정리되지 않은 표현이 남아 있다.
 
 ## Suggested Next Work
 
-1. `eval/pipeline.py`의 retrieval 지표를 실제 `RAGEngine` 검색 경로와 맞춘다.
-2. `vector_precision@k`, `rag_precision@k`, `source_coverage@k`, `not_found_rate`를 추가한다.
-3. `.venv/bin/python eval/pipeline.py --all`로 새 기준선 리포트를 생성한다.
+1. 최신 리포트 기준으로 `accuracy_mean`이 낮은 케이스를 분류한다.
+2. `not_found` 케이스가 실제 문서 근거 부족인지, 프롬프트 문제인지 확인한다.
+3. 프롬프트 개선, 평가 키워드 보정, 테스트 케이스 정리 중 첫 구현 실험을 정한다.
 
 ## Handoff Prompt
 
@@ -96,12 +100,13 @@
 5. docs/PLANS.md
 6. docs/product-specs/terms-rag-system.md
 7. docs/references/quality-baseline-analysis.md
-8. docs/exec-plans/active/2026-05-13-eval-harness-alignment.md
-9. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
-10. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
-11. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
-12. docs/exec-plans/completed/2026-05-12-runtime-validation.md
-13. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
+8. docs/exec-plans/active/2026-05-13-answer-quality-improvement.md
+9. docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md
+10. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
+11. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
+12. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
+13. docs/exec-plans/completed/2026-05-12-runtime-validation.md
+14. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
 
 현재 기준:
 - branch: `git branch --show-current`

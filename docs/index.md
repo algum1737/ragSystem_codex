@@ -31,7 +31,7 @@
 
 ## Active Work
 
-- [Eval Harness Alignment Plan](./exec-plans/active/2026-05-13-eval-harness-alignment.md)
+- [Answer Quality Improvement Plan](./exec-plans/active/2026-05-13-answer-quality-improvement.md)
 
 ## Completed Work
 
@@ -40,3 +40,4 @@
 - [Cross-Encoder Offline Setup Plan](./exec-plans/completed/2026-05-13-cross-encoder-offline.md)
 - [Architecture Document Consolidation Plan](./exec-plans/completed/2026-05-13-architecture-doc-consolidation.md)
 - [Quality Baseline Improvement Plan](./exec-plans/completed/2026-05-13-quality-baseline-improvement.md)
+- [Eval Harness Alignment Plan](./exec-plans/completed/2026-05-13-eval-harness-alignment.md)
