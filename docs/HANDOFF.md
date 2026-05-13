@@ -107,6 +107,9 @@
 1. GitHub Actions workflow를 추가해 PR checks가 표시되게 한다.
 2. CI에서는 `bash scripts/validate-docs.sh`와 Python compile 검증을 실행한다.
 3. full eval은 Ollama/Chroma/모델 캐시 의존성 때문에 로컬 검증으로 유지한다.
+4. CI 완료 후 검색 품질 개선 계획을 새 active plan으로 승격한다.
+5. 검색 품질 개선의 현재 기준은 `precision@k_mean=0.48`, `rag_precision@k_mean=0.54`이며 1차 목표는 `precision@k_mean=0.60+`다.
+6. 개선 후보는 청킹, hybrid search 가중치, reranking 적용 범위, 카테고리 필터링, 평가셋 확장 순서로 점검한다.
 
 ## Handoff Prompt
 
