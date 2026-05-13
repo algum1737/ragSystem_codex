@@ -12,6 +12,7 @@
 6. `docs/product-specs/terms-rag-system.md`
 7. `docs/exec-plans/active/2026-05-12-bootstrap-ragsystem-codex.md`
 8. `docs/exec-plans/active/2026-05-12-runtime-validation.md`
+9. `docs/exec-plans/active/2026-05-13-cross-encoder-offline.md`
 
 ## Current Baseline
 
@@ -49,6 +50,8 @@
 - `SentenceTransformer` import 지연과 stale collection handle 복구를 적용해 `/stats`와 retrieval eval이 정상화됐다.
 - 전체 eval도 실행됐지만 Ollama 미기동으로 accuracy/faithfulness는 비어 있었고, retrieval만 `0.48`로 산출됐다.
 - 권한 상승으로 전체 eval을 다시 실행해 `precision@k_mean=0.48`, `accuracy_mean=0.575`, `faithfulness_mean=0.7`을 확인했다.
+- Cross-Encoder 모델까지 오프라인화하기 위한 새 실행 계획을 추가했고 `feature/cross-encoder-offline` 브랜치에서 작업을 시작했다.
+- `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` 캐시를 준비했고 오프라인 강제 모드 로드도 확인했다.
 
 ## Current Gaps
 
@@ -56,12 +59,12 @@
 - retrieval eval은 현재 `precision@k_mean=0.48`로 정상 완료된다.
 - 최신 full eval 리포트는 `eval/results/eval_20260512_182410.json`에 저장되어 있다.
 - 검색/인제스천/평가 경로에 필요한 임베딩 모델 캐시는 준비됐다.
+- Cross-Encoder reranking 캐시도 준비됐다.
 - 코드 내부의 명칭과 문서 상 제품 정의 사이에 일부 정리되지 않은 표현이 남아 있다.
 
 ## Suggested Next Work
 
-1. 필요하면 Cross-Encoder 모델 캐시도 준비해 reranking까지 완전 오프라인으로 맞춘다.
-2. `docs/architecture.md`와 `ARCHITECTURE.md`의 중복을 정리하고 장기적으로 하나의 아키텍처 소스로 통합한다.
+1. `docs/architecture.md`와 `ARCHITECTURE.md`의 중복을 정리하고 장기적으로 하나의 아키텍처 소스로 통합한다.
 
 ## Handoff Prompt
 
@@ -77,6 +80,7 @@
 6. docs/product-specs/terms-rag-system.md
 7. docs/exec-plans/active/2026-05-12-bootstrap-ragsystem-codex.md
 8. docs/exec-plans/active/2026-05-12-runtime-validation.md
+9. docs/exec-plans/active/2026-05-13-cross-encoder-offline.md
 
 현재 기준:
 - branch: `git branch --show-current`
