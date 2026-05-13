@@ -42,13 +42,6 @@
 - `streamlit run app.py`가 시작되어야 한다.
 - `python eval/pipeline.py --metric retrieval` 실행 결과 또는 실패 원인이 문서화되어야 한다.
 
-## Open Work
-
-- FastAPI 서버 실제 기동과 `/health` 확인
-- Streamlit 앱 실제 기동 확인
-- `eval/pipeline.py` 실행 확인
-- `sentence_transformers` / `torch` 포함 경로의 초기 로딩 시간을 smoke test에서 관찰
-
 ## Progress
 
 - `.venv` 생성 완료
@@ -96,6 +89,9 @@
   - `faithfulness_mean: 0.7`
 - 결론: 현재 남은 품질 이슈는 런타임 장애가 아니라 검색/모델 품질 자체다.
 
-## Next Actions
+## Completion
 
-- 필요하면 Cross-Encoder 모델도 로컬 캐시에 준비해 reranking 경로를 완전 오프라인으로 맞춘다.
+- 완료일: 2026-05-13
+- FastAPI, Streamlit, retrieval eval, full eval 검증을 완료했다.
+- Cross-Encoder 오프라인 캐시는 `2026-05-13-cross-encoder-offline.md`에서 후속 완료했다.
+- 남은 작업 없음.

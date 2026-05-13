@@ -16,19 +16,19 @@
 
 - `2026-05-12-bootstrap-ragsystem-codex.md`
   - 목표: 소스 프로젝트와 하네스 운영 체계를 결합한다.
-  - 상태: Active
+  - 상태: Completed
 
 ### Runtime Validation
 
 - `2026-05-12-runtime-validation.md`
   - 목표: 실행 환경을 복구하고 API, UI, eval smoke test를 수행한다.
-  - 상태: Active
+  - 상태: Completed
 
 ### Cross-Encoder Offline Setup
 
 - `2026-05-13-cross-encoder-offline.md`
   - 목표: reranking 모델 캐시를 준비해 완전 오프라인 경로를 맞춘다.
-  - 상태: Active
+  - 상태: Completed
 
 ### Follow-Up Candidates
 
@@ -36,3 +36,13 @@
 - 평가 파이프라인 실제 실행과 기준선 재확인
 - 문서 명칭 정리와 아키텍처 문서 통합
 - Phase 14 수준의 정확도와 faithfulness 평가 계획 재수립
+
+## Active Plans
+
+- `exec-plans/active/2026-05-13-architecture-doc-consolidation.md`
+
+## Completed Plans
+
+- `exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
+- `exec-plans/completed/2026-05-12-runtime-validation.md`
+- `exec-plans/completed/2026-05-13-cross-encoder-offline.md`
