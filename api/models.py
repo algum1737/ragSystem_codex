@@ -11,7 +11,8 @@ class StatsResponse(BaseModel):
     count: int
 
 
-_VALID_DOC_TYPES = {None, "일반약관", "위치기반약관"}
+VALID_DOC_TYPES = {None, "일반", "유료서비스", "위치기반서비스", "운영정책"}
+VALID_DOC_TYPES_LABEL = "일반, 유료서비스, 위치기반서비스, 운영정책"
 
 
 class QueryRequest(BaseModel):
@@ -39,8 +40,8 @@ class QueryRequest(BaseModel):
     @field_validator("doc_type")
     @classmethod
     def doc_type_valid(cls, v: str | None) -> str | None:
-        if v not in _VALID_DOC_TYPES:
-            raise ValueError(f"유효하지 않은 doc_type: {v!r}. 허용 값: 일반약관, 위치기반약관")
+        if v not in VALID_DOC_TYPES:
+            raise ValueError(f"유효하지 않은 doc_type: {v!r}. 허용 값: {VALID_DOC_TYPES_LABEL}")
         return v
 
 

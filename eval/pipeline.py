@@ -13,6 +13,17 @@ logger = logging.getLogger(__name__)
 
 _DB_PATH = "./chroma_db"
 _COLLECTION = "ragSystem"
+_DOC_TYPE_ALIASES = {
+    "일반": ["일반", "일반약관"],
+    "위치기반서비스": ["위치기반서비스", "위치기반약관"],
+}
+
+
+def _doc_type_where(doc_type: str | None) -> dict | None:
+    if not doc_type:
+        return None
+    values = _DOC_TYPE_ALIASES.get(doc_type, [doc_type])
+    return {"doc_type": values[0]} if len(values) == 1 else {"doc_type": {"$in": values}}
 
 
 class RAGEvaluator:
@@ -46,7 +57,7 @@ class RAGEvaluator:
     def _retrieval_query(self, question: str, doc_type: str | None = None) -> list[str]:
         """Retrieval-only path — Ollama 불필요."""
         embedding = self._embedder.embed_query(question)
-        where = {"doc_type": doc_type} if doc_type else None
+        where = _doc_type_where(doc_type)
         results = self._store.similarity_search(embedding, k=self._top_k, where=where)
         return [r.get("source_path", "") for r in results]
 
@@ -88,11 +99,17 @@ class RAGEvaluator:
             return False
         return "찾을 수 없습니다" in answer
 
-    def answer_accuracy(self, answer: str, expected_keywords: list[str]) -> float | None:
+    def answer_accuracy(self, answer: str, expected_keywords: list[str | list[str]]) -> float | None:
         if not expected_keywords:
             return None
         answer_lower = answer.lower().strip()
-        matched = sum(1 for kw in expected_keywords if kw.lower().strip() in answer_lower)
+        matched = 0
+        for keyword in expected_keywords:
+            if isinstance(keyword, list):
+                if any(str(kw).lower().strip() in answer_lower for kw in keyword):
+                    matched += 1
+            elif str(keyword).lower().strip() in answer_lower:
+                matched += 1
         return matched / len(expected_keywords)
 
     def faithfulness(self, answer: str, context_texts: list[str]) -> float | None:

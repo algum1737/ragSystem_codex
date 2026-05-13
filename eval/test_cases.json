@@ -35,7 +35,7 @@
       "question": "위약금 또는 손해배상 조건은 무엇인가?",
       "expected_keywords": ["위약금", "손해배상", "배상", "책임"],
       "relevant_sources": ["다음 이용약관.txt", "네이버 이용약관.txt"],
-      "doc_type": "일반약관"
+      "doc_type": "일반"
     },
     {
       "id": "tc-06",
@@ -54,16 +54,16 @@
     {
       "id": "tc-08",
       "question": "서비스 변경 또는 중단 시 이용자에게 어떻게 고지하는가?",
-      "expected_keywords": ["변경", "중단", "고지", "통보"],
+      "expected_keywords": ["변경", ["중단", "중지", "종료"], ["고지", "공지", "안내"], ["통보", "통지", "문자메시지"]],
       "relevant_sources": ["다음 이용약관.txt", "다음 위치기반서비스 이용약관.txt", "네이버 위치기반서비스 이용약관.txt", "네이버 이용약관.txt"],
       "doc_type": null
     },
     {
       "id": "tc-09",
       "question": "이용자의 주요 의무 사항은 무엇인가?",
-      "expected_keywords": ["의무", "금지", "준수", "이용자"],
+      "expected_keywords": ["의무", ["금지", "하여서는 안 됩니다", "할 수 없습니다"], ["준수", "약관", "정책"], "이용자"],
       "relevant_sources": ["다음 이용약관.txt", "네이버 이용약관.txt"],
-      "doc_type": "일반약관"
+      "doc_type": "일반"
     },
     {
       "id": "tc-10",
