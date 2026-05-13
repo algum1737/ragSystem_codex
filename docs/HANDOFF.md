@@ -87,9 +87,10 @@
 
 ## Suggested Next Work
 
-1. `eval/test_cases.json`에 동의어/대체 표현을 표현할 수 있는 구조를 설계한다.
-2. `eval/pipeline.py`의 `answer_accuracy()`가 문자열 키워드와 OR keyword group을 모두 처리하게 한다.
-3. `tc-08`, `tc-09`를 우선 보정하고 full eval을 재실행한다.
+1. 약관 카테고리를 `일반`, `유료서비스`, `위치기반서비스`, `운영정책` 4개로 정리한다.
+2. `eval/test_cases.json`에 동의어/대체 표현을 표현할 수 있는 구조를 설계한다.
+3. `eval/pipeline.py`의 `answer_accuracy()`가 문자열 키워드와 OR keyword group을 모두 처리하게 한다.
+4. `tc-08`, `tc-09`를 우선 보정하고 full eval을 재실행한다.
 
 ## Handoff Prompt
 
