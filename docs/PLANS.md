@@ -46,6 +46,12 @@
 
 - `2026-05-13-eval-harness-alignment.md`
   - 목표: 평가 retrieval 지표를 실제 RAG 검색 경로와 맞춘다.
+  - 상태: Completed
+
+### Answer Quality Improvement
+
+- `2026-05-13-answer-quality-improvement.md`
+  - 목표: 검색 이후 답변 품질과 평가셋 정합성 문제를 개선한다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -57,7 +63,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-13-eval-harness-alignment.md`
+- `exec-plans/active/2026-05-13-answer-quality-improvement.md`
 
 ## Completed Plans
 
@@ -66,3 +72,4 @@
 - `exec-plans/completed/2026-05-13-cross-encoder-offline.md`
 - `exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
 - `exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
+- `exec-plans/completed/2026-05-13-eval-harness-alignment.md`
