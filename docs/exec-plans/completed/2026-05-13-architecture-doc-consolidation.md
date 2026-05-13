@@ -38,6 +38,30 @@
 
 ## Open Work
 
-- 아키텍처 문서 중복 비교와 통합 방향 결정
-- 링크 갱신
-- 검증 실행
+- 없음
+
+## Progress
+
+- `ARCHITECTURE.md`를 canonical 아키텍처 요약 문서로 유지하기로 결정했다.
+- `docs/architecture.md`는 Mermaid 기반 상세 다이어그램 문서로 역할을 명확히 했다.
+- `docs/architecture.md`의 오래된 모델명과 벡터 차원 표기를 현재 코드 기준으로 갱신했다.
+- `docs/index.md`의 링크명을 원본 문서에서 아키텍처 다이어그램으로 바꿨다.
+
+## Verification Notes
+
+- `bash scripts/validate-docs.sh` 통과
+- 오래된 아키텍처 표기 검색 결과 없음:
+  - `paraphrase-multilingual`
+  - `Gemma 4`
+  - `768-dim`
+  - `Phase 4`
+  - `Phase 5`
+  - `Phase 6`
+  - `원본 아키텍처`
+
+## Completion
+
+- 완료일: 2026-05-13
+- 루트 `ARCHITECTURE.md`를 canonical 요약 문서로 정리했다.
+- `docs/architecture.md`를 상세 Mermaid 다이어그램 문서로 정리했다.
+- 남은 작업 없음.

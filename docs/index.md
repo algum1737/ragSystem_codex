@@ -24,16 +24,17 @@
 ## Project References
 
 - [제품 명세](./product-specs/terms-rag-system.md)
-- [원본 아키텍처 문서](./architecture.md)
+- [아키텍처 다이어그램](./architecture.md)
 - [서버 기동 가이드](./서버_기동_가이드.md)
 - [임베딩 모델 캐시 절차](./references/embedding-model-cache.md)
 
 ## Active Work
 
-- [Architecture Document Consolidation Plan](./exec-plans/active/2026-05-13-architecture-doc-consolidation.md)
+- [Quality Baseline Improvement Plan](./exec-plans/active/2026-05-13-quality-baseline-improvement.md)
 
 ## Completed Work
 
 - [Bootstrap And Migration Plan](./exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md)
 - [Runtime Validation Plan](./exec-plans/completed/2026-05-12-runtime-validation.md)
 - [Cross-Encoder Offline Setup Plan](./exec-plans/completed/2026-05-13-cross-encoder-offline.md)
+- [Architecture Document Consolidation Plan](./exec-plans/completed/2026-05-13-architecture-doc-consolidation.md)
