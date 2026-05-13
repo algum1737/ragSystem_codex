@@ -43,8 +43,43 @@
 
 ## Open Work
 
-- 구현 변경 승인
-- 약관 카테고리 4종 기준 반영
-- accuracy 평가 구조 확장
-- 평가셋 보정
-- full eval 재실행
+- 없음
+
+## Progress
+
+- API, Streamlit, 평가셋에서 약관 카테고리 4종을 지원하도록 정리했다.
+- 표준 카테고리:
+  - `일반`
+  - `유료서비스`
+  - `위치기반서비스`
+  - `운영정책`
+- 기존 Chroma DB의 legacy 값 `일반약관`, `위치기반약관`도 새 필터로 검색되도록 호환 매핑을 추가했다.
+- `answer_accuracy()`가 문자열 키워드와 OR keyword group을 모두 처리하도록 확장했다.
+- `tc-08`, `tc-09`에 대체 표현을 반영했다.
+- full eval을 재실행해 새 리포트를 저장했다.
+
+## Verification Notes
+
+- `.venv/bin/python -m py_compile eval/pipeline.py retriever/engine.py api/models.py api/main.py app.py` 통과
+- `bash scripts/validate-docs.sh` 통과
+- API `doc_type` 검증 통과:
+  - 허용: `일반`, `유료서비스`, `위치기반서비스`, `운영정책`
+  - legacy 값 `일반약관`은 API 경계에서 거부
+- legacy DB 호환 필터 확인:
+  - 새 `doc_type="일반"` 필터로 기존 `일반약관` 청크 검색 성공
+- `.venv/bin/python eval/pipeline.py --all` 통과
+- 최신 리포트: `eval/results/eval_20260513_155642.json`
+- 지표 변화:
+  - `accuracy_mean: 0.625 -> 0.7`
+  - `vector_precision@k_mean: 0.48 -> 0.48`
+  - `rag_precision@k_mean: 0.54 -> 0.54`
+  - `source_coverage@k_mean: 0.925 -> 0.925`
+  - `faithfulness_mean: 0.8 -> 0.8`
+  - `not_found_rate: 0.2 -> 0.2`
+
+## Completion
+
+- 완료일: 2026-05-13
+- 약관 카테고리와 accuracy 평가 기준을 보정했다.
+- 검색/faithfulness 기준선은 유지하면서 accuracy를 0.7로 개선했다.
+- 남은 작업 없음.

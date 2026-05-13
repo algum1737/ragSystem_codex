@@ -30,7 +30,13 @@ with tab_ingest:
         accept_multiple_files=True,
     )
 
-    _ingest_doc_type_options = {"선택 안 함": None, "일반약관": "일반약관", "위치기반약관": "위치기반약관"}
+    _ingest_doc_type_options = {
+        "선택 안 함": None,
+        "일반": "일반",
+        "유료서비스": "유료서비스",
+        "위치기반서비스": "위치기반서비스",
+        "운영정책": "운영정책",
+    }
     _ingest_doc_type = _ingest_doc_type_options[
         st.selectbox("문서 유형", list(_ingest_doc_type_options.keys()), key="ingest_doc_type")
     ]
@@ -106,7 +112,13 @@ with tab_query:
     st.header("RAG 질의")
     st.caption("인덱싱된 문서를 기반으로 LLM이 답변을 생성합니다.")
 
-    _query_doc_type_options = {"전체 문서": None, "일반약관": "일반약관", "위치기반약관": "위치기반약관"}
+    _query_doc_type_options = {
+        "전체 문서": None,
+        "일반": "일반",
+        "유료서비스": "유료서비스",
+        "위치기반서비스": "위치기반서비스",
+        "운영정책": "운영정책",
+    }
     _query_doc_type = _query_doc_type_options[
         st.selectbox("문서 유형 필터", list(_query_doc_type_options.keys()), key="query_doc_type")
     ]

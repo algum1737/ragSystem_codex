@@ -58,6 +58,12 @@
 
 - `2026-05-13-eval-accuracy-calibration.md`
   - 목표: keyword exact-match에 치우친 accuracy 평가를 보정한다.
+  - 상태: Completed
+
+### Partial Answer Policy
+
+- `2026-05-13-partial-answer-policy.md`
+  - 목표: 근거가 일부 있을 때 no-answer 대신 부분 답변을 하도록 정책을 정한다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -69,7 +75,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-13-eval-accuracy-calibration.md`
+- `exec-plans/active/2026-05-13-partial-answer-policy.md`
 
 ## Completed Plans
 
@@ -80,3 +86,4 @@
 - `exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
 - `exec-plans/completed/2026-05-13-eval-harness-alignment.md`
 - `exec-plans/completed/2026-05-13-answer-quality-improvement.md`
+- `exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`

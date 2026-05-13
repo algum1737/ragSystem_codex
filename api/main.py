@@ -38,6 +38,8 @@ from .models import (
     ModelDeleteRequest,
     ModelDeleteResponse,
     ResetResponse,
+    VALID_DOC_TYPES,
+    VALID_DOC_TYPES_LABEL,
 )
 
 logger = logging.getLogger(__name__)
@@ -45,7 +47,6 @@ logger = logging.getLogger(__name__)
 _DB_PATH = "./chroma_db"
 _COLLECTION = "ragSystem"
 MAX_UPLOAD_BYTES = 50 * 1024 * 1024  # audit-added: 50MB 상한 — 무제한 read()로 OOM 방지
-_VALID_DOC_TYPES = {None, "일반약관", "위치기반약관"}
 
 # in-memory task store: task_id → {status, progress, current_section, output_path, error}
 _task_store: dict[str, dict] = {}
@@ -220,10 +221,10 @@ async def ingest(file: UploadFile, request: Request, doc_type: str | None = Form
             status_code=400,
             detail=f"지원하지 않는 파일 형식: {suffix or '(없음)'}. 지원: .pdf, .docx, .doc, .hwp, .txt, .md",
         )
-    if doc_type not in _VALID_DOC_TYPES:
+    if doc_type not in VALID_DOC_TYPES:
         raise HTTPException(
             status_code=400,
-            detail=f"유효하지 않은 doc_type: {doc_type!r}. 허용 값: 일반약관, 위치기반약관",
+            detail=f"유효하지 않은 doc_type: {doc_type!r}. 허용 값: {VALID_DOC_TYPES_LABEL}",
         )
     content = await file.read()
     # audit-added: 무제한 read()로 OOM 방지 — 50MB 초과 시 413

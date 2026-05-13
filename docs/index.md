@@ -32,7 +32,7 @@
 
 ## Active Work
 
-- [Eval Accuracy Calibration Plan](./exec-plans/active/2026-05-13-eval-accuracy-calibration.md)
+- [Partial Answer Policy Plan](./exec-plans/active/2026-05-13-partial-answer-policy.md)
 
 ## Completed Work
 
@@ -43,3 +43,4 @@
 - [Quality Baseline Improvement Plan](./exec-plans/completed/2026-05-13-quality-baseline-improvement.md)
 - [Eval Harness Alignment Plan](./exec-plans/completed/2026-05-13-eval-harness-alignment.md)
 - [Answer Quality Improvement Plan](./exec-plans/completed/2026-05-13-answer-quality-improvement.md)
+- [Eval Accuracy Calibration Plan](./exec-plans/completed/2026-05-13-eval-accuracy-calibration.md)

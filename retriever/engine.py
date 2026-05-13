@@ -33,6 +33,32 @@ def _tokenize(text: str) -> list[str]:
     return tokens if tokens else [""]
 
 
+_DOC_TYPE_ALIASES = {
+    "일반": ["일반", "일반약관"],
+    "위치기반서비스": ["위치기반서비스", "위치기반약관"],
+}
+
+
+def _doc_type_where(doc_type: str | None) -> dict | None:
+    if not doc_type:
+        return None
+    values = _DOC_TYPE_ALIASES.get(doc_type, [doc_type])
+    return {"doc_type": values[0]} if len(values) == 1 else {"doc_type": {"$in": values}}
+
+
+def _metadata_matches(metadata: dict, where: dict | None) -> bool:
+    if not where:
+        return True
+    for key, expected in where.items():
+        actual = metadata.get(key)
+        if isinstance(expected, dict) and "$in" in expected:
+            if actual not in expected["$in"]:
+                return False
+        elif actual != expected:
+            return False
+    return True
+
+
 class _BM25Cache:
     def __init__(self):
         self._index = None
@@ -72,7 +98,7 @@ class _BM25Cache:
             if where:
                 top_idx = [
                     i for i in top_idx
-                    if all(self._docs[i].get("metadata", {}).get(k) == v for k, v in where.items())
+                    if _metadata_matches(self._docs[i].get("metadata", {}), where)
                 ]
             top_idx = top_idx[:n]
             return [(self._texts[i], float(scores[i])) for i in top_idx]
@@ -177,7 +203,7 @@ class RAGEngine:
 
         logger.info("RAG 쿼리: %s (doc_type=%s)", question, doc_type)
 
-        where = {"doc_type": doc_type} if doc_type else None
+        where = _doc_type_where(doc_type)
         query_embedding = self._embedder.embed_query(question)
         vec_results = self._store.similarity_search(query_embedding, k=self._top_k * 3, where=where)
 
