@@ -26,6 +26,17 @@
 - 인터페이스: CLI, FastAPI, Streamlit
 - 메타데이터 필터: `doc_type`
 
+## Terms Categories
+
+약관 문서는 아래 4개 카테고리로 분류한다.
+
+- `일반`
+- `유료서비스`
+- `위치기반서비스`
+- `운영정책`
+
+다음 평가셋/인제스천 개선 작업에서는 기존 `doc_type` 값을 이 기준에 맞춘다.
+
 ## Assumptions
 
 - 현재 저장소는 원본 `ragSystem`을 기반으로 한 Codex 운영 전환 버전이다.
