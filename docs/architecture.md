@@ -1,4 +1,6 @@
-# ragSystem 아키텍처
+# ragSystem Architecture Diagrams
+
+이 문서는 Mermaid 기반 상세 다이어그램을 유지한다. 아키텍처의 canonical 요약과 운영 원칙은 루트 `ARCHITECTURE.md`를 기준으로 한다.
 
 ## 1. 전체 파이프라인 흐름
 
@@ -13,7 +15,7 @@ flowchart TD
     subgraph INGEST["🔄 인제스천 파이프라인"]
         D["문서 파서\nPdfParser / DocxParser / HwpParser"]
         E["텍스트 청킹\nTextChunker"]
-        F["임베딩\nEmbeddingEngine\nparaphrase-multilingual-mpnet-base-v2"]
+        F["임베딩\nEmbeddingEngine\nintfloat/multilingual-e5-large"]
         G[("Chroma\nVectorStore")]
     end
 
@@ -21,7 +23,7 @@ flowchart TD
         H["RFP 섹션 분석"]
         I["유사도 검색\nVectorStore.similarity_search()"]
         J["프롬프트 조립\nRAGEngine"]
-        K["LLM 답변 생성\nOllama + Gemma 4"]
+        K["LLM 답변 생성\nOllama + gemma3:12b"]
     end
 
     subgraph OUTPUT["📤 출력"]
@@ -31,8 +33,8 @@ flowchart TD
 
     subgraph INTERFACE["🖥️ 인터페이스"]
         N["CLI\ningest.py / query.py"]
-        O["FastAPI\nPhase 4"]
-        P["Web UI\nPhase 5"]
+        O["FastAPI\napi/main.py"]
+        P["Streamlit Web UI\napp.py"]
     end
 
     A --> D --> E --> F --> G
@@ -71,20 +73,20 @@ graph TD
         engine["RAGEngine\nengine.py"]
     end
 
-    subgraph generator["📦 generator/ (Phase 6)"]
+    subgraph generator["📦 generator/"]
         ppt["PPTGenerator\nppt_generator.py"]
     end
 
-    subgraph api["📦 api/ (Phase 4)"]
+    subgraph api["📦 api/"]
         fastapi["FastAPI 엔드포인트"]
     end
 
-    subgraph ui["📦 ui/ (Phase 5)"]
-        webui["Web UI"]
+    subgraph ui["📦 app.py"]
+        webui["Streamlit Web UI"]
     end
 
     subgraph external["⚙️ 외부 런타임"]
-        ollama["Ollama\nGemma 4 (localhost:11434)"]
+        ollama["Ollama\ngemma3:12b (localhost:11434)"]
         chroma["ChromaDB\n(./chroma_db)"]
         stmodel["sentence-transformers\n(로컬 캐시)"]
     end
@@ -129,7 +131,7 @@ flowchart LR
 
     subgraph D["④ 임베딩\nnp.ndarray"]
         direction TB
-        d1["768-dim float32 벡터"]
+        d1["1024-dim float32 벡터"]
     end
 
     subgraph E["⑤ Chroma 저장"]
@@ -140,7 +142,7 @@ flowchart LR
     subgraph F["⑥ RFP 질의"]
         direction TB
         f1["question: str\n(RFP 섹션)"]
-        f2["query_embedding\n768-dim"]
+        f2["query_embedding\n1024-dim"]
         f3["Top-K 결과\n{text, source_path, distance}"]
         f4["prompt\n컨텍스트 + 질문"]
         f5["answer: str"]

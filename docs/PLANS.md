@@ -30,6 +30,18 @@
   - 목표: reranking 모델 캐시를 준비해 완전 오프라인 경로를 맞춘다.
   - 상태: Completed
 
+### Architecture Document Consolidation
+
+- `2026-05-13-architecture-doc-consolidation.md`
+  - 목표: 루트 아키텍처 요약과 상세 다이어그램 문서의 역할을 정리한다.
+  - 상태: Completed
+
+### Quality Baseline Improvement
+
+- `2026-05-13-quality-baseline-improvement.md`
+  - 목표: 최신 평가 기준선을 분석하고 첫 품질 개선 실험을 정한다.
+  - 상태: Active
+
 ### Follow-Up Candidates
 
 - 런타임 환경 복구와 smoke test 계획
@@ -39,10 +51,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-13-architecture-doc-consolidation.md`
+- `exec-plans/active/2026-05-13-quality-baseline-improvement.md`
 
 ## Completed Plans
 
 - `exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
 - `exec-plans/completed/2026-05-12-runtime-validation.md`
 - `exec-plans/completed/2026-05-13-cross-encoder-offline.md`
+- `exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`

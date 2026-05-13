@@ -44,10 +44,16 @@ scripts/      문서 검증과 handoff 루프 스크립트
 ## Known Tensions
 
 - 코드 상 제품 명칭과 문서 상 제품 포지셔닝이 아직 완전히 정리되지 않았다.
-- `docs/architecture.md`와 `docs/서버_기동_가이드.md`는 원본 프로젝트 문서이며 현재 하네스 문서와 일부 중복된다.
+- `docs/서버_기동_가이드.md`는 원본 프로젝트 문서이며 현재 하네스 문서와 일부 중복된다.
 - 현재는 로컬 실행을 전제로 하므로 배포, 비밀 관리, 멀티유저 운영 설계는 비어 있다.
+
+## Canonical Documents
+
+- 이 파일은 Codex 작업자가 먼저 읽는 아키텍처 기준 문서다.
+- `docs/architecture.md`는 Mermaid 기반 상세 다이어그램 문서로 유지한다.
+- 아키텍처 설명을 바꿀 때는 이 파일을 먼저 갱신하고, 다이어그램 변경이 필요하면 `docs/architecture.md`를 함께 갱신한다.
 
 ## References
 
-- 원본 아키텍처 다이어그램: `docs/architecture.md`
+- 상세 아키텍처 다이어그램: `docs/architecture.md`
 - 서버 기동 가이드: `docs/서버_기동_가이드.md`
