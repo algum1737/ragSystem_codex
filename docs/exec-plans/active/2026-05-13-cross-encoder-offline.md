@@ -44,6 +44,7 @@
 - `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` 다운로드 완료
 - 캐시 디렉터리 확인 완료
 - 오프라인 강제 모드 로드 확인 완료
+- Cross-Encoder 캐시 준비 후 full eval 재실행 완료
 
 ## Verification Notes
 
@@ -53,3 +54,9 @@
   - `HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1`
   - `local_files_only=True`
   - 결과: `cross-encoder-offline-ok`
+- full eval 재검증:
+  - 리포트: `eval/results/eval_20260513_100727.json`
+  - `precision@k_mean: 0.48`
+  - `accuracy_mean: 0.525`
+  - `faithfulness_mean: 0.8`
+  - Cross-Encoder 로드 실패 경고 없음
