@@ -28,10 +28,11 @@
 - [서버 기동 가이드](./서버_기동_가이드.md)
 - [임베딩 모델 캐시 절차](./references/embedding-model-cache.md)
 - [품질 기준선 분석](./references/quality-baseline-analysis.md)
+- [답변 품질 분석](./references/answer-quality-analysis.md)
 
 ## Active Work
 
-- [Answer Quality Improvement Plan](./exec-plans/active/2026-05-13-answer-quality-improvement.md)
+- [Eval Accuracy Calibration Plan](./exec-plans/active/2026-05-13-eval-accuracy-calibration.md)
 
 ## Completed Work
 
@@ -41,3 +42,4 @@
 - [Architecture Document Consolidation Plan](./exec-plans/completed/2026-05-13-architecture-doc-consolidation.md)
 - [Quality Baseline Improvement Plan](./exec-plans/completed/2026-05-13-quality-baseline-improvement.md)
 - [Eval Harness Alignment Plan](./exec-plans/completed/2026-05-13-eval-harness-alignment.md)
+- [Answer Quality Improvement Plan](./exec-plans/completed/2026-05-13-answer-quality-improvement.md)

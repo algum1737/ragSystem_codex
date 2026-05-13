@@ -37,6 +37,34 @@
 
 ## Open Work
 
-- 낮은 accuracy 케이스 분석
-- `not_found` 케이스 문서 근거 확인
-- 첫 구현 실험 후보 선정
+- 없음
+
+## Progress
+
+- 최신 리포트 `eval/results/eval_20260513_134658.json`에서 낮은 accuracy 케이스를 추출했다.
+- `tc-01`, `tc-04`, `tc-08`, `tc-09`를 분석 대상으로 분류했다.
+- Chroma DB 청크를 검색해 not_found 케이스의 문서 근거 여부를 확인했다.
+- 분석 결과를 `docs/references/answer-quality-analysis.md`에 기록했다.
+
+## Findings
+
+- `source_coverage@k_mean=0.925`이므로 검색 누락이 1차 병목은 아니다.
+- `tc-08`, `tc-09`는 답변이 근거 기반이지만 keyword exact-match 때문에 낮게 평가된다.
+- `tc-01`은 현재 문서 기준 환불 정책 근거가 약하다.
+- `tc-04`는 정기 결제 취소 근거는 있으나 자동 갱신/구독 표현과 문서 표현이 불일치한다.
+
+## Recommended Next Experiment
+
+- `eval/test_cases.json`과 `answer_accuracy()`를 보정해 동의어/대체 표현을 평가할 수 있게 한다.
+- `tc-01`, `tc-04`는 no-answer 또는 partial-answer 케이스로 재분류할지 결정한다.
+
+## Verification Notes
+
+- `bash scripts/validate-docs.sh` 통과
+
+## Completion
+
+- 완료일: 2026-05-13
+- 낮은 accuracy와 not_found 케이스의 원인을 분류했다.
+- 첫 구현 실험 후보를 평가셋/accuracy 판정 보정으로 정했다.
+- 남은 작업 없음.
