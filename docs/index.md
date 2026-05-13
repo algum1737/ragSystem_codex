@@ -26,6 +26,7 @@
 - [제품 명세](./product-specs/terms-rag-system.md)
 - [아키텍처 다이어그램](./architecture.md)
 - [서버 기동 가이드](./서버_기동_가이드.md)
+- [수동 배포 가이드](./manual-deployment-guide.md)
 - [임베딩 모델 캐시 절차](./references/embedding-model-cache.md)
 - [품질 기준선 분석](./references/quality-baseline-analysis.md)
 - [답변 품질 분석](./references/answer-quality-analysis.md)
