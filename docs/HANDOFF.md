@@ -14,17 +14,18 @@
 8. `docs/references/quality-baseline-analysis.md`
 9. `docs/references/answer-quality-analysis.md`
 10. `docs/references/search-quality-improvement.md`
-11. `docs/exec-plans/active/2026-05-14-search-quality-improvement.md`
-12. `docs/exec-plans/completed/2026-05-13-github-actions-ci.md`
-13. `docs/exec-plans/completed/2026-05-13-partial-answer-policy.md`
-14. `docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
-15. `docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md`
-16. `docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md`
-17. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
-18. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
-19. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
-20. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
-21. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
+11. `docs/exec-plans/active/2026-05-14-next-quality-iteration.md`
+12. `docs/exec-plans/completed/2026-05-14-search-quality-improvement.md`
+13. `docs/exec-plans/completed/2026-05-13-github-actions-ci.md`
+14. `docs/exec-plans/completed/2026-05-13-partial-answer-policy.md`
+15. `docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
+16. `docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md`
+17. `docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md`
+18. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
+19. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
+20. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
+21. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
+22. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
 
 ## Current Baseline
 
@@ -104,6 +105,8 @@
 - 개선 후 full eval 리포트는 `eval/results/eval_20260514_113849.json`, 분석 기록은 `docs/references/search-quality-improvement.md`에 남겼다.
 - PR #16 `RAG 검색 source coverage 개선`을 생성했고 GitHub Actions `Static checks`가 통과했다.
 - 권한 상승 경로에서 Ollama 상태를 재확인했고 `gemma3:12b`가 사용 가능해 full eval 생성 지표까지 재검증했다.
+- PR #16을 머지했고 로컬 `main`을 원격과 동기화했다.
+- 검색 품질 개선 계획을 completed로 이동하고, 다음 품질 반복 계획을 active로 생성했다.
 
 ## Current Gaps
 
@@ -118,8 +121,8 @@
 
 ## Suggested Next Work
 
-1. PR #16 머지 여부를 사용자와 판단한다.
-2. 검색 품질 개선 계획 완료 여부를 판단하고 completed 이동을 준비한다.
+1. 최신 full eval 리포트 `eval/results/eval_20260514_113849.json`를 케이스별로 분석한다.
+2. 남은 낮은 점수 케이스를 답변 품질, 평가셋 정합성, 검색 후보 문제로 재분류한다.
 3. 다음 개선 후보는 청킹, hybrid search 가중치, reranking 적용 범위, 평가셋 확장 순서로 점검한다.
 
 ## Handoff Prompt
@@ -138,17 +141,18 @@
 8. docs/references/quality-baseline-analysis.md
 9. docs/references/answer-quality-analysis.md
 10. docs/references/search-quality-improvement.md
-11. docs/exec-plans/active/2026-05-14-search-quality-improvement.md
-12. docs/exec-plans/completed/2026-05-13-github-actions-ci.md
-13. docs/exec-plans/completed/2026-05-13-partial-answer-policy.md
-14. docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md
-15. docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md
-16. docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md
-17. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
-18. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
-19. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
-20. docs/exec-plans/completed/2026-05-12-runtime-validation.md
-21. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
+11. docs/exec-plans/active/2026-05-14-next-quality-iteration.md
+12. docs/exec-plans/completed/2026-05-14-search-quality-improvement.md
+13. docs/exec-plans/completed/2026-05-13-github-actions-ci.md
+14. docs/exec-plans/completed/2026-05-13-partial-answer-policy.md
+15. docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md
+16. docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md
+17. docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md
+18. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
+19. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
+20. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
+21. docs/exec-plans/completed/2026-05-12-runtime-validation.md
+22. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
 
 현재 기준:
 - branch: `git branch --show-current`

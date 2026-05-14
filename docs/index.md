@@ -34,7 +34,7 @@
 
 ## Active Work
 
-- [Search Quality Improvement Plan](./exec-plans/active/2026-05-14-search-quality-improvement.md)
+- [Next Quality Iteration Plan](./exec-plans/active/2026-05-14-next-quality-iteration.md)
 
 ## Completed Work
 
@@ -48,3 +48,4 @@
 - [Eval Accuracy Calibration Plan](./exec-plans/completed/2026-05-13-eval-accuracy-calibration.md)
 - [Partial Answer Policy Plan](./exec-plans/completed/2026-05-13-partial-answer-policy.md)
 - [GitHub Actions CI Plan](./exec-plans/completed/2026-05-13-github-actions-ci.md)
+- [Search Quality Improvement Plan](./exec-plans/completed/2026-05-14-search-quality-improvement.md)

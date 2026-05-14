@@ -101,6 +101,12 @@
 
 - `2026-05-14-search-quality-improvement.md`
   - 목표: 검색 기준선을 분석하고 `precision@k_mean=0.60+`를 향한 1차 개선안을 검증한다.
+  - 상태: Completed
+
+### Next Quality Iteration
+
+- `2026-05-14-next-quality-iteration.md`
+  - 목표: 검색 1차 개선 이후 남은 품질 병목을 재분류하고 다음 실험 후보를 정한다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -112,7 +118,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-14-search-quality-improvement.md`
+- `exec-plans/active/2026-05-14-next-quality-iteration.md`
 
 ## Completed Plans
 
@@ -126,3 +132,4 @@
 - `exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
 - `exec-plans/completed/2026-05-13-partial-answer-policy.md`
 - `exec-plans/completed/2026-05-13-github-actions-ci.md`
+- `exec-plans/completed/2026-05-14-search-quality-improvement.md`

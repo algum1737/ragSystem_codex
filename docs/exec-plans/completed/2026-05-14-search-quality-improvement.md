@@ -73,4 +73,13 @@
 
 ## Open Work
 
-- PR #16 머지 여부 판단
+- 없음
+
+## Completion
+
+- PR #16을 머지했다.
+- 로컬 `main`을 `origin/main`과 동기화했다.
+- 검색 품질 1차 목표를 달성했다.
+  - `rag_precision@k_mean`: `0.54 -> 0.60`
+  - `source_coverage@k_mean`: `0.925 -> 1.0`
+- Ollama 기동 상태에서 full eval 생성 지표까지 재확인했다.
