@@ -55,11 +55,18 @@ class RAGEvaluator:
         return self._engine
 
     def _retrieval_query(self, question: str, doc_type: str | None = None) -> list[str]:
-        """Retrieval-only path — Ollama 불필요."""
+        """Vector-only retrieval path — Ollama 불필요."""
         embedding = self._embedder.embed_query(question)
         where = _doc_type_where(doc_type)
         results = self._store.similarity_search(embedding, k=self._top_k, where=where)
         return [r.get("source_path", "") for r in results]
+
+    def _rag_retrieval_query(self, question: str, doc_type: str | None = None) -> tuple[list[str], list[str]]:
+        """RAG retrieval path without LLM generation."""
+        chunks = self._get_engine().retrieve(question, doc_type=doc_type)
+        sources = [c.get("source_path", "") for c in chunks]
+        texts = [c.get("text", "") for c in chunks]
+        return sources, texts
 
     def _load_cases(self) -> list[dict]:
         cases_path = Path(__file__).parent / "test_cases.json"
@@ -176,33 +183,43 @@ class RAGEvaluator:
                 case_result["vector_precision_at_k"] = vector_precision
                 # Backward-compatible metric alias for older reports.
                 case_result["precision_at_k"] = vector_precision
+                try:
+                    rag_sources, rag_context_texts = self._rag_retrieval_query(
+                        case["question"], doc_type=case.get("doc_type")
+                    )
+                    case_result["rag_retrieved_sources"] = rag_sources
+                    case_result["rag_precision_at_k"] = self.precision_at_k(
+                        rag_sources, case.get("relevant_sources", []), self._top_k
+                    )
+                    case_result["source_coverage_at_k"] = self.source_coverage_at_k(
+                        rag_sources, case.get("relevant_sources", []), self._top_k
+                    )
+                except Exception as e:
+                    logger.warning("RAG retrieval 실패 (케이스 %s): %s", case["id"], e)
+                    rag_sources = []
+                    rag_context_texts = []
+            else:
+                rag_sources = []
+                rag_context_texts = []
 
             if need_llm:
                 try:
-                    rag_result = self._get_engine().query(case["question"])
+                    rag_result = self._get_engine().query(case["question"], doc_type=case.get("doc_type"))
                     answer = rag_result.get("answer", "")
                     context_texts = [s["text"] for s in rag_result.get("sources", [])]
-                    rag_sources = [s.get("source_path", "") for s in rag_result.get("sources", [])]
+                    query_sources = [s.get("source_path", "") for s in rag_result.get("sources", [])]
+                    if not rag_sources:
+                        rag_sources = query_sources
                     case_result["answer"] = answer
                     case_result["rag_retrieved_sources"] = rag_sources
                     case_result["not_found"] = self._is_not_found_answer(answer)
                 except Exception as e:
                     logger.warning("RAG query 실패 (케이스 %s): %s", case["id"], e)
                     answer = None
-                    context_texts = []
-                    rag_sources = []
+                    context_texts = rag_context_texts
             else:
                 answer = None
-                context_texts = []
-                rag_sources = []
-
-            if "retrieval" in metrics and rag_sources:
-                case_result["rag_precision_at_k"] = self.precision_at_k(
-                    rag_sources, case.get("relevant_sources", []), self._top_k
-                )
-                case_result["source_coverage_at_k"] = self.source_coverage_at_k(
-                    rag_sources, case.get("relevant_sources", []), self._top_k
-                )
+                context_texts = rag_context_texts
 
             if "accuracy" in metrics and answer is not None:
                 case_result["answer_accuracy"] = self.answer_accuracy(
