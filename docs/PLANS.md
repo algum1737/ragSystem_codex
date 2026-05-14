@@ -131,6 +131,18 @@
 
 - `2026-05-14-residual-answer-quality-analysis.md`
   - 목표: 검색 지표 정규화 이후 남은 답변 accuracy 병목을 분석한다.
+  - 상태: Completed
+
+### Answer Format Prompt Experiment
+
+- `2026-05-14-answer-format-prompt-experiment.md`
+  - 목표: 분쟁/면책/의무 질문의 답변 형식을 안정화해 잔여 accuracy 감점을 줄인다.
+  - 상태: Completed
+
+### Faithfulness Eval Stability
+
+- `2026-05-14-faithfulness-eval-stability.md`
+  - 목표: `tc-10` faithfulness 판정 흔들림을 분석하고 다음 개선 후보를 정한다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -139,10 +151,11 @@
 - 평가 파이프라인 실제 실행과 기준선 재확인
 - 문서 명칭 정리와 아키텍처 문서 통합
 - Phase 14 수준의 정확도와 faithfulness 평가 계획 재수립
+- 답변 형식 안정화를 위한 프롬프트 보정 실험
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-14-residual-answer-quality-analysis.md`
+- `exec-plans/active/2026-05-14-faithfulness-eval-stability.md`
 
 ## Completed Plans
 
@@ -161,3 +174,5 @@
 - `exec-plans/completed/2026-05-14-eval-case-alignment.md`
 - `exec-plans/completed/2026-05-14-next-search-quality-experiment.md`
 - `exec-plans/completed/2026-05-14-retrieval-metric-normalization.md`
+- `exec-plans/completed/2026-05-14-residual-answer-quality-analysis.md`
+- `exec-plans/completed/2026-05-14-answer-format-prompt-experiment.md`
