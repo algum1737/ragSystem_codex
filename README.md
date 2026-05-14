@@ -26,4 +26,4 @@
 - [ARCHITECTURE.md](./ARCHITECTURE.md)
 - [docs/index.md](./docs/index.md)
 - [docs/HANDOFF.md](./docs/HANDOFF.md)
-- [현재 실행 계획](./docs/exec-plans/active/2026-05-14-next-quality-iteration.md)
+- [실행 계획 현황](./docs/PLANS.md)

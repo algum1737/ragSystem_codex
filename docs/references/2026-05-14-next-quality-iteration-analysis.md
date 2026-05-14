@@ -2,7 +2,7 @@
 
 ## Basis
 
-- Active plan: `docs/exec-plans/active/2026-05-14-next-quality-iteration.md`
+- Plan: `docs/exec-plans/completed/2026-05-14-next-quality-iteration.md`
 - Latest report: `eval/results/eval_20260514_113849.json`
 - Current summary:
   - `vector_precision@k_mean=0.48`

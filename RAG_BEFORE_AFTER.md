@@ -199,6 +199,37 @@ Precision@5 평균    미측정           미측정            0.46             
 
 ---
 
+## 비교 5: 검색 품질 1차 개선 → 평가셋 정합성 보정
+
+**비교 기준:** `eval/results/eval_20260514_113849.json` vs `eval/results/eval_20260514_152044.json`
+
+### 변경 내용
+
+| Case | Before | After |
+| --- | --- | --- |
+| `tc-01` | 해지 시 환불 정책 질문 | 문서 근거가 있는 해지 후 데이터/게시물 처리 질문 |
+| `tc-03` | exact keyword 중심 | 이용 제한/정지/금지 표현 OR group 보정 |
+| `tc-04` | 자동 갱신과 해지 복합 질문 | 자동 갱신 근거 부족을 인정하고 해지/데이터 처리 근거 평가 |
+| `tc-09` | 일부 표현 불일치 | 권리/보유 등 약관식 표현 일부 허용 |
+
+### 실측 지표 변화
+
+| Metric | Before | After | Delta |
+| --- | ---: | ---: | ---: |
+| `precision@k_mean` | `0.48` | `0.48` | `0.00` |
+| `vector_precision@k_mean` | `0.48` | `0.48` | `0.00` |
+| `rag_precision@k_mean` | `0.60` | `0.60` | `0.00` |
+| `source_coverage@k_mean` | `1.0` | `1.0` | `0.0` |
+| `accuracy_mean` | `0.70` | `0.875` | `+0.175` |
+| `faithfulness_mean` | `0.90` | `1.0` | `+0.10` |
+| `not_found_rate` | `0.10` | `0.0` | `-0.10` |
+
+검색 경로는 바꾸지 않았기 때문에 검색 지표는 유지됐다. 개선은 문서 근거와 평가 질문/키워드 정합성을 맞춘 결과다.
+
+상세 결과는 `docs/references/2026-05-14-eval-case-alignment.md`에 기록한다.
+
+---
+
 ## 실측 평가 실행 방법
 
 v0.3에서 평가 파이프라인이 구축되어 실제 수치 측정이 가능합니다.
@@ -230,10 +261,10 @@ python3 eval/pipeline.py --all
 
 ## 다음 단계
 
-1. 최신 full eval 리포트 `eval/results/eval_20260514_113849.json`를 케이스별로 분석한다.
-2. 낮은 점수 케이스를 답변 품질, 평가셋 정합성, 검색 후보 문제로 재분류한다.
-3. 다음 구현 후보를 청킹, hybrid search 가중치, reranking 적용 범위, 평가셋 확장 순서로 비교한다.
+1. 최신 full eval 리포트 `eval/results/eval_20260514_152044.json`를 케이스별로 분석한다.
+2. 낮은 검색 precision 케이스를 청킹, query expansion, reranking threshold, source diversity 문제로 재분류한다.
+3. 사용자 승인 후 다음 검색 품질 개선 구현 계획을 별도로 승격한다.
 
 ---
 
-*최종 업데이트: 2026-05-14 — 검색 품질 1차 개선 완료, RAG precision@k 0.60*
+*최종 업데이트: 2026-05-14 — 평가셋 정합성 보정 완료, accuracy 0.875*

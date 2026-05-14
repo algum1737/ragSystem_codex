@@ -17,18 +17,21 @@
 11. `docs/references/2026-05-14-work-report.md`
 12. `docs/references/2026-05-14-before-after.md`
 13. `docs/references/2026-05-14-next-quality-iteration-analysis.md`
-14. `docs/exec-plans/active/2026-05-14-next-quality-iteration.md`
-15. `docs/exec-plans/completed/2026-05-14-search-quality-improvement.md`
-16. `docs/exec-plans/completed/2026-05-13-github-actions-ci.md`
-17. `docs/exec-plans/completed/2026-05-13-partial-answer-policy.md`
-18. `docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
-19. `docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md`
-20. `docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md`
-21. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
-22. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
-23. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
-24. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
-25. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
+14. `docs/references/2026-05-14-eval-case-alignment.md`
+15. `docs/exec-plans/completed/2026-05-14-eval-case-alignment.md`
+16. `docs/exec-plans/completed/2026-05-14-next-quality-iteration.md`
+17. `docs/exec-plans/completed/2026-05-14-search-quality-improvement.md`
+18. `docs/exec-plans/active/2026-05-14-next-search-quality-experiment.md`
+19. `docs/exec-plans/completed/2026-05-13-github-actions-ci.md`
+20. `docs/exec-plans/completed/2026-05-13-partial-answer-policy.md`
+21. `docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
+22. `docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md`
+23. `docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md`
+24. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
+25. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
+26. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
+27. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
+28. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
 
 ## Current Baseline
 
@@ -119,13 +122,24 @@
   - `RAG_PERFORMANCE_REPORT.md`
 - 최신 full eval 낮은 점수 케이스를 분석했고 다음 실험 후보를 평가셋 정합성 보정으로 정리했다.
   - `docs/references/2026-05-14-next-quality-iteration-analysis.md`
+- 평가셋 정합성 보정을 수행했다.
+  - `tc-01`: 해지 시 환불 정책 질문을 현재 문서 근거에 맞는 해지 후 데이터/게시물 처리 질문으로 재분류했다.
+  - `tc-03`, `tc-04`, `tc-09`: expected keyword OR group을 보강했다.
+- 전체 eval을 재실행해 `eval/results/eval_20260514_152044.json`을 저장했다.
+- 평가셋 정렬 후 생성 지표는 `accuracy_mean=0.875`, `faithfulness_mean=1.0`, `not_found_rate=0.0`이다.
+- 검색 지표는 변경 없음: `precision@k_mean=0.48`, `vector_precision@k_mean=0.48`, `rag_precision@k_mean=0.60`, `source_coverage@k_mean=1.0`.
+- 평가셋 정렬 결과 문서를 추가했다.
+  - `docs/references/2026-05-14-eval-case-alignment.md`
+- 다음 품질 반복 계획과 평가셋 정렬 계획을 completed로 이동했다.
+- 다음 후보로 검색 지표 추가 개선 계획을 active로 생성했다.
+  - `docs/exec-plans/active/2026-05-14-next-search-quality-experiment.md`
 
 ## Current Gaps
 
 - `/stats`는 현재 `count=89`를 반환한다.
 - retrieval eval은 현재 `vector_precision@k_mean=0.48`, `rag_precision@k_mean=0.60`으로 정상 완료된다.
-- 최신 full eval 리포트는 `eval/results/eval_20260514_113849.json`에 저장되어 있다.
-- 최신 full eval 생성 지표는 `accuracy_mean=0.70`, `faithfulness_mean=0.90`, `not_found_rate=0.10`이다.
+- 최신 full eval 리포트는 `eval/results/eval_20260514_152044.json`에 저장되어 있다.
+- 최신 full eval 생성 지표는 `accuracy_mean=0.875`, `faithfulness_mean=1.0`, `not_found_rate=0.0`이다.
 - 이전 Cross-Encoder 캐시 반영 리포트는 `eval/results/eval_20260513_100727.json`에 저장되어 있다.
 - 검색/인제스천/평가 경로에 필요한 임베딩 모델 캐시는 준비됐다.
 - Cross-Encoder reranking 캐시도 준비됐다.
@@ -133,10 +147,10 @@
 
 ## Suggested Next Work
 
-1. 사용자 승인 후 `Eval Case Alignment Plan`을 별도 active plan으로 승격한다.
-2. `tc-01`은 no-answer 또는 문서 근거에 맞는 질문으로 재분류한다.
-3. `tc-03`, `tc-04`, `tc-09`는 expected keyword OR group과 partial-answer 기준을 보정한다.
-4. full eval을 재실행해 `accuracy_mean` 개선과 `faithfulness_mean` 유지 여부를 확인한다.
+1. active plan `docs/exec-plans/active/2026-05-14-next-search-quality-experiment.md`에 따라 최신 retrieval 실패/부분 실패 케이스를 분석한다.
+2. 사용자 승인 후 검색 지표 추가 개선 구현 계획을 별도로 승격한다.
+3. 후보는 chunking, query expansion, reranking threshold, source diversity 전략 비교다.
+4. 목표 지표는 `rag_precision@k_mean=0.60` 유지 또는 개선과 `precision@k_mean=0.48` 개선이다.
 
 ## Handoff Prompt
 
@@ -157,18 +171,21 @@
 11. docs/references/2026-05-14-work-report.md
 12. docs/references/2026-05-14-before-after.md
 13. docs/references/2026-05-14-next-quality-iteration-analysis.md
-14. docs/exec-plans/active/2026-05-14-next-quality-iteration.md
-15. docs/exec-plans/completed/2026-05-14-search-quality-improvement.md
-16. docs/exec-plans/completed/2026-05-13-github-actions-ci.md
-17. docs/exec-plans/completed/2026-05-13-partial-answer-policy.md
-18. docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md
-19. docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md
-20. docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md
-21. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
-22. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
-23. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
-24. docs/exec-plans/completed/2026-05-12-runtime-validation.md
-25. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
+14. docs/references/2026-05-14-eval-case-alignment.md
+15. docs/exec-plans/completed/2026-05-14-eval-case-alignment.md
+16. docs/exec-plans/completed/2026-05-14-next-quality-iteration.md
+17. docs/exec-plans/completed/2026-05-14-search-quality-improvement.md
+18. docs/exec-plans/active/2026-05-14-next-search-quality-experiment.md
+19. docs/exec-plans/completed/2026-05-13-github-actions-ci.md
+20. docs/exec-plans/completed/2026-05-13-partial-answer-policy.md
+21. docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md
+22. docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md
+23. docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md
+24. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
+25. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
+26. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
+27. docs/exec-plans/completed/2026-05-12-runtime-validation.md
+28. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
 
 현재 기준:
 - branch: `git branch --show-current`

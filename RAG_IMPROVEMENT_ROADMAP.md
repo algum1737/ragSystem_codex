@@ -1,7 +1,7 @@
 # RAG 품질 개선 로드맵
 
 **최종 업데이트:** 2026-05-14  
-**현재 버전:** v0.4 진행 중 (검색 품질 1차 개선 완료)  
+**현재 버전:** v0.4 진행 중 (평가셋 정합성 보정 완료)
 **목적:** 특정 카테고리 문서 기반 RAG 검색 및 문서 초안 생성 파이프라인  
 **검증 도메인:** 이용약관 (예시 — 다른 도메인으로 교체 가능)
 
@@ -70,6 +70,7 @@
 | 부분 답변 정책 | 2026-05-13 | 일부 근거가 있을 때 no-answer 대신 확인/미확인 분리 |
 | GitHub Actions 최소 CI | 2026-05-14 | PR checks에서 문서 검증과 Python compile 검증 |
 | RAG 검색 source 다양성 선택 | 2026-05-14 | `rag_precision@k_mean` 0.54→0.60, coverage 0.925→1.0 |
+| 평가셋 정합성 보정 | 2026-05-14 | `accuracy_mean` 0.70→0.875, `faithfulness_mean` 0.90→1.0 |
 | 원본 파일명 메타데이터 보존 (버그 수정) | v0.3 | Precision@K 평가 정상화 |
 | TxtParser / MdParser 추가 | v0.2 Phase 7 | .txt, .md 파일 인제스천 가능 |
 
@@ -79,8 +80,8 @@
 
 | 개선 방법 | 대상 | 비고 |
 |-----------|------|------|
-| 다음 품질 병목 재분류 | 낮은 점수 케이스 분석 | active plan: `2026-05-14-next-quality-iteration.md` |
-| 다음 구현 실험 후보 선정 | 청킹 / hybrid 가중치 / reranking / 평가셋 | 사용자 승인 후 별도 active plan 승격 |
+| 다음 검색 품질 실험 선정 | 낮은 precision 케이스 분석 | active plan: `2026-05-14-next-search-quality-experiment.md` |
+| 검색 지표 추가 개선 | 청킹 / query expansion / reranking threshold / source diversity | 사용자 승인 후 구현 계획 승격 |
 
 ---
 
@@ -96,38 +97,40 @@
 
 ---
 
-## 실측 기준선 (2026-05-14 검색 품질 1차 개선 완료)
+## 실측 기준선 (2026-05-14 평가셋 정합성 보정 완료)
 
 ```
-최신 리포트: eval/results/eval_20260514_113849.json
+최신 리포트: eval/results/eval_20260514_152044.json
 
+precision@k_mean:        0.48
 vector_precision@k_mean: 0.48
 rag_precision@k_mean:    0.60
 source_coverage@k_mean:  1.0
-accuracy_mean:           0.70
-faithfulness_mean:       0.90
-not_found_rate:          0.10
+accuracy_mean:           0.875
+faithfulness_mean:       1.0
+not_found_rate:          0.0
 ```
 
 v0.4 검색 1차 목표: 실제 RAG 경로 기준 `rag_precision@k_mean` **0.60 이상** 달성
+v0.4 평가셋 정합성 목표: 문서 근거와 평가 질문/키워드 정렬 완료
 
 ---
 
 ## 추천 진행 순서 (잔여)
 
 ```
-현재 (검색 품질 1차 개선 완료)
+현재 (평가셋 정합성 보정 완료)
     │
     ▼
-최신 full eval 케이스별 분석
-    │  → tc-01, tc-03, tc-04, tc-09 중심 재분류
+검색 지표 낮은 케이스 분석
+    │  → precision@k_mean 0.48 개선 후보 확인
     ▼
-다음 개선 후보 선정
-    │  → 청킹 / hybrid search 가중치 / reranking 적용 범위 / 평가셋 확장
+다음 검색 실험 후보 선정
+    │  → 청킹 / query expansion / reranking threshold / source diversity
     ▼
 사용자 승인 후 별도 active plan으로 구현
 ```
 
 ---
 
-*실측값은 `.venv/bin/python eval/pipeline.py --all`로 측정한다. 최신 before/after는 `docs/references/2026-05-14-before-after.md`를 기준으로 한다.*
+*실측값은 `.venv/bin/python eval/pipeline.py --all`로 측정한다. 최신 평가셋 정합성 보정 결과는 `docs/references/2026-05-14-eval-case-alignment.md`를 기준으로 한다.*
