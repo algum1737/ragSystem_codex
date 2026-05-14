@@ -119,6 +119,18 @@
 
 - `2026-05-14-next-search-quality-experiment.md`
   - 목표: 평가셋 정합성 보정 이후 남은 검색 지표 병목을 분석하고 다음 검색 품질 실험을 정한다.
+  - 상태: Completed
+
+### Retrieval Metric Normalization
+
+- `2026-05-14-retrieval-metric-normalization.md`
+  - 목표: `precision@k` 계열 지표의 상한 문제를 보정하고 검색 평가 지표를 분리한다.
+  - 상태: Completed
+
+### Residual Answer Quality Analysis
+
+- `2026-05-14-residual-answer-quality-analysis.md`
+  - 목표: 검색 지표 정규화 이후 남은 답변 accuracy 병목을 분석한다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -130,7 +142,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-14-next-search-quality-experiment.md`
+- `exec-plans/active/2026-05-14-residual-answer-quality-analysis.md`
 
 ## Completed Plans
 
@@ -147,3 +159,5 @@
 - `exec-plans/completed/2026-05-14-search-quality-improvement.md`
 - `exec-plans/completed/2026-05-14-next-quality-iteration.md`
 - `exec-plans/completed/2026-05-14-eval-case-alignment.md`
+- `exec-plans/completed/2026-05-14-next-search-quality-experiment.md`
+- `exec-plans/completed/2026-05-14-retrieval-metric-normalization.md`

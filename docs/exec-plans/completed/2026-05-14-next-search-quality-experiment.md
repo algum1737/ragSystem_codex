@@ -54,9 +54,26 @@
 
 ## Validation Result
 
-- 아직 실행 전.
+- 통과: 최신 full eval 리포트 확인
+  - `eval/results/eval_20260514_152044.json`
+- 통과: 케이스별 relevant source 수와 RAG precision 상한 분석
+  - 2-source 케이스 5개 최고점: `0.4`
+  - 4-source 케이스 5개 최고점: `0.8`
+  - 현 metric 기준 전체 평균 상한: `0.60`
+- 통과: 현재 RAG 검색 결과 대조
+  - 모든 케이스 `source_coverage_at_k=1.0`
+  - 모든 케이스가 현 `rag_precision_at_k` 상한 도달
+- 통과: 검색 튜닝 후보 비교
+  - chunking, query expansion, reranking threshold/window, source diversity 추가 튜닝은 현재 지표 기준 즉시 효과 제한
+- 결정: 다음 구현 후보는 retrieval metric normalization
+  - 분석 문서: `docs/references/2026-05-14-search-quality-ceiling-analysis.md`
 
 ## Open Work
 
-- 최신 retrieval 실패/부분 실패 케이스 분석
-- 다음 검색 품질 실험 후보 선정
+- 없음.
+
+## Completion
+
+- 완료: 최신 retrieval 실패/부분 실패 케이스 분석
+- 완료: 현 `rag_precision@k_mean=0.60`이 metric 상한임을 확인
+- 완료: 다음 구현 후보를 retrieval metric normalization으로 선정

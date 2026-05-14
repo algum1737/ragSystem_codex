@@ -38,10 +38,12 @@
 - [2026-05-14 Before/After](./references/2026-05-14-before-after.md)
 - [2026-05-14 다음 품질 반복 분석](./references/2026-05-14-next-quality-iteration-analysis.md)
 - [2026-05-14 평가 케이스 정렬](./references/2026-05-14-eval-case-alignment.md)
+- [2026-05-14 검색 품질 상한 분석](./references/2026-05-14-search-quality-ceiling-analysis.md)
+- [2026-05-14 Retrieval Metric Normalization](./references/2026-05-14-retrieval-metric-normalization.md)
 
 ## Active Work
 
-- [Next Search Quality Experiment Plan](./exec-plans/active/2026-05-14-next-search-quality-experiment.md)
+- [Residual Answer Quality Analysis Plan](./exec-plans/active/2026-05-14-residual-answer-quality-analysis.md)
 
 ## Completed Work
 
@@ -58,3 +60,5 @@
 - [Search Quality Improvement Plan](./exec-plans/completed/2026-05-14-search-quality-improvement.md)
 - [Next Quality Iteration Plan](./exec-plans/completed/2026-05-14-next-quality-iteration.md)
 - [Eval Case Alignment Plan](./exec-plans/completed/2026-05-14-eval-case-alignment.md)
+- [Next Search Quality Experiment Plan](./exec-plans/completed/2026-05-14-next-search-quality-experiment.md)
+- [Retrieval Metric Normalization Plan](./exec-plans/completed/2026-05-14-retrieval-metric-normalization.md)

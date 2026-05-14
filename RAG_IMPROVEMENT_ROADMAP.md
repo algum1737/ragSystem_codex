@@ -71,6 +71,7 @@
 | GitHub Actions 최소 CI | 2026-05-14 | PR checks에서 문서 검증과 Python compile 검증 |
 | RAG 검색 source 다양성 선택 | 2026-05-14 | `rag_precision@k_mean` 0.54→0.60, coverage 0.925→1.0 |
 | 평가셋 정합성 보정 | 2026-05-14 | `accuracy_mean` 0.70→0.875, `faithfulness_mean` 0.90→1.0 |
+| Retrieval metric 정규화 | 2026-05-14 | `rag_normalized_source_precision@k_mean=1.0`, `rag_chunk_precision@k_mean=0.96` |
 | 원본 파일명 메타데이터 보존 (버그 수정) | v0.3 | Precision@K 평가 정상화 |
 | TxtParser / MdParser 추가 | v0.2 Phase 7 | .txt, .md 파일 인제스천 가능 |
 
@@ -80,8 +81,8 @@
 
 | 개선 방법 | 대상 | 비고 |
 |-----------|------|------|
-| 다음 검색 품질 실험 선정 | 낮은 precision 케이스 분석 | active plan: `2026-05-14-next-search-quality-experiment.md` |
-| 검색 지표 추가 개선 | 청킹 / query expansion / reranking threshold / source diversity | 사용자 승인 후 구현 계획 승격 |
+| 잔여 답변 품질 분석 | `tc-06`, `tc-07`, `tc-09` | active plan: `2026-05-14-residual-answer-quality-analysis.md` |
+| 답변 accuracy 개선 후보 선정 | expected keyword / 답변 형식 / 프롬프트 | 검색 지표 정규화 이후 우선 후보 |
 
 ---
 
@@ -97,40 +98,44 @@
 
 ---
 
-## 실측 기준선 (2026-05-14 평가셋 정합성 보정 완료)
+## 실측 기준선 (2026-05-14 retrieval metric 정규화 완료)
 
 ```
-최신 리포트: eval/results/eval_20260514_152044.json
+최신 리포트: eval/results/eval_20260514_164724.json
 
 precision@k_mean:        0.48
 vector_precision@k_mean: 0.48
 rag_precision@k_mean:    0.60
+rag_normalized_source_precision@k_mean: 1.0
+rag_chunk_precision@k_mean:             0.96
+source_recall@k_mean:                   1.0
 source_coverage@k_mean:  1.0
-accuracy_mean:           0.875
+accuracy_mean:           0.90
 faithfulness_mean:       1.0
 not_found_rate:          0.0
 ```
 
 v0.4 검색 1차 목표: 실제 RAG 경로 기준 `rag_precision@k_mean` **0.60 이상** 달성
 v0.4 평가셋 정합성 목표: 문서 근거와 평가 질문/키워드 정렬 완료
+v0.4 검색 지표 정규화 목표: 기존 precision 상한 문제 해소와 해석 가능한 source/chunk 지표 추가 완료
 
 ---
 
 ## 추천 진행 순서 (잔여)
 
 ```
-현재 (평가셋 정합성 보정 완료)
+현재 (retrieval metric 정규화 완료)
     │
     ▼
-검색 지표 낮은 케이스 분석
-    │  → precision@k_mean 0.48 개선 후보 확인
+잔여 낮은 answer accuracy 케이스 분석
+    │  → tc-06, tc-07, tc-09 확인
     ▼
-다음 검색 실험 후보 선정
-    │  → 청킹 / query expansion / reranking threshold / source diversity
+답변 품질 개선 후보 선정
+    │  → expected keyword / 답변 형식 / 프롬프트
     ▼
 사용자 승인 후 별도 active plan으로 구현
 ```
 
 ---
 
-*실측값은 `.venv/bin/python eval/pipeline.py --all`로 측정한다. 최신 평가셋 정합성 보정 결과는 `docs/references/2026-05-14-eval-case-alignment.md`를 기준으로 한다.*
+*실측값은 `.venv/bin/python eval/pipeline.py --all`로 측정한다. 최신 retrieval metric 정규화 결과는 `docs/references/2026-05-14-retrieval-metric-normalization.md`를 기준으로 한다.*
