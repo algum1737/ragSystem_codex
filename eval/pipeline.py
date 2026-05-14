@@ -87,6 +87,40 @@ class RAGEvaluator:
         intersection = retrieved_basenames & relevant_basenames
         return len(intersection) / k
 
+    def normalized_source_precision_at_k(
+        self,
+        retrieved_sources: list[str],
+        relevant_sources: list[str],
+        k: int,
+    ) -> float | None:
+        if not relevant_sources:
+            return None
+        retrieved_basenames = {unicodedata.normalize("NFC", os.path.basename(s)) for s in retrieved_sources[:k]}
+        relevant_basenames = {unicodedata.normalize("NFC", os.path.basename(s)) for s in relevant_sources}
+        denominator = min(k, len(relevant_basenames))
+        if denominator <= 0:
+            return None
+        intersection = retrieved_basenames & relevant_basenames
+        return len(intersection) / denominator
+
+    def chunk_precision_at_k(
+        self,
+        retrieved_sources: list[str],
+        relevant_sources: list[str],
+        k: int,
+    ) -> float | None:
+        if not relevant_sources:
+            return None
+        relevant_basenames = {unicodedata.normalize("NFC", os.path.basename(s)) for s in relevant_sources}
+        retrieved_basenames = [
+            unicodedata.normalize("NFC", os.path.basename(s))
+            for s in retrieved_sources[:k]
+        ]
+        if not retrieved_basenames:
+            return 0.0
+        matched = sum(1 for source in retrieved_basenames if source in relevant_basenames)
+        return matched / k
+
     def source_coverage_at_k(
         self,
         retrieved_sources: list[str],
@@ -166,6 +200,12 @@ class RAGEvaluator:
                 "precision_at_k": None,
                 "vector_precision_at_k": None,
                 "rag_precision_at_k": None,
+                "normalized_source_precision_at_k": None,
+                "vector_normalized_source_precision_at_k": None,
+                "rag_normalized_source_precision_at_k": None,
+                "vector_chunk_precision_at_k": None,
+                "rag_chunk_precision_at_k": None,
+                "source_recall_at_k": None,
                 "source_coverage_at_k": None,
                 "answer_accuracy": None,
                 "faithfulness": None,
@@ -183,6 +223,15 @@ class RAGEvaluator:
                 case_result["vector_precision_at_k"] = vector_precision
                 # Backward-compatible metric alias for older reports.
                 case_result["precision_at_k"] = vector_precision
+                vector_normalized_precision = self.normalized_source_precision_at_k(
+                    retrieved, case.get("relevant_sources", []), self._top_k
+                )
+                case_result["vector_normalized_source_precision_at_k"] = vector_normalized_precision
+                # Backward-compatible path alias follows the vector-only default precision path.
+                case_result["normalized_source_precision_at_k"] = vector_normalized_precision
+                case_result["vector_chunk_precision_at_k"] = self.chunk_precision_at_k(
+                    retrieved, case.get("relevant_sources", []), self._top_k
+                )
                 try:
                     rag_sources, rag_context_texts = self._rag_retrieval_query(
                         case["question"], doc_type=case.get("doc_type")
@@ -191,9 +240,17 @@ class RAGEvaluator:
                     case_result["rag_precision_at_k"] = self.precision_at_k(
                         rag_sources, case.get("relevant_sources", []), self._top_k
                     )
+                    case_result["rag_normalized_source_precision_at_k"] = self.normalized_source_precision_at_k(
+                        rag_sources, case.get("relevant_sources", []), self._top_k
+                    )
+                    case_result["rag_chunk_precision_at_k"] = self.chunk_precision_at_k(
+                        rag_sources, case.get("relevant_sources", []), self._top_k
+                    )
                     case_result["source_coverage_at_k"] = self.source_coverage_at_k(
                         rag_sources, case.get("relevant_sources", []), self._top_k
                     )
+                    # Clearer alias for report consumers: this is source-level recall, not precision.
+                    case_result["source_recall_at_k"] = case_result["source_coverage_at_k"]
                 except Exception as e:
                     logger.warning("RAG retrieval 실패 (케이스 %s): %s", case["id"], e)
                     rag_sources = []
@@ -241,6 +298,12 @@ class RAGEvaluator:
             "precision@k_mean": _mean("precision_at_k"),
             "vector_precision@k_mean": _mean("vector_precision_at_k"),
             "rag_precision@k_mean": _mean("rag_precision_at_k"),
+            "normalized_source_precision@k_mean": _mean("normalized_source_precision_at_k"),
+            "vector_normalized_source_precision@k_mean": _mean("vector_normalized_source_precision_at_k"),
+            "rag_normalized_source_precision@k_mean": _mean("rag_normalized_source_precision_at_k"),
+            "vector_chunk_precision@k_mean": _mean("vector_chunk_precision_at_k"),
+            "rag_chunk_precision@k_mean": _mean("rag_chunk_precision_at_k"),
+            "source_recall@k_mean": _mean("source_recall_at_k"),
             "source_coverage@k_mean": _mean("source_coverage_at_k"),
             "accuracy_mean": _mean("answer_accuracy"),
             "faithfulness_mean": _mean("faithfulness"),

@@ -363,6 +363,33 @@ final_chunks = _select_diverse_chunks(
 
 ---
 
+### 2-18. Retrieval metric 정규화 (2026-05-14)
+
+**파일:** `eval/pipeline.py`
+
+기존 `precision@k` 계열 지표는 고유 source 수를 `top_k=5`로 나누는 방식이라, relevant source가 2개인 케이스는 최고점이 0.4, 4개인 케이스는 최고점이 0.8로 제한됐다. 기존 지표는 리포트 호환을 위해 유지하고, 해석 가능한 새 지표를 추가했다.
+
+**추가 지표:**
+
+- `normalized_source_precision@k`: source 수가 적은 케이스의 상한 보정
+- `chunk_precision@k`: top_k 청크 중 relevant source 청크 비율
+- `source_recall@k`: 관련 source를 모두 포함했는지 확인
+
+**효과:**
+
+| Metric | Value |
+| --- | ---: |
+| `rag_normalized_source_precision@k_mean` | `1.0` |
+| `rag_chunk_precision@k_mean` | `0.96` |
+| `source_recall@k_mean` | `1.0` |
+| `accuracy_mean` | `0.90` |
+| `faithfulness_mean` | `1.0` |
+| `not_found_rate` | `0.0` |
+
+최신 리포트: `eval/results/eval_20260514_164724.json`
+
+---
+
 ## 3. 현재 인제스천 상태 (v0.4 기준)
 
 **인제스천 문서:** 4개 이용약관 파일 (총 89개 청크)
@@ -385,6 +412,7 @@ final_chunks = _select_diverse_chunks(
 | ~~Faithfulness 실측~~ | ~~답변 근거 검증 수치화~~ | ~~낮음~~ | ✅ 2026-05-14 완료 |
 | ~~RAG source 다양성 선택~~ | ~~최종 context source coverage 개선~~ | ~~중간~~ | ✅ 2026-05-14 완료 |
 | ~~평가셋 정합성 보정~~ | ~~문서 근거와 평가 질문/키워드 정렬~~ | ~~낮음~~ | ✅ 2026-05-14 완료 |
+| ~~Retrieval metric 정규화~~ | ~~검색 지표 상한 문제 해소~~ | ~~낮음~~ | ✅ 2026-05-14 완료 |
 | 이용약관 문서 확대 | 다문서 환경 검색 품질 검증 | 낮음 | Phase 15 예정 |
 | MMR 다양성 검색 | 단일 문서 집중 문제 해소 | 중간 | source 다양성 적용 후 잔여 후보 |
 | 쿼리 재작성 (Query Rewriting) | 모호한 쿼리 처리 능력 향상 | 중간 | 미정 |
@@ -430,10 +458,12 @@ v0.4 진행 중 — 2026-05-12~
 ├── ✅ 평가 하네스 정렬 / accuracy 보정 / partial answer 정책 — 2026-05-13
 ├── ✅ RAG source 다양성 선택 — 2026-05-14
 │   rag_precision@k: 0.54 → 0.60, source_coverage@k: 0.925 → 1.0
-└── ✅ 평가셋 정합성 보정 — 2026-05-14
-    accuracy: 0.70 → 0.875, faithfulness: 0.90 → 1.0
+├── ✅ 평가셋 정합성 보정 — 2026-05-14
+│   accuracy: 0.70 → 0.875, faithfulness: 0.90 → 1.0
+└── ✅ Retrieval metric 정규화 — 2026-05-14
+    rag_normalized_source_precision@k: 1.0, rag_chunk_precision@k: 0.96
 ```
 
 ---
 
-*최종 업데이트: 2026-05-14 — 평가셋 정합성 보정 완료*
+*최종 업데이트: 2026-05-14 — retrieval metric 정규화 완료*

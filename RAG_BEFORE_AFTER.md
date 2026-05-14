@@ -230,6 +230,38 @@ Precision@5 평균    미측정           미측정            0.46             
 
 ---
 
+## 비교 6: 평가셋 정합성 보정 → Retrieval metric 정규화
+
+**비교 기준:** `eval/results/eval_20260514_152044.json` vs `eval/results/eval_20260514_164724.json`
+
+### 변경 내용
+
+| 항목 | Before | After |
+| --- | --- | --- |
+| source precision | 고유 source 수를 `top_k=5`로 나눔 | 기존 지표 유지 |
+| source 수 상한 보정 | 없음 | `normalized_source_precision@k` 추가 |
+| context purity | 명시 지표 없음 | `chunk_precision@k` 추가 |
+| source recall | `source_coverage@k` 이름으로 제공 | `source_recall@k` alias 추가 |
+
+### 새 기준선
+
+| Metric | Value |
+| --- | ---: |
+| `precision@k_mean` | `0.48` |
+| `rag_precision@k_mean` | `0.60` |
+| `rag_normalized_source_precision@k_mean` | `1.0` |
+| `rag_chunk_precision@k_mean` | `0.96` |
+| `source_recall@k_mean` | `1.0` |
+| `accuracy_mean` | `0.90` |
+| `faithfulness_mean` | `1.0` |
+| `not_found_rate` | `0.0` |
+
+기존 `rag_precision@k_mean=0.60`은 낮은 검색 성능이 아니라 현 metric 설계의 상한이다. 새 지표 기준으로 RAG 검색 경로는 source recall과 normalized source precision에서 모두 1.0이다.
+
+상세 결과는 `docs/references/2026-05-14-retrieval-metric-normalization.md`에 기록한다.
+
+---
+
 ## 실측 평가 실행 방법
 
 v0.3에서 평가 파이프라인이 구축되어 실제 수치 측정이 가능합니다.
@@ -261,10 +293,10 @@ python3 eval/pipeline.py --all
 
 ## 다음 단계
 
-1. 최신 full eval 리포트 `eval/results/eval_20260514_152044.json`를 케이스별로 분석한다.
-2. 낮은 검색 precision 케이스를 청킹, query expansion, reranking threshold, source diversity 문제로 재분류한다.
-3. 사용자 승인 후 다음 검색 품질 개선 구현 계획을 별도로 승격한다.
+1. 최신 full eval 리포트 `eval/results/eval_20260514_164724.json`를 케이스별로 분석한다.
+2. 낮은 answer accuracy 케이스인 `tc-06`, `tc-07`, `tc-09`를 재분류한다.
+3. expected keyword 정합성 문제와 실제 답변 누락을 분리한다.
 
 ---
 
-*최종 업데이트: 2026-05-14 — 평가셋 정합성 보정 완료, accuracy 0.875*
+*최종 업데이트: 2026-05-14 — retrieval metric 정규화 완료, rag_normalized_source_precision@k 1.0*
