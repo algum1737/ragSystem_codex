@@ -133,6 +133,7 @@
 - 다음 품질 반복 계획과 평가셋 정렬 계획을 completed로 이동했다.
 - 다음 후보로 검색 지표 추가 개선 계획을 active로 생성했다.
   - `docs/exec-plans/active/2026-05-14-next-search-quality-experiment.md`
+- PR #17 `평가 케이스 정합성 보정`을 생성했다.
 
 ## Current Gaps
 
