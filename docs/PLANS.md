@@ -95,14 +95,16 @@
 
 - `2026-05-13-github-actions-ci.md`
   - 목표: PR에서 최소 checks가 실행되도록 GitHub Actions를 추가한다.
+  - 상태: Completed
+
+### Search Quality Improvement
+
+- `2026-05-14-search-quality-improvement.md`
+  - 목표: 검색 기준선을 분석하고 `precision@k_mean=0.60+`를 향한 1차 개선안을 검증한다.
   - 상태: Active
 
 ### Follow-Up Candidates
 
-- 검색 품질 개선 계획
-  - 현재 기준: `precision@k_mean=0.48`, `rag_precision@k_mean=0.54`
-  - 1차 목표: 검색/재랭킹/청킹 점검으로 `precision@k_mean`을 `0.60+`까지 끌어올릴 수 있는 개선안을 수립한다.
-  - 진행 순서: GitHub Actions CI 완료 후 새 active plan으로 승격한다.
 - 런타임 환경 복구와 smoke test 계획
 - 평가 파이프라인 실제 실행과 기준선 재확인
 - 문서 명칭 정리와 아키텍처 문서 통합
@@ -110,7 +112,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-13-github-actions-ci.md`
+- `exec-plans/active/2026-05-14-search-quality-improvement.md`
 
 ## Completed Plans
 
@@ -123,3 +125,4 @@
 - `exec-plans/completed/2026-05-13-answer-quality-improvement.md`
 - `exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
 - `exec-plans/completed/2026-05-13-partial-answer-policy.md`
+- `exec-plans/completed/2026-05-13-github-actions-ci.md`
