@@ -13,16 +13,17 @@
 7. `docs/manual-deployment-guide.md`
 8. `docs/references/quality-baseline-analysis.md`
 9. `docs/references/answer-quality-analysis.md`
-10. `docs/exec-plans/active/2026-05-13-github-actions-ci.md`
-11. `docs/exec-plans/completed/2026-05-13-partial-answer-policy.md`
-12. `docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
-13. `docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md`
-14. `docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md`
-15. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
-16. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
-17. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
-18. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
-19. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
+10. `docs/exec-plans/active/2026-05-14-search-quality-improvement.md`
+11. `docs/exec-plans/completed/2026-05-13-github-actions-ci.md`
+12. `docs/exec-plans/completed/2026-05-13-partial-answer-policy.md`
+13. `docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
+14. `docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md`
+15. `docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md`
+16. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
+17. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
+18. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
+19. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
+20. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
 
 ## Current Baseline
 
@@ -91,6 +92,11 @@
 - `not_found_rate`는 `0.2 -> 0.1`로 개선됐고 `faithfulness_mean=0.8`은 유지됐다.
 - `accuracy_mean`은 `0.7 -> 0.675`로 소폭 하락했으며, 이는 `tc-01` no-answer 표현 변화에 따른 keyword accuracy 변동이다.
 - Ubuntu 20.04.5 LTS 서버에 Git 없이 수동 배포하고 이후 수정 사항을 재반영하는 절차를 `docs/manual-deployment-guide.md`에 정리했다.
+- `feature/github-actions-ci` 브랜치에서 GitHub Actions 최소 CI workflow를 추가했다.
+- CI는 PR과 `main` push에서 `bash scripts/validate-docs.sh`와 Python compile 검증을 실행한다.
+- 로컬 검증은 문서 검증 통과, `.venv/bin/python -m py_compile eval/pipeline.py retriever/engine.py api/models.py api/main.py app.py` 통과까지 확인했다.
+- PR #15를 생성했고 GitHub Actions `Static checks`가 생성되어 통과했다.
+- GitHub Actions CI 계획을 completed로 이동하고, 검색 품질 개선 계획을 새 active plan으로 승격했다.
 
 ## Current Gaps
 
@@ -104,12 +110,11 @@
 
 ## Suggested Next Work
 
-1. GitHub Actions workflow를 추가해 PR checks가 표시되게 한다.
-2. CI에서는 `bash scripts/validate-docs.sh`와 Python compile 검증을 실행한다.
-3. full eval은 Ollama/Chroma/모델 캐시 의존성 때문에 로컬 검증으로 유지한다.
-4. CI 완료 후 검색 품질 개선 계획을 새 active plan으로 승격한다.
-5. 검색 품질 개선의 현재 기준은 `precision@k_mean=0.48`, `rag_precision@k_mean=0.54`이며 1차 목표는 `precision@k_mean=0.60+`다.
-6. 개선 후보는 청킹, hybrid search 가중치, reranking 적용 범위, 카테고리 필터링, 평가셋 확장 순서로 점검한다.
+1. PR #15의 문서 정리 커밋을 원격에 push한다.
+2. PR #15를 머지할지 사용자 판단을 받는다.
+3. 검색 품질 개선 계획을 진행한다.
+4. 검색 품질 개선의 현재 기준은 `precision@k_mean=0.48`, `rag_precision@k_mean=0.54`이며 1차 목표는 `precision@k_mean=0.60+`다.
+5. 개선 후보는 청킹, hybrid search 가중치, reranking 적용 범위, 카테고리 필터링, 평가셋 확장 순서로 점검한다.
 
 ## Handoff Prompt
 
@@ -126,16 +131,17 @@
 7. docs/manual-deployment-guide.md
 8. docs/references/quality-baseline-analysis.md
 9. docs/references/answer-quality-analysis.md
-10. docs/exec-plans/active/2026-05-13-github-actions-ci.md
-11. docs/exec-plans/completed/2026-05-13-partial-answer-policy.md
-12. docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md
-13. docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md
-14. docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md
-15. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
-16. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
-17. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
-18. docs/exec-plans/completed/2026-05-12-runtime-validation.md
-19. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
+10. docs/exec-plans/active/2026-05-14-search-quality-improvement.md
+11. docs/exec-plans/completed/2026-05-13-github-actions-ci.md
+12. docs/exec-plans/completed/2026-05-13-partial-answer-policy.md
+13. docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md
+14. docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md
+15. docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md
+16. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
+17. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
+18. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
+19. docs/exec-plans/completed/2026-05-12-runtime-validation.md
+20. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
 
 현재 기준:
 - branch: `git branch --show-current`
