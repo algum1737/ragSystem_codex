@@ -64,14 +64,13 @@
   - `vector_precision@k_mean=0.48`
   - `rag_precision@k_mean=0.60`
   - `source_coverage@k_mean=1.0`
-- 부분 통과: `.venv/bin/python eval/pipeline.py --all`
-  - 리포트: `eval/results/eval_20260514_111556.json`
+- 통과: `.venv/bin/python eval/pipeline.py --all`
+  - 리포트: `eval/results/eval_20260514_113849.json`
   - 검색 지표는 저장됨: `rag_precision@k_mean=0.60`, `source_coverage@k_mean=1.0`
-  - 생성 지표는 Ollama 미기동으로 미실행: `accuracy_mean=None`, `faithfulness_mean=None`, `not_found_rate=None`
+  - 생성 지표도 산출됨: `accuracy_mean=0.70`, `faithfulness_mean=0.90`, `not_found_rate=0.10`
 - 통과: PR #16 GitHub Actions `Static checks`
   - 6초 만에 통과했다.
 
 ## Open Work
 
-- Ollama 기동 후 full eval 생성 지표 재확인
 - PR #16 머지 여부 판단

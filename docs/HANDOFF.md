@@ -101,16 +101,16 @@
 - PR #15를 머지했고 로컬 `main`을 원격과 동기화했다.
 - `feature/search-quality-improvement` 브랜치에서 RAG 검색 경로를 LLM 생성과 분리하고, rerank 이후 source 다양성 선택을 추가했다.
 - 검색 지표는 `rag_precision@k_mean=0.54 -> 0.60`, `source_coverage@k_mean=0.925 -> 1.0`으로 개선됐다.
-- 개선 후 검색 리포트는 `eval/results/eval_20260514_111556.json`, 분석 기록은 `docs/references/search-quality-improvement.md`에 남겼다.
+- 개선 후 full eval 리포트는 `eval/results/eval_20260514_113849.json`, 분석 기록은 `docs/references/search-quality-improvement.md`에 남겼다.
 - PR #16 `RAG 검색 source coverage 개선`을 생성했고 GitHub Actions `Static checks`가 통과했다.
+- 권한 상승 경로에서 Ollama 상태를 재확인했고 `gemma3:12b`가 사용 가능해 full eval 생성 지표까지 재검증했다.
 
 ## Current Gaps
 
 - `/stats`는 현재 `count=89`를 반환한다.
 - retrieval eval은 현재 `vector_precision@k_mean=0.48`, `rag_precision@k_mean=0.60`으로 정상 완료된다.
-- 최신 full eval 검색 리포트는 `eval/results/eval_20260514_111556.json`에 저장되어 있다.
-- Ollama 미기동 상태라 최신 리포트의 `accuracy_mean`, `faithfulness_mean`, `not_found_rate`는 산출되지 않았다.
-- 생성 지표까지 포함한 최신 full eval 리포트는 `eval/results/eval_20260513_164755.json`이다.
+- 최신 full eval 리포트는 `eval/results/eval_20260514_113849.json`에 저장되어 있다.
+- 최신 full eval 생성 지표는 `accuracy_mean=0.70`, `faithfulness_mean=0.90`, `not_found_rate=0.10`이다.
 - 이전 Cross-Encoder 캐시 반영 리포트는 `eval/results/eval_20260513_100727.json`에 저장되어 있다.
 - 검색/인제스천/평가 경로에 필요한 임베딩 모델 캐시는 준비됐다.
 - Cross-Encoder reranking 캐시도 준비됐다.
@@ -119,9 +119,8 @@
 ## Suggested Next Work
 
 1. PR #16 머지 여부를 사용자와 판단한다.
-2. Ollama 기동 후 `.venv/bin/python eval/pipeline.py --all`을 재실행해 생성 지표까지 확인한다.
-3. 검색 품질 개선 계획 완료 여부를 판단하고 completed 이동을 준비한다.
-4. 다음 개선 후보는 답변 생성 지표 재확인 후 청킹, hybrid search 가중치, reranking 적용 범위, 평가셋 확장 순서로 점검한다.
+2. 검색 품질 개선 계획 완료 여부를 판단하고 completed 이동을 준비한다.
+3. 다음 개선 후보는 청킹, hybrid search 가중치, reranking 적용 범위, 평가셋 확장 순서로 점검한다.
 
 ## Handoff Prompt
 
