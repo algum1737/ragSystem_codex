@@ -59,8 +59,12 @@
   - `RAG_IMPROVEMENT_ROADMAP.md`
   - `RAG_BEFORE_AFTER.md`
   - `RAG_PERFORMANCE_REPORT.md`
+- 통과: 최신 full eval 낮은 점수 케이스 분석
+  - `docs/references/2026-05-14-next-quality-iteration-analysis.md`
+- 결정: 다음 실험 후보는 평가셋 정합성 보정
+  - `tc-01`: 문서 근거 부족 / 질문 재분류 후보
+  - `tc-03`, `tc-04`, `tc-09`: expected keyword OR group 및 partial-answer 기준 보정 후보
 
 ## Open Work
 
-- 최신 리포트 분석
-- 다음 실험 후보 선정
+- 사용자 승인 후 `Eval Case Alignment Plan`을 별도 active plan으로 승격

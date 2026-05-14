@@ -36,6 +36,7 @@
 - [검색 품질 개선 결과](./references/search-quality-improvement.md)
 - [2026-05-14 작업 리포트](./references/2026-05-14-work-report.md)
 - [2026-05-14 Before/After](./references/2026-05-14-before-after.md)
+- [2026-05-14 다음 품질 반복 분석](./references/2026-05-14-next-quality-iteration-analysis.md)
 
 ## Active Work
 
