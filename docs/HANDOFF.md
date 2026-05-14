@@ -25,17 +25,20 @@
 19. `docs/exec-plans/completed/2026-05-14-retrieval-metric-normalization.md`
 20. `docs/references/2026-05-14-search-quality-ceiling-analysis.md`
 21. `docs/references/2026-05-14-retrieval-metric-normalization.md`
-22. `docs/exec-plans/active/2026-05-14-residual-answer-quality-analysis.md`
-23. `docs/exec-plans/completed/2026-05-13-github-actions-ci.md`
-24. `docs/exec-plans/completed/2026-05-13-partial-answer-policy.md`
-25. `docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
-26. `docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md`
-27. `docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md`
-28. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
-29. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
-30. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
-31. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
-32. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
+22. `docs/references/2026-05-14-residual-answer-quality-analysis.md`
+23. `docs/exec-plans/completed/2026-05-14-residual-answer-quality-analysis.md`
+24. `docs/exec-plans/completed/2026-05-14-answer-format-prompt-experiment.md`
+25. `docs/exec-plans/active/2026-05-14-faithfulness-eval-stability.md`
+26. `docs/exec-plans/completed/2026-05-13-github-actions-ci.md`
+27. `docs/exec-plans/completed/2026-05-13-partial-answer-policy.md`
+28. `docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
+29. `docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md`
+30. `docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md`
+31. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
+32. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
+33. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
+34. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
+35. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
 
 ## Current Baseline
 
@@ -151,7 +154,22 @@
   - 새 full eval 리포트: `eval/results/eval_20260514_164724.json`
   - 주요 결과: `rag_normalized_source_precision@k_mean=1.0`, `rag_chunk_precision@k_mean=0.96`, `source_recall@k_mean=1.0`
 - 다음 후보로 잔여 답변 accuracy 분석 계획을 active로 생성했다.
-  - `docs/exec-plans/active/2026-05-14-residual-answer-quality-analysis.md`
+  - `docs/exec-plans/completed/2026-05-14-residual-answer-quality-analysis.md`
+- 잔여 답변 accuracy 케이스를 분석했다.
+  - 분석 대상: `tc-06`, `tc-07`, `tc-09`
+  - 분석 문서: `docs/references/2026-05-14-residual-answer-quality-analysis.md`
+  - 결론: 검색 병목이 아니라 답변 표현과 keyword 기반 평가셋의 불일치가 주 원인이다.
+  - 다음 후보: 프롬프트 보정 우선, 평가셋 보정 보조.
+- 다음 작업으로 답변 형식 프롬프트 실험 active plan을 생성했다.
+  - `docs/exec-plans/completed/2026-05-14-answer-format-prompt-experiment.md`
+- 답변 형식 프롬프트 실험을 수행했다.
+  - 분쟁/면책/의무 질문별 표지어 사용 지시를 추가한 프롬프트 실험은 `accuracy_mean`, `faithfulness_mean`, `not_found_rate`가 회귀해 철회했다.
+  - 좁은 프롬프트 지시도 `accuracy_mean` 회귀가 있어 철회했다.
+  - 최종 채택 변경은 `eval/test_cases.json`의 `tc-06`, `tc-09` expected keyword OR group 보정이다.
+  - 최종 유효 리포트는 `eval/results/eval_20260514_180006.json`이다.
+  - 최종 유효 지표: `accuracy_mean=0.975`, `faithfulness_mean=0.9`, `not_found_rate=0.0`.
+- 다음 작업으로 faithfulness eval stability active plan을 생성했다.
+  - `docs/exec-plans/active/2026-05-14-faithfulness-eval-stability.md`
 
 ## Current Gaps
 
@@ -161,6 +179,8 @@
 - 최신 full eval 리포트는 `eval/results/eval_20260514_164724.json`에 저장되어 있다.
 - 최신 full eval 생성 지표는 `accuracy_mean=0.90`, `faithfulness_mean=1.0`, `not_found_rate=0.0`이다.
 - 최신 정규화 검색 지표는 `rag_normalized_source_precision@k_mean=1.0`, `rag_chunk_precision@k_mean=0.96`, `source_recall@k_mean=1.0`이다.
+- 최종 유효 리포트 기준 잔여 낮은 accuracy 케이스는 `tc-09=0.75`이고, `tc-10`은 `answer_accuracy=1.0`이나 `faithfulness=0.0`이다.
+- 현재 active plan은 `docs/exec-plans/active/2026-05-14-faithfulness-eval-stability.md`다.
 - 이전 Cross-Encoder 캐시 반영 리포트는 `eval/results/eval_20260513_100727.json`에 저장되어 있다.
 - 검색/인제스천/평가 경로에 필요한 임베딩 모델 캐시는 준비됐다.
 - Cross-Encoder reranking 캐시도 준비됐다.
@@ -168,9 +188,9 @@
 
 ## Suggested Next Work
 
-1. active plan `docs/exec-plans/active/2026-05-14-residual-answer-quality-analysis.md`에 따라 잔여 낮은 answer accuracy 케이스를 분석한다.
-2. 우선 대상은 `tc-06`, `tc-07`, `tc-09`다.
-3. expected keyword 정합성 문제와 실제 답변 누락을 분리한 뒤 다음 구현 후보를 정한다.
+1. active plan `docs/exec-plans/active/2026-05-14-faithfulness-eval-stability.md`에 따라 `tc-10` faithfulness 판정 흔들림을 분석한다.
+2. faithfulness judge가 사용하는 `context_texts[:3]`와 `tc-10` 답변을 직접 대조한다.
+3. 다음 후보를 평가 프롬프트 보정, context 범위 조정, 또는 no-op으로 정한다.
 
 ## Handoff Prompt
 
@@ -199,17 +219,20 @@
 19. docs/exec-plans/completed/2026-05-14-retrieval-metric-normalization.md
 20. docs/references/2026-05-14-search-quality-ceiling-analysis.md
 21. docs/references/2026-05-14-retrieval-metric-normalization.md
-22. docs/exec-plans/active/2026-05-14-residual-answer-quality-analysis.md
-23. docs/exec-plans/completed/2026-05-13-github-actions-ci.md
-24. docs/exec-plans/completed/2026-05-13-partial-answer-policy.md
-25. docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md
-26. docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md
-27. docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md
-28. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
-29. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
-30. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
-31. docs/exec-plans/completed/2026-05-12-runtime-validation.md
-32. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
+22. docs/references/2026-05-14-residual-answer-quality-analysis.md
+23. docs/exec-plans/completed/2026-05-14-residual-answer-quality-analysis.md
+24. docs/exec-plans/completed/2026-05-14-answer-format-prompt-experiment.md
+25. docs/exec-plans/active/2026-05-14-faithfulness-eval-stability.md
+26. docs/exec-plans/completed/2026-05-13-github-actions-ci.md
+27. docs/exec-plans/completed/2026-05-13-partial-answer-policy.md
+28. docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md
+29. docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md
+30. docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md
+31. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
+32. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
+33. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
+34. docs/exec-plans/completed/2026-05-12-runtime-validation.md
+35. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
 
 현재 기준:
 - branch: `git branch --show-current`

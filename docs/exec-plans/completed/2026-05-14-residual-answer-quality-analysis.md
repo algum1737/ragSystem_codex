@@ -51,9 +51,26 @@
 
 ## Validation Result
 
-- 아직 실행 전.
+- Pre-flight checks: 통과.
+  - 최신 full eval 리포트 `eval/results/eval_20260514_164724.json` 확인.
+  - `eval/test_cases.json`의 `tc-06`, `tc-07`, `tc-09` expected keyword 확인.
+  - 해당 케이스 답변과 retrieved source 지표 확인.
+- Automated tests: 통과.
+  - `bash scripts/validate-docs.sh`
+  - `.venv/bin/python -m py_compile eval/pipeline.py retriever/engine.py api/models.py api/main.py app.py`
+- Manual/Runtime QA: 통과.
+  - `tc-06`, `tc-07`, `tc-09` 답변을 expected keyword와 직접 대조.
+  - 분석 결과를 `docs/references/2026-05-14-residual-answer-quality-analysis.md`에 기록.
+- Skipped/Not Run: 계획대로 full eval 재실행은 미실행.
+  - 이번 작업은 최신 리포트 기반 분석이며 구현 변경이 없으므로 새 full eval은 필요하지 않다.
 
 ## Open Work
 
-- 잔여 낮은 answer accuracy 케이스 분석
-- 다음 답변 품질 개선 후보 선정
+- 이 계획 범위의 남은 작업은 없다.
+- 후속 작업은 `docs/exec-plans/active/2026-05-14-answer-format-prompt-experiment.md`에서 진행한다.
+
+## Completion
+
+- `tc-06`, `tc-07`, `tc-09`의 낮은 `answer_accuracy` 원인을 분리했다.
+- 결론은 검색 병목이 아니라 답변 표현과 keyword 기반 평가셋의 불일치다.
+- 다음 후보는 프롬프트 보정 우선, 평가셋 보정 보조로 정리했다.

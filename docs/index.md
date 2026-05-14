@@ -40,10 +40,11 @@
 - [2026-05-14 평가 케이스 정렬](./references/2026-05-14-eval-case-alignment.md)
 - [2026-05-14 검색 품질 상한 분석](./references/2026-05-14-search-quality-ceiling-analysis.md)
 - [2026-05-14 Retrieval Metric Normalization](./references/2026-05-14-retrieval-metric-normalization.md)
+- [2026-05-14 잔여 답변 품질 분석](./references/2026-05-14-residual-answer-quality-analysis.md)
 
 ## Active Work
 
-- [Residual Answer Quality Analysis Plan](./exec-plans/active/2026-05-14-residual-answer-quality-analysis.md)
+- [Faithfulness Eval Stability Plan](./exec-plans/active/2026-05-14-faithfulness-eval-stability.md)
 
 ## Completed Work
 
@@ -62,3 +63,5 @@
 - [Eval Case Alignment Plan](./exec-plans/completed/2026-05-14-eval-case-alignment.md)
 - [Next Search Quality Experiment Plan](./exec-plans/completed/2026-05-14-next-search-quality-experiment.md)
 - [Retrieval Metric Normalization Plan](./exec-plans/completed/2026-05-14-retrieval-metric-normalization.md)
+- [Residual Answer Quality Analysis Plan](./exec-plans/completed/2026-05-14-residual-answer-quality-analysis.md)
+- [Answer Format Prompt Experiment Plan](./exec-plans/completed/2026-05-14-answer-format-prompt-experiment.md)
