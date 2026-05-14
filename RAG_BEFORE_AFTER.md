@@ -1,6 +1,6 @@
 # RAG 성능 변화 비교 보고서
 
-**최종 업데이트:** 2026-05-12  
+**최종 업데이트:** 2026-05-14  
 **목적:** 특정 카테고리 문서 기반 RAG 검색 및 문서 초안 생성  
 **검증 도메인:** 이용약관 (예시 — 다른 도메인으로 교체 가능)
 
@@ -146,19 +146,56 @@
 ## 전체 버전 누적 비교
 
 ```
-                    v0.1 초기        v0.2 완료        v0.3 완료        v0.4 Phase 13
-                    ─────────────    ────────────────  ──────────────── ────────────────────
-검색 방식           벡터 단독        하이브리드        하이브리드+재순위 하이브리드+재순위+필터
+                    v0.1 초기        v0.2 완료        v0.3 완료        v0.4 Phase 13       2026-05-14
+                    ─────────────    ────────────────  ──────────────── ──────────────────── ─────────────────────
+검색 방식           벡터 단독        하이브리드        하이브리드+재순위 하이브리드+재순위+필터 실제 RAG 경로 다양성 선택
 임베딩 차원         768dim           768dim            1024dim          1024dim
 지원 언어           50개             50개              94개             94개
-재순위              없음             없음              Cross-Encoder    Cross-Encoder
-doc_type 필터       없음             없음              없음             ✅ 일반약관/위치기반약관
+재순위              없음             없음              Cross-Encoder    Cross-Encoder        Cross-Encoder
+doc_type 필터       없음             없음              없음             ✅ 일반약관/위치기반약관 ✅ 4개 카테고리 기준 호환
 청크 평균 길이      454자            907자             907자            907자
 컨텍스트 한도       4,000자          8,000자           8,000자          8,000자
 파일 형식 지원      3종              5종               5종              5종
-평가 파이프라인     없음             없음              ✅ 구축 완료     ✅ 실측 완료
-Precision@5 평균    미측정           미측정            0.46             0.48
+평가 파이프라인     없음             없음              ✅ 구축 완료     ✅ 실측 완료       ✅ RAG/vector 지표 분리
+Precision@5 평균    미측정           미측정            0.46             0.48                vector 0.48 / RAG 0.60
 ```
+
+---
+
+## 비교 4: v0.4 Phase 13 → 2026-05-14 검색 품질 1차 개선
+
+**비교 기준:** `eval/results/eval_20260513_164755.json` vs `eval/results/eval_20260514_113849.json`
+
+### 시스템 구성 변화
+
+| 구성 요소 | Before | After |
+|-----------|--------|-------|
+| RAG 검색 API | `query()` 내부에 검색과 생성 결합 | `retrieve()`로 검색 단계 분리 |
+| eval retrieval | vector-only와 LLM query 의존 혼재 | LLM 없이 실제 RAG 검색 경로 측정 |
+| 최종 청크 선택 | rerank top_k 직접 사용 | 상위 후보 창 안에서 source 다양성 보존 |
+| doc_type 전달 | full eval query 경로에서 누락 | `RAGEngine.query(..., doc_type=...)` 전달 |
+
+### 실측 지표 변화
+
+| Metric | Before | After | Delta |
+| --- | ---: | ---: | ---: |
+| `vector_precision@k_mean` | `0.48` | `0.48` | `0.00` |
+| `rag_precision@k_mean` | `0.54` | `0.60` | `+0.06` |
+| `source_coverage@k_mean` | `0.925` | `1.0` | `+0.075` |
+| `accuracy_mean` | `0.675` | `0.70` | `+0.025` |
+| `faithfulness_mean` | `0.8` | `0.9` | `+0.1` |
+| `not_found_rate` | `0.1` | `0.1` | `0.0` |
+
+### 케이스별 주요 변화
+
+| Case | 변화 |
+| --- | --- |
+| `tc-04` | `rag_precision_at_k 0.4 -> 0.8`, `source_coverage_at_k 0.5 -> 1.0` |
+| `tc-07` | `rag_precision_at_k 0.6 -> 0.8`, `source_coverage_at_k 0.75 -> 1.0` |
+| `tc-09` | `answer_accuracy 0.5 -> 0.75` |
+| `tc-10` | `faithfulness 0.0 -> 1.0` |
+
+상세 before/after는 `docs/references/2026-05-14-before-after.md`에 기록한다.
 
 ---
 
@@ -191,12 +228,12 @@ python3 eval/pipeline.py --all
 
 ---
 
-## 다음 단계 (v0.4 잔여)
+## 다음 단계
 
-1. **Phase 14**: Answer Accuracy + Faithfulness 실측 (Ollama 연동)
-2. **Phase 15**: 카카오, 쿠팡 등 이용약관 추가 인제스천 → 다문서 환경 Precision@5 변화 추적
-3. **v0.4 목표**: Precision@5 평균 0.6 이상 달성
+1. 최신 full eval 리포트 `eval/results/eval_20260514_113849.json`를 케이스별로 분석한다.
+2. 낮은 점수 케이스를 답변 품질, 평가셋 정합성, 검색 후보 문제로 재분류한다.
+3. 다음 구현 후보를 청킹, hybrid search 가중치, reranking 적용 범위, 평가셋 확장 순서로 비교한다.
 
 ---
 
-*최종 업데이트: 2026-05-12 — v0.4 Phase 13 완료, Precision@5 0.48*
+*최종 업데이트: 2026-05-14 — 검색 품질 1차 개선 완료, RAG precision@k 0.60*

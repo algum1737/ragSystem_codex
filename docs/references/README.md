@@ -11,3 +11,8 @@
 - `LLM_TUNING_METHODS.md`
 - `gemmna4-analysis.md`
 - [Embedding Model Cache Setup](./embedding-model-cache.md)
+- [Quality Baseline Analysis](./quality-baseline-analysis.md)
+- [Answer Quality Analysis](./answer-quality-analysis.md)
+- [Search Quality Improvement](./search-quality-improvement.md)
+- [2026-05-14 Work Report](./2026-05-14-work-report.md)
+- [2026-05-14 Before After](./2026-05-14-before-after.md)

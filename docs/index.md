@@ -27,10 +27,15 @@
 - [아키텍처 다이어그램](./architecture.md)
 - [서버 기동 가이드](./서버_기동_가이드.md)
 - [수동 배포 가이드](./manual-deployment-guide.md)
+- [RAG 개선 로드맵](../RAG_IMPROVEMENT_ROADMAP.md)
+- [RAG Before/After](../RAG_BEFORE_AFTER.md)
+- [RAG 성능 보고서](../RAG_PERFORMANCE_REPORT.md)
 - [임베딩 모델 캐시 절차](./references/embedding-model-cache.md)
 - [품질 기준선 분석](./references/quality-baseline-analysis.md)
 - [답변 품질 분석](./references/answer-quality-analysis.md)
 - [검색 품질 개선 결과](./references/search-quality-improvement.md)
+- [2026-05-14 작업 리포트](./references/2026-05-14-work-report.md)
+- [2026-05-14 Before/After](./references/2026-05-14-before-after.md)
 
 ## Active Work
 

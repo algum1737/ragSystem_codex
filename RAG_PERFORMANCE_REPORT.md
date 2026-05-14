@@ -1,8 +1,8 @@
 # RAG 성능 향상 보고서
 
 **프로젝트:** ragSystem  
-**작성일:** 2026-05-12  
-**현재 버전:** v0.4 진행 중 (Phase 13 완료)  
+**작성일:** 2026-05-14  
+**현재 버전:** v0.4 진행 중 (검색 품질 1차 개선 완료)  
 **목적:** 특정 카테고리 문서 기반 RAG 검색 및 문서 초안 생성 파이프라인  
 **검증 도메인:** 이용약관 (예시 도메인 — 다른 도메인으로 교체 가능)
 
@@ -26,6 +26,8 @@ ragSystem은 완전 로컬 실행 기반의 RAG(Retrieval-Augmented Generation) 
                                            [RRF 병합]
                                                │
                                     [Cross-Encoder 재순위]
+                                               │
+                                  [source-aware 최종 청크 선택]
                                                │
                                          [LLM (Ollama)]
                                                │
@@ -140,7 +142,9 @@ BM25+Vector로 top_20 후보를 뽑은 뒤 Cross-Encoder로 재순위 매겨 LLM
 
 | 지표 | 설명 | Ollama 필요 |
 |------|------|-------------|
-| Precision@K | 상위 K 청크 중 정답 관련 청크 비율 | 불필요 |
+| Vector Precision@K | Chroma vector-only 상위 K source 평가 | 불필요 |
+| RAG Precision@K | 실제 RAG 최종 source 평가 | 불필요 |
+| Source Coverage@K | 관련 source 중 최종 context 포함 비율 | 불필요 |
 | Answer Accuracy | LLM 답변 내 정답 키워드 포함 비율 | 필요 |
 | Faithfulness | 답변이 제공된 청크에만 근거했는지 여부 | 필요 |
 
@@ -301,6 +305,35 @@ rag_engine.query("위약금 조건은?", doc_type="일반약관")
 
 ---
 
+### 2-16. RAG 검색 경로 분리와 source 다양성 선택 (2026-05-14)
+
+**파일:** `retriever/engine.py`, `eval/pipeline.py`
+
+기존 `RAGEngine.query()`는 검색과 LLM 생성을 함께 수행했다. 이 구조에서는 실제 RAG 검색 경로를 측정하려면 Ollama 호출까지 필요했다. 검색 단계를 `RAGEngine.retrieve()`로 분리해 LLM 없이도 실제 RAG 최종 source를 평가할 수 있게 했다.
+
+또한 Cross-Encoder rerank 이후 최종 top_k를 바로 자르지 않고, 상위 후보 창 안에서 source 다양성을 보존하도록 선택한다.
+
+```python
+final_chunks = _select_diverse_chunks(
+    ranked_chunks,
+    self._top_k,
+    diversity_window=self._top_k * 2 + 2,
+)
+```
+
+**효과:**
+
+| Metric | Before | After |
+| --- | ---: | ---: |
+| `rag_precision@k_mean` | `0.54` | `0.60` |
+| `source_coverage@k_mean` | `0.925` | `1.0` |
+| `accuracy_mean` | `0.675` | `0.70` |
+| `faithfulness_mean` | `0.8` | `0.9` |
+
+최신 리포트: `eval/results/eval_20260514_113849.json`
+
+---
+
 ## 3. 현재 인제스천 상태 (v0.4 기준)
 
 **인제스천 문서:** 4개 이용약관 파일 (총 89개 청크)
@@ -319,10 +352,11 @@ rag_engine.query("위약금 조건은?", doc_type="일반약관")
 | 기법 | 예상 효과 | 구현 난이도 | 상태 |
 |------|-----------|-------------|------|
 | ~~메타데이터 필터링~~ | ~~특정 문서 유형 필터 검색~~ | ~~중간~~ | ✅ Phase 13 완료 |
-| Answer Accuracy 실측 | LLM 답변 품질 수치화 | 낮음 | Phase 14 예정 |
-| Faithfulness 실측 | 답변 근거 검증 수치화 | 낮음 | Phase 14 예정 |
+| ~~Answer Accuracy 실측~~ | ~~LLM 답변 품질 수치화~~ | ~~낮음~~ | ✅ 2026-05-14 완료 |
+| ~~Faithfulness 실측~~ | ~~답변 근거 검증 수치화~~ | ~~낮음~~ | ✅ 2026-05-14 완료 |
+| ~~RAG source 다양성 선택~~ | ~~최종 context source coverage 개선~~ | ~~중간~~ | ✅ 2026-05-14 완료 |
 | 이용약관 문서 확대 | 다문서 환경 검색 품질 검증 | 낮음 | Phase 15 예정 |
-| MMR 다양성 검색 | tc-09 유형 단일 문서 집중 문제 해소 | 중간 | 미정 |
+| MMR 다양성 검색 | 단일 문서 집중 문제 해소 | 중간 | source 다양성 적용 후 잔여 후보 |
 | 쿼리 재작성 (Query Rewriting) | 모호한 쿼리 처리 능력 향상 | 중간 | 미정 |
 | Parent-Child 청킹 | 검색 정밀도 + 컨텍스트 품질 동시 향상 | 높음 | 미정 |
 | 이용약관 특화 QLoRA | 답변 형식·어투 도메인 최적화 | 높음 | 미정 |
@@ -361,10 +395,13 @@ v0.3 완료 (5개 기법) — 2026-05-12
 └── ✅ 이용약관 도메인 전환 (4개 문서 인제스천)
 
 v0.4 진행 중 — 2026-05-12~
-└── ✅ doc_type 메타데이터 필터링 (일반약관 / 위치기반약관) — Phase 13
-    Precision@5: 0.46 → 0.48 (tc-05: 0.2 → 0.4)
+├── ✅ doc_type 메타데이터 필터링 — Phase 13
+│   Precision@5: 0.46 → 0.48 (tc-05: 0.2 → 0.4)
+├── ✅ 평가 하네스 정렬 / accuracy 보정 / partial answer 정책 — 2026-05-13
+└── ✅ RAG source 다양성 선택 — 2026-05-14
+    rag_precision@k: 0.54 → 0.60, source_coverage@k: 0.925 → 1.0
 ```
 
 ---
 
-*최종 업데이트: 2026-05-12 — v0.4 Phase 13 완료*
+*최종 업데이트: 2026-05-14 — 검색 품질 1차 개선 완료*

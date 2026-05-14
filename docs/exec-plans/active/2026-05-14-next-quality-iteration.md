@@ -50,7 +50,15 @@
 
 ## Validation Result
 
-- 아직 실행 전.
+- 통과: 최신 리포트 `eval/results/eval_20260514_113849.json` 확인
+- 통과: 작업 리포트 작성
+  - `docs/references/2026-05-14-work-report.md`
+- 통과: before/after 비교 문서 작성
+  - `docs/references/2026-05-14-before-after.md`
+- 통과: 기존 RAG 요약 문서 최신화
+  - `RAG_IMPROVEMENT_ROADMAP.md`
+  - `RAG_BEFORE_AFTER.md`
+  - `RAG_PERFORMANCE_REPORT.md`
 
 ## Open Work
 
