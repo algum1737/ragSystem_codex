@@ -30,6 +30,7 @@
 - [임베딩 모델 캐시 절차](./references/embedding-model-cache.md)
 - [품질 기준선 분석](./references/quality-baseline-analysis.md)
 - [답변 품질 분석](./references/answer-quality-analysis.md)
+- [검색 품질 개선 결과](./references/search-quality-improvement.md)
 
 ## Active Work
 

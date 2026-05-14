@@ -175,6 +175,39 @@ def _rrf_merge(
     return sorted(scores, key=lambda t: scores[t], reverse=True)[:top_n]
 
 
+def _select_diverse_chunks(chunks: list[dict], top_k: int, diversity_window: int | None = None) -> list[dict]:
+    window_size = diversity_window or top_k
+    diversity_pool = chunks[:window_size]
+    selected: list[dict] = []
+    deferred: list[dict] = []
+    seen_sources: set[str] = set()
+    seen_texts: set[str] = set()
+
+    for chunk in diversity_pool:
+        text = chunk.get("text", "")
+        if text in seen_texts:
+            continue
+        seen_texts.add(text)
+
+        source = chunk.get("source_path", "")
+        if source and source not in seen_sources and len(selected) < top_k:
+            selected.append(chunk)
+            seen_sources.add(source)
+        else:
+            deferred.append(chunk)
+
+    for chunk in deferred + chunks[window_size:]:
+        if len(selected) >= top_k:
+            break
+        text = chunk.get("text", "")
+        if text in seen_texts:
+            continue
+        seen_texts.add(text)
+        selected.append(chunk)
+
+    return selected[:top_k]
+
+
 class RAGEngine:
     def __init__(
         self,
@@ -207,37 +240,7 @@ class RAGEngine:
 
         logger.info("RAG 쿼리: %s (doc_type=%s)", question, doc_type)
 
-        where = _doc_type_where(doc_type)
-        query_embedding = self._embedder.embed_query(question)
-        vec_results = self._store.similarity_search(query_embedding, k=self._top_k * 3, where=where)
-
-        if not vec_results:
-            logger.warning("검색 결과 없음 — 컬렉션이 비어 있습니다")
-            return {"answer": NO_RESULTS_ANSWER, "sources": [], "query": question}
-
-        try:
-            bm25_results = _bm25_cache.search(self._store, question, n=self._top_k * 3, where=where)
-        except Exception as e:
-            logger.warning("BM25 검색 예외 (폴백): %s", e)
-            bm25_results = []
-
-        if bm25_results:
-            merged_texts = _rrf_merge(vec_results, bm25_results, top_n=self._top_k * 4)
-            if self._reranker:
-                merged_texts = self._reranker.rerank(question, merged_texts, self._top_k)
-            vec_dict = {r["text"]: r for r in vec_results}
-            final_chunks: list[dict] = []
-            for text in merged_texts:
-                if text in vec_dict:
-                    final_chunks.append(vec_dict[text])
-                else:
-                    doc = _bm25_cache.get_doc(text)
-                    if doc:
-                        final_chunks.append(doc)
-                if len(final_chunks) >= self._top_k:
-                    break
-        else:
-            final_chunks = vec_results[:self._top_k]
+        final_chunks = self.retrieve(question, doc_type=doc_type)
 
         if not final_chunks:
             logger.warning("최종 청크 없음")
@@ -273,3 +276,44 @@ class RAGEngine:
         ]
 
         return {"answer": answer, "sources": sources, "query": question}
+
+    def retrieve(self, question: str, doc_type: str | None = None) -> list[dict]:
+        if not question.strip():
+            raise ValueError("question이 비어 있습니다")
+
+        where = _doc_type_where(doc_type)
+        query_embedding = self._embedder.embed_query(question)
+        vec_results = self._store.similarity_search(query_embedding, k=self._top_k * 3, where=where)
+
+        if not vec_results:
+            logger.warning("검색 결과 없음 — 컬렉션이 비어 있습니다")
+            return []
+
+        try:
+            bm25_results = _bm25_cache.search(self._store, question, n=self._top_k * 3, where=where)
+        except Exception as e:
+            logger.warning("BM25 검색 예외 (폴백): %s", e)
+            bm25_results = []
+
+        if bm25_results:
+            merged_texts = _rrf_merge(vec_results, bm25_results, top_n=self._top_k * 4)
+            if self._reranker:
+                merged_texts = self._reranker.rerank(question, merged_texts, len(merged_texts))
+            vec_dict = {r["text"]: r for r in vec_results}
+            ranked_chunks: list[dict] = []
+            for text in merged_texts:
+                if text in vec_dict:
+                    ranked_chunks.append(vec_dict[text])
+                else:
+                    doc = _bm25_cache.get_doc(text)
+                    if doc:
+                        ranked_chunks.append(doc)
+            final_chunks = _select_diverse_chunks(
+                ranked_chunks,
+                self._top_k,
+                diversity_window=self._top_k * 2 + 2,
+            )
+        else:
+            final_chunks = _select_diverse_chunks(vec_results, self._top_k)
+
+        return final_chunks

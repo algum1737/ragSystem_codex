@@ -2,7 +2,7 @@
 
 ## Goal
 
-현재 검색 기준선 `precision@k_mean=0.48`, `rag_precision@k_mean=0.54`를 분석하고, 1차 개선 목표인 `precision@k_mean=0.60+`에 도달하기 위한 최소 변경안을 검증한다.
+현재 검색 기준선 `precision@k_mean=0.48`, `rag_precision@k_mean=0.54`를 분석하고, 실제 RAG 검색 경로의 1차 개선 목표인 `rag_precision@k_mean=0.60+`에 도달하기 위한 최소 변경안을 검증한다.
 
 ## Scope
 
@@ -43,8 +43,8 @@
 
 - `bash scripts/validate-docs.sh`
 - `.venv/bin/python -m py_compile eval/pipeline.py retriever/engine.py api/models.py api/main.py app.py`
-- `.venv/bin/python eval/pipeline.py --mode retrieval`
-- `.venv/bin/python eval/pipeline.py --mode full`
+- `.venv/bin/python eval/pipeline.py --metric retrieval`
+- `.venv/bin/python eval/pipeline.py --all`
 
 ## Manual/Runtime QA
 
@@ -58,10 +58,19 @@
 
 ## Validation Result
 
-- 아직 실행 전.
+- 통과: `bash scripts/validate-docs.sh`
+- 통과: `.venv/bin/python -m py_compile eval/pipeline.py retriever/engine.py api/models.py api/main.py app.py`
+- 통과: `.venv/bin/python eval/pipeline.py --metric retrieval`
+  - `vector_precision@k_mean=0.48`
+  - `rag_precision@k_mean=0.60`
+  - `source_coverage@k_mean=1.0`
+- 통과: `.venv/bin/python eval/pipeline.py --all`
+  - 리포트: `eval/results/eval_20260514_113849.json`
+  - 검색 지표는 저장됨: `rag_precision@k_mean=0.60`, `source_coverage@k_mean=1.0`
+  - 생성 지표도 산출됨: `accuracy_mean=0.70`, `faithfulness_mean=0.90`, `not_found_rate=0.10`
+- 통과: PR #16 GitHub Actions `Static checks`
+  - 6초 만에 통과했다.
 
 ## Open Work
 
-- 검색 실패 케이스 분석
-- 개선 후보 선정
-- 구현과 평가 재실행
+- PR #16 머지 여부 판단
