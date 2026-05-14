@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  static-checks:
+    name: Static checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Validate docs
+        run: bash scripts/validate-docs.sh
+
+      - name: Compile Python entry points
+        run: python -m py_compile eval/pipeline.py retriever/engine.py api/models.py api/main.py app.py

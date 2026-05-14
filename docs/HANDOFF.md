@@ -91,6 +91,9 @@
 - `not_found_rate`는 `0.2 -> 0.1`로 개선됐고 `faithfulness_mean=0.8`은 유지됐다.
 - `accuracy_mean`은 `0.7 -> 0.675`로 소폭 하락했으며, 이는 `tc-01` no-answer 표현 변화에 따른 keyword accuracy 변동이다.
 - Ubuntu 20.04.5 LTS 서버에 Git 없이 수동 배포하고 이후 수정 사항을 재반영하는 절차를 `docs/manual-deployment-guide.md`에 정리했다.
+- `feature/github-actions-ci` 브랜치에서 GitHub Actions 최소 CI workflow를 추가했다.
+- CI는 PR과 `main` push에서 `bash scripts/validate-docs.sh`와 Python compile 검증을 실행한다.
+- 로컬 검증은 문서 검증 통과, `.venv/bin/python -m py_compile eval/pipeline.py retriever/engine.py api/models.py api/main.py app.py` 통과까지 확인했다.
 
 ## Current Gaps
 
@@ -100,13 +103,14 @@
 - 이전 Cross-Encoder 캐시 반영 리포트는 `eval/results/eval_20260513_100727.json`에 저장되어 있다.
 - 검색/인제스천/평가 경로에 필요한 임베딩 모델 캐시는 준비됐다.
 - Cross-Encoder reranking 캐시도 준비됐다.
+- GitHub Actions workflow는 추가됐지만 PR checks 생성 여부는 아직 PR 생성 전이라 미확인이다.
 - 코드 내부의 명칭과 문서 상 제품 정의 사이에 일부 정리되지 않은 표현이 남아 있다.
 
 ## Suggested Next Work
 
-1. GitHub Actions workflow를 추가해 PR checks가 표시되게 한다.
-2. CI에서는 `bash scripts/validate-docs.sh`와 Python compile 검증을 실행한다.
-3. full eval은 Ollama/Chroma/모델 캐시 의존성 때문에 로컬 검증으로 유지한다.
+1. `feature/github-actions-ci`를 원격에 push하고 PR을 생성한다.
+2. PR 화면에서 GitHub Actions checks가 생성되고 통과하는지 확인한다.
+3. CI 확인 후 active plan을 completed로 이동하고 `docs/index.md`, `docs/PLANS.md`, `docs/HANDOFF.md`를 갱신한다.
 4. CI 완료 후 검색 품질 개선 계획을 새 active plan으로 승격한다.
 5. 검색 품질 개선의 현재 기준은 `precision@k_mean=0.48`, `rag_precision@k_mean=0.54`이며 1차 목표는 `precision@k_mean=0.60+`다.
 6. 개선 후보는 청킹, hybrid search 가중치, reranking 적용 범위, 카테고리 필터링, 평가셋 확장 순서로 점검한다.
