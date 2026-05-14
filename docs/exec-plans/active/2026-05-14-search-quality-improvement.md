@@ -68,8 +68,10 @@
   - 리포트: `eval/results/eval_20260514_111556.json`
   - 검색 지표는 저장됨: `rag_precision@k_mean=0.60`, `source_coverage@k_mean=1.0`
   - 생성 지표는 Ollama 미기동으로 미실행: `accuracy_mean=None`, `faithfulness_mean=None`, `not_found_rate=None`
+- 통과: PR #16 GitHub Actions `Static checks`
+  - 6초 만에 통과했다.
 
 ## Open Work
 
 - Ollama 기동 후 full eval 생성 지표 재확인
-- PR 생성과 checks 확인
+- PR #16 머지 여부 판단

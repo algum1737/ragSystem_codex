@@ -102,6 +102,7 @@
 - `feature/search-quality-improvement` 브랜치에서 RAG 검색 경로를 LLM 생성과 분리하고, rerank 이후 source 다양성 선택을 추가했다.
 - 검색 지표는 `rag_precision@k_mean=0.54 -> 0.60`, `source_coverage@k_mean=0.925 -> 1.0`으로 개선됐다.
 - 개선 후 검색 리포트는 `eval/results/eval_20260514_111556.json`, 분석 기록은 `docs/references/search-quality-improvement.md`에 남겼다.
+- PR #16 `RAG 검색 source coverage 개선`을 생성했고 GitHub Actions `Static checks`가 통과했다.
 
 ## Current Gaps
 
@@ -117,7 +118,7 @@
 
 ## Suggested Next Work
 
-1. `feature/search-quality-improvement` 변경을 PR로 올리고 checks를 확인한다.
+1. PR #16 머지 여부를 사용자와 판단한다.
 2. Ollama 기동 후 `.venv/bin/python eval/pipeline.py --all`을 재실행해 생성 지표까지 확인한다.
 3. 검색 품질 개선 계획 완료 여부를 판단하고 completed 이동을 준비한다.
 4. 다음 개선 후보는 답변 생성 지표 재확인 후 청킹, hybrid search 가중치, reranking 적용 범위, 평가셋 확장 순서로 점검한다.
