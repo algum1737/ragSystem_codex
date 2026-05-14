@@ -37,10 +37,11 @@
 - [2026-05-14 작업 리포트](./references/2026-05-14-work-report.md)
 - [2026-05-14 Before/After](./references/2026-05-14-before-after.md)
 - [2026-05-14 다음 품질 반복 분석](./references/2026-05-14-next-quality-iteration-analysis.md)
+- [2026-05-14 평가 케이스 정렬](./references/2026-05-14-eval-case-alignment.md)
 
 ## Active Work
 
-- [Next Quality Iteration Plan](./exec-plans/active/2026-05-14-next-quality-iteration.md)
+- [Next Search Quality Experiment Plan](./exec-plans/active/2026-05-14-next-search-quality-experiment.md)
 
 ## Completed Work
 
@@ -55,3 +56,5 @@
 - [Partial Answer Policy Plan](./exec-plans/completed/2026-05-13-partial-answer-policy.md)
 - [GitHub Actions CI Plan](./exec-plans/completed/2026-05-13-github-actions-ci.md)
 - [Search Quality Improvement Plan](./exec-plans/completed/2026-05-14-search-quality-improvement.md)
+- [Next Quality Iteration Plan](./exec-plans/completed/2026-05-14-next-quality-iteration.md)
+- [Eval Case Alignment Plan](./exec-plans/completed/2026-05-14-eval-case-alignment.md)

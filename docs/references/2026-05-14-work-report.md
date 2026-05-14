@@ -51,7 +51,7 @@
 - `docs/references/search-quality-improvement.md`
 - `docs/exec-plans/completed/2026-05-13-github-actions-ci.md`
 - `docs/exec-plans/completed/2026-05-14-search-quality-improvement.md`
-- `docs/exec-plans/active/2026-05-14-next-quality-iteration.md`
+- `docs/exec-plans/completed/2026-05-14-next-quality-iteration.md`
 - `README.md`
 - `docs/index.md`
 - `docs/PLANS.md`

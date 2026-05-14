@@ -107,6 +107,18 @@
 
 - `2026-05-14-next-quality-iteration.md`
   - 목표: 검색 1차 개선 이후 남은 품질 병목을 재분류하고 다음 실험 후보를 정한다.
+  - 상태: Completed
+
+### Eval Case Alignment
+
+- `2026-05-14-eval-case-alignment.md`
+  - 목표: 낮은 accuracy 케이스의 질문과 expected keyword를 문서 근거에 맞게 정렬한다.
+  - 상태: Completed
+
+### Next Search Quality Experiment
+
+- `2026-05-14-next-search-quality-experiment.md`
+  - 목표: 평가셋 정합성 보정 이후 남은 검색 지표 병목을 분석하고 다음 검색 품질 실험을 정한다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -118,7 +130,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-14-next-quality-iteration.md`
+- `exec-plans/active/2026-05-14-next-search-quality-experiment.md`
 
 ## Completed Plans
 
@@ -133,3 +145,5 @@
 - `exec-plans/completed/2026-05-13-partial-answer-policy.md`
 - `exec-plans/completed/2026-05-13-github-actions-ci.md`
 - `exec-plans/completed/2026-05-14-search-quality-improvement.md`
+- `exec-plans/completed/2026-05-14-next-quality-iteration.md`
+- `exec-plans/completed/2026-05-14-eval-case-alignment.md`

@@ -17,3 +17,4 @@
 - [2026-05-14 Work Report](./2026-05-14-work-report.md)
 - [2026-05-14 Before After](./2026-05-14-before-after.md)
 - [2026-05-14 Next Quality Iteration Analysis](./2026-05-14-next-quality-iteration-analysis.md)
+- [2026-05-14 Eval Case Alignment](./2026-05-14-eval-case-alignment.md)
