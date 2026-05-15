@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import re
 import sys
 import unicodedata
 from datetime import datetime
@@ -17,6 +18,11 @@ _DOC_TYPE_ALIASES = {
     "일반": ["일반", "일반약관"],
     "위치기반서비스": ["위치기반서비스", "위치기반약관"],
 }
+
+
+def _tokenize_for_overlap(text: str) -> set[str]:
+    tokens = re.findall(r"[가-힣]+|[a-zA-Z0-9]+", text.lower())
+    return {t for t in tokens if len(t) > 1}
 
 
 def _doc_type_where(doc_type: str | None) -> dict | None:
@@ -153,10 +159,71 @@ class RAGEvaluator:
                 matched += 1
         return matched / len(expected_keywords)
 
-    def faithfulness(self, answer: str, context_texts: list[str]) -> float | None:
+    def _select_faithfulness_contexts(
+        self,
+        question: str,
+        answer: str,
+        context_texts: list[str],
+        context_sources: list[str] | None = None,
+        max_contexts: int = 3,
+    ) -> list[str]:
+        if len(context_texts) <= max_contexts:
+            return context_texts
+
+        query_tokens = _tokenize_for_overlap(f"{question}\n{answer}")
+        if not query_tokens:
+            return context_texts[:max_contexts]
+
+        scored: list[tuple[int, int, str, str]] = []
+        for index, text in enumerate(context_texts):
+            text_tokens = _tokenize_for_overlap(text)
+            overlap = len(query_tokens & text_tokens)
+            source = context_sources[index] if context_sources and index < len(context_sources) else ""
+            source = unicodedata.normalize("NFC", os.path.basename(source))
+            scored.append((overlap, -index, source, text))
+
+        selected: list[tuple[int, int, str, str]] = []
+        seen_sources: set[str] = set()
+        for item in sorted(scored, reverse=True):
+            source = item[2]
+            if source and source in seen_sources:
+                continue
+            selected.append(item)
+            if source:
+                seen_sources.add(source)
+            if len(selected) >= max_contexts:
+                break
+
+        if len(selected) < max_contexts:
+            selected_texts = {item[3] for item in selected}
+            for item in sorted(scored, reverse=True):
+                if item[3] in selected_texts:
+                    continue
+                selected.append(item)
+                selected_texts.add(item[3])
+                if len(selected) >= max_contexts:
+                    break
+
+        # Keep retrieval order inside the final prompt after relevance and source filtering.
+        selected_texts = [text for _, _, _, text in sorted(selected, key=lambda item: -item[1])]
+        return selected_texts
+
+    def faithfulness(
+        self,
+        question: str,
+        answer: str,
+        context_texts: list[str],
+        context_sources: list[str] | None = None,
+    ) -> float | None:
         if not context_texts:
             return None
-        context = "\n\n".join(context_texts[:3])
+        selected_contexts = self._select_faithfulness_contexts(
+            question,
+            answer,
+            context_texts,
+            context_sources=context_sources,
+        )
+        context = "\n\n".join(selected_contexts)
         prompt = (
             "다음 답변이 참고 문서에만 근거하는지 판단하세요.\n\n"
             f"[참고 문서]\n{context}\n\n"
@@ -284,7 +351,12 @@ class RAGEvaluator:
                 )
 
             if "faithfulness" in metrics and answer is not None:
-                case_result["faithfulness"] = self.faithfulness(answer, context_texts)
+                case_result["faithfulness"] = self.faithfulness(
+                    case["question"],
+                    answer,
+                    context_texts,
+                    context_sources=query_sources if need_llm else rag_sources,
+                )
 
             results.append(case_result)
 
