@@ -50,8 +50,30 @@
 
 ## Validation Result
 
-- 아직 실행 전.
+- Pre-flight checks: 통과.
+  - 최신 유효 리포트 `eval/results/eval_20260514_180006.json` 확인.
+  - `eval/pipeline.py`의 faithfulness prompt와 `context_texts[:3]` 사용 확인.
+  - `tc-10` retrieved context를 동일 RAG retrieval 경로로 추출.
+- Automated tests: 통과.
+  - `bash scripts/validate-docs.sh`
+  - `.venv/bin/python -m py_compile eval/pipeline.py retriever/engine.py api/models.py api/main.py app.py`
+- Manual/Runtime QA: 통과.
+  - `tc-10` 답변의 핵심 문장은 context 1, 2에 직접 근거함을 확인.
+  - context 3은 이용 제한/해지 조항으로 `tc-10` 답변 근거와 무관함을 확인.
+- Single-case judge reproduction: 통과.
+  - `context_texts[:2]`: `YES`
+  - `context_texts[:3]`: `NO`
+  - `context_texts[:5]`: `NO`
+- Skipped/Not Run:
+  - 계획대로 full eval 재실행은 미실행.
 
 ## Open Work
 
-- `tc-10` faithfulness 판정 흔들림 원인 분석
+- 이 계획 범위의 남은 작업은 없다.
+- 후속 작업은 faithfulness 전용 context selection 구현 실험이다.
+
+## Completion
+
+- `tc-10` faithfulness 실패 원인은 답변 근거 부족보다 judge context selection 문제로 분류했다.
+- 분석 결과를 `docs/references/2026-05-15-faithfulness-eval-stability.md`에 기록했다.
+- 다음 후보는 `context_texts[:3]` 고정 사용을 대체하는 faithfulness 전용 context selection이다.

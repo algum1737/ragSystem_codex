@@ -143,6 +143,18 @@
 
 - `2026-05-14-faithfulness-eval-stability.md`
   - 목표: `tc-10` faithfulness 판정 흔들림을 분석하고 다음 개선 후보를 정한다.
+  - 상태: Completed
+
+### Faithfulness Context Selection
+
+- `2026-05-15-faithfulness-context-selection.md`
+  - 목표: faithfulness judge 입력 context 선택 방식을 개선한다.
+  - 상태: Completed
+
+### Residual Keyword Accuracy
+
+- `2026-05-15-residual-keyword-accuracy.md`
+  - 목표: `tc-03`, `tc-09` 잔여 keyword accuracy 감점을 분석한다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -155,7 +167,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-14-faithfulness-eval-stability.md`
+- `exec-plans/active/2026-05-15-residual-keyword-accuracy.md`
 
 ## Completed Plans
 
@@ -176,3 +188,5 @@
 - `exec-plans/completed/2026-05-14-retrieval-metric-normalization.md`
 - `exec-plans/completed/2026-05-14-residual-answer-quality-analysis.md`
 - `exec-plans/completed/2026-05-14-answer-format-prompt-experiment.md`
+- `exec-plans/completed/2026-05-14-faithfulness-eval-stability.md`
+- `exec-plans/completed/2026-05-15-faithfulness-context-selection.md`
