@@ -155,6 +155,12 @@
 
 - `2026-05-15-residual-keyword-accuracy.md`
   - 목표: `tc-03`, `tc-09` 잔여 keyword accuracy 감점을 분석한다.
+  - 상태: Completed
+
+### Eval Generalization Review
+
+- `2026-05-15-eval-generalization-review.md`
+  - 목표: 평가셋 상한 도달 이후 일반화와 확장 방향을 검토한다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -167,7 +173,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-15-residual-keyword-accuracy.md`
+- `exec-plans/active/2026-05-15-eval-generalization-review.md`
 
 ## Completed Plans
 
@@ -190,3 +196,4 @@
 - `exec-plans/completed/2026-05-14-answer-format-prompt-experiment.md`
 - `exec-plans/completed/2026-05-14-faithfulness-eval-stability.md`
 - `exec-plans/completed/2026-05-15-faithfulness-context-selection.md`
+- `exec-plans/completed/2026-05-15-residual-keyword-accuracy.md`

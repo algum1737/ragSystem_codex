@@ -42,10 +42,11 @@
 - [2026-05-14 Retrieval Metric Normalization](./references/2026-05-14-retrieval-metric-normalization.md)
 - [2026-05-14 잔여 답변 품질 분석](./references/2026-05-14-residual-answer-quality-analysis.md)
 - [2026-05-15 Faithfulness Eval Stability](./references/2026-05-15-faithfulness-eval-stability.md)
+- [2026-05-15 Residual Keyword Accuracy](./references/2026-05-15-residual-keyword-accuracy.md)
 
 ## Active Work
 
-- [Residual Keyword Accuracy Plan](./exec-plans/active/2026-05-15-residual-keyword-accuracy.md)
+- [Eval Generalization Review Plan](./exec-plans/active/2026-05-15-eval-generalization-review.md)
 
 ## Completed Work
 
@@ -68,3 +69,4 @@
 - [Answer Format Prompt Experiment Plan](./exec-plans/completed/2026-05-14-answer-format-prompt-experiment.md)
 - [Faithfulness Eval Stability Plan](./exec-plans/completed/2026-05-14-faithfulness-eval-stability.md)
 - [Faithfulness Context Selection Plan](./exec-plans/completed/2026-05-15-faithfulness-context-selection.md)
+- [Residual Keyword Accuracy Plan](./exec-plans/completed/2026-05-15-residual-keyword-accuracy.md)
