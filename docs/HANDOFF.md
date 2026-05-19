@@ -196,6 +196,10 @@
   - 최종 지표: `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_rate=0.0`.
 - 다음 작업으로 eval generalization review active plan을 생성했다.
   - `docs/exec-plans/active/2026-05-15-eval-generalization-review.md`
+- RAG 보고서 3종을 최신 평가/인제스천 상태 기준으로 갱신했고, HTML 복사본과 `RAG_BEFORE_AFTER.pdf`를 추가했다.
+  - `RAG_BEFORE_AFTER.md`, `RAG_PERFORMANCE_REPORT.md`, `RAG_IMPROVEMENT_ROADMAP.md`
+  - `RAG_BEFORE_AFTER.html`, `RAG_PERFORMANCE_REPORT.html`, `RAG_IMPROVEMENT_ROADMAP.html`
+  - `RAG_BEFORE_AFTER.pdf`
 
 ## Current Gaps
 
