@@ -146,6 +146,11 @@ class RAGEvaluator:
             return False
         return "찾을 수 없습니다" in answer
 
+    def expected_not_found_accuracy(self, answer: str | None, expected_not_found: bool) -> float | None:
+        if not expected_not_found:
+            return None
+        return 1.0 if self._is_not_found_answer(answer) else 0.0
+
     def answer_accuracy(self, answer: str, expected_keywords: list[str | list[str]]) -> float | None:
         if not expected_keywords:
             return None
@@ -165,7 +170,7 @@ class RAGEvaluator:
         answer: str,
         context_texts: list[str],
         context_sources: list[str] | None = None,
-        max_contexts: int = 3,
+        max_contexts: int = 5,
     ) -> list[str]:
         if len(context_texts) <= max_contexts:
             return context_texts
@@ -277,6 +282,8 @@ class RAGEvaluator:
                 "answer_accuracy": None,
                 "faithfulness": None,
                 "not_found": None,
+                "expected_not_found": case.get("expected_not_found", False),
+                "not_found_success": None,
             }
 
             if "retrieval" in metrics:
@@ -337,6 +344,8 @@ class RAGEvaluator:
                     case_result["answer"] = answer
                     case_result["rag_retrieved_sources"] = rag_sources
                     case_result["not_found"] = self._is_not_found_answer(answer)
+                    if case_result["expected_not_found"]:
+                        case_result["not_found_success"] = case_result["not_found"] is True
                 except Exception as e:
                     logger.warning("RAG query 실패 (케이스 %s): %s", case["id"], e)
                     answer = None
@@ -346,17 +355,26 @@ class RAGEvaluator:
                 context_texts = rag_context_texts
 
             if "accuracy" in metrics and answer is not None:
-                case_result["answer_accuracy"] = self.answer_accuracy(
-                    answer, case.get("expected_keywords", [])
+                expected_not_found_accuracy = self.expected_not_found_accuracy(
+                    answer,
+                    case_result["expected_not_found"],
+                )
+                case_result["answer_accuracy"] = (
+                    expected_not_found_accuracy
+                    if expected_not_found_accuracy is not None
+                    else self.answer_accuracy(answer, case.get("expected_keywords", []))
                 )
 
             if "faithfulness" in metrics and answer is not None:
-                case_result["faithfulness"] = self.faithfulness(
-                    case["question"],
-                    answer,
-                    context_texts,
-                    context_sources=query_sources if need_llm else rag_sources,
-                )
+                if case_result["expected_not_found"] and case_result["not_found"] is True:
+                    case_result["faithfulness"] = 1.0
+                else:
+                    case_result["faithfulness"] = self.faithfulness(
+                        case["question"],
+                        answer,
+                        context_texts,
+                        context_sources=query_sources if need_llm else rag_sources,
+                    )
 
             results.append(case_result)
 
@@ -380,6 +398,7 @@ class RAGEvaluator:
             "accuracy_mean": _mean("answer_accuracy"),
             "faithfulness_mean": _mean("faithfulness"),
             "not_found_rate": _mean("not_found"),
+            "not_found_success_rate": _mean("not_found_success"),
         }
 
         print("\n=== 평가 요약 ===")
