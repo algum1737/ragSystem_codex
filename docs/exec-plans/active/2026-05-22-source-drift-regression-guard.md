@@ -39,6 +39,8 @@
 ## Automated tests
 
 - `bash scripts/validate-docs.sh`
+- `.venv/bin/python -m py_compile scripts/source_drift_report.py`
+- `.venv/bin/python scripts/source_drift_report.py eval/results/eval_20260522_160844.json --fail-on-critical`
 
 ## Manual/Runtime QA
 
@@ -46,12 +48,25 @@
 
 ## Skipped/Not Run
 
-- 아직 실행 전.
+- CI workflow 반영은 실행하지 않는다. 현재 범위는 로컬 리포트와 guard 후보 검증이다.
 
 ## Validation Result
 
-- 아직 실행 전.
+- Pre-flight checks
+  - `docs/references/2026-05-22-eval-source-drift-calibration.md` 확인.
+  - `eval/results/eval_20260522_160844.json` 확인.
+  - `eval/test_cases.json`의 `relevant_sources` 구조 확인.
+- Automated tests
+  - `bash scripts/validate-docs.sh` 통과.
+  - `.venv/bin/python -m py_compile scripts/source_drift_report.py` 통과.
+  - `.venv/bin/python scripts/source_drift_report.py eval/results/eval_20260522_160844.json --fail-on-critical` 통과.
+- Manual/Runtime QA
+  - 리포트 생성 완료: `docs/references/2026-05-22-source-drift-regression-report.md`
+  - critical case 없음.
+  - watch case 7건 확인: `tc-02`, `tc-03`, `tc-06`, `tc-07`, `tc-08`, `tc-14`, `tc-15`.
+  - 생성 지표는 모두 통과하므로 watch case는 CI 실패 조건이 아니라 후속 분석 후보로 유지.
 
 ## Open Work
 
-- source drift regression guard 설계 검토 진행.
+- 로컬 source drift 리포트 스크립트 구현 완료.
+- 남은 판단: watch case 기준을 CI warning/report로만 둘지, 별도 PR에서 CI 실패 조건으로 승격할지 결정.
