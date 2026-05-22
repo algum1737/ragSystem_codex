@@ -48,12 +48,33 @@
 
 ## Skipped/Not Run
 
-- 아직 실행 전.
+- 없음.
 
 ## Validation Result
 
-- 아직 실행 전.
+- Pre-flight checks
+  - `docs/references/2026-05-22-eval-failure-triage.md` 확인.
+  - `eval/results/eval_20260522_131753.json` 확인.
+  - `eval/test_cases.json`의 `tc-04`, `tc-06` 확인.
+- Automated tests
+  - `jq empty eval/test_cases.json` 통과.
+  - `bash scripts/validate-docs.sh` 통과.
+  - `.venv/bin/python -m py_compile eval/pipeline.py retriever/engine.py api/models.py api/main.py app.py` 통과.
+  - `.venv/bin/python eval/pipeline.py --all` 실행 완료.
+    - 최종 리포트: `eval/results/eval_20260522_160844.json`
+    - `total_cases=17`
+    - `accuracy_mean=1.0`
+    - `faithfulness_mean=1.0`
+    - `not_found_rate=0.0588`
+    - `not_found_success_rate=1.0`
+- Manual/Runtime QA
+  - `tc-04`는 유료서비스 자동 갱신 positive case로 통과.
+  - `tc-06`은 협의/소송/법원/제소 표현을 반영해 통과.
+  - `tc-16`은 expected no-answer negative case로 유지.
+  - `tc-17`은 해지/개별 서비스 이용 종료 positive case로 통과.
+  - 결과 문서: `docs/references/2026-05-22-eval-source-drift-calibration.md`
 
 ## Open Work
 
-- 사용자 승인 후 평가셋 calibration 구현 진행.
+- 남은 작업 없음.
+- 다음 후보: 신규 문서 추가 시 source drift를 자동 탐지하는 regression guard 또는 리포트 검토.
