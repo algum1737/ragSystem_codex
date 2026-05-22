@@ -161,6 +161,18 @@
 
 - `2026-05-15-eval-generalization-review.md`
   - 목표: 평가셋 상한 도달 이후 일반화와 확장 방향을 검토한다.
+  - 상태: Completed
+
+### Eval Set Expansion
+
+- `2026-05-22-eval-set-expansion.md`
+  - 목표: 최신 13개 문서, 318개 청크 corpus를 검증하도록 hard case를 추가한다.
+  - 상태: Completed
+
+### Eval Failure Triage
+
+- `2026-05-22-eval-failure-triage.md`
+  - 목표: 확장 평가셋 full eval에서 드러난 실패 케이스를 분류하고 우선 개선 대상을 정한다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -173,7 +185,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-15-eval-generalization-review.md`
+- `exec-plans/active/2026-05-22-eval-failure-triage.md`
 
 ## Completed Plans
 
@@ -197,3 +209,5 @@
 - `exec-plans/completed/2026-05-14-faithfulness-eval-stability.md`
 - `exec-plans/completed/2026-05-15-faithfulness-context-selection.md`
 - `exec-plans/completed/2026-05-15-residual-keyword-accuracy.md`
+- `exec-plans/completed/2026-05-15-eval-generalization-review.md`
+- `exec-plans/completed/2026-05-22-eval-set-expansion.md`

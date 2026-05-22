@@ -50,8 +50,20 @@
 
 ## Validation Result
 
-- 아직 실행 전.
+- Pre-flight checks
+  - `eval/results/eval_20260515_135903.json` 확인 완료.
+  - `eval/test_cases.json` 10개 케이스 검토 완료.
+  - `docs/references/2026-05-15-residual-keyword-accuracy.md` 확인 완료.
+- Automated tests
+  - `bash scripts/validate-docs.sh` 통과.
+  - `.venv/bin/python -m py_compile eval/pipeline.py retriever/engine.py api/models.py api/main.py app.py` 통과.
+- Manual/Runtime QA
+  - 현재 케이스 coverage와 keyword OR group 위험도를 `docs/references/2026-05-22-eval-generalization-review.md`에 기록.
+  - hard case 후보 6개를 제안.
+- Skipped/Not Run
+  - full eval 재실행은 분석 계획 범위 밖이라 실행하지 않음.
 
 ## Open Work
 
-- 평가셋 일반화 및 확장 방향 검토
+- 남은 작업 없음.
+- 다음 active plan: `docs/exec-plans/active/2026-05-22-eval-set-expansion.md`
