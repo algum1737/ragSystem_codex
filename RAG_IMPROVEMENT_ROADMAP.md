@@ -1,8 +1,8 @@
 # RAG 품질 개선 로드맵
 
-**최종 업데이트:** 2026-05-15
+**최종 업데이트:** 2026-05-22
 
-**현재 버전:** v0.4 진행 중 (검색/평가 하네스 안정화 및 keyword accuracy 보정 완료)
+**현재 버전:** v0.4 진행 중 (확장 평가셋 안정화 및 source scope 정책 정리 중)
 
 **목적:** 특정 카테고리 문서 기반 RAG 검색 및 문서 초안 생성 파이프라인
 
@@ -85,6 +85,12 @@
 | 잔여 keyword accuracy 보정 | 2026-05-15 | `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_rate=0.0` |
 | 원본 파일명 메타데이터 보존 (버그 수정) | v0.3 | Precision@K 평가 정상화 |
 | TxtParser / MdParser 추가 | v0.2 Phase 7 | .txt, .md 파일 인제스천 가능 |
+| 평가셋 일반화 검토 | 2026-05-22 | 기존 10개 케이스의 과적합 가능성과 hard case 확장 필요성 확인 |
+| hard case 확장 | 2026-05-22 | 10개→16개→17개 케이스로 확장, 13개 문서/318개 청크 corpus 검증 |
+| expected no-answer 평가 정책 | 2026-05-22 | `expected_not_found`, `not_found_success_rate` 추가 |
+| Source drift calibration | 2026-05-22 | `tc-04`, `tc-06`, `tc-16`, `tc-17` 정리 후 생성 지표 1.0 회복 |
+| Source drift regression guard | 2026-05-22 | critical/watch case 자동 리포트 스크립트 추가 |
+| Watch case review | 2026-05-22 | watch case 7건을 source scope 정책 후보로 분리 |
 
 ---
 
@@ -92,8 +98,8 @@
 
 | 개선 방법 | 대상 | 비고 |
 | --- | --- | --- |
-| 평가셋 일반화 검토 | 현재 10개 케이스와 keyword OR group | active plan: `2026-05-15-eval-generalization-review.md` |
-| hard case 확장 후보 정의 | 신규 질문 3건 이상 | 현재 평가셋 상한 도달 이후 우선 후보 |
+| Source scope policy | `relevant_sources` 범위 기준 | active plan: `2026-05-22-source-scope-policy.md` |
+| Watch case 후속 보정 판단 | `tc-02`, `tc-03`, `tc-07`, `tc-08`, `tc-14`, `tc-15` | source scope 정책 확정 후 재검토 |
 
 ---
 
@@ -109,21 +115,23 @@
 
 ---
 
-## 실측 기준선 (2026-05-15 full eval)
+## 실측 기준선 (2026-05-22 full eval)
 
 ```
-최신 리포트: eval/results/eval_20260515_135903.json
+최신 리포트: eval/results/eval_20260522_160844.json
 
-precision@k_mean:        0.48
-vector_precision@k_mean: 0.48
-rag_precision@k_mean:    0.60
-rag_normalized_source_precision@k_mean: 1.0
-rag_chunk_precision@k_mean:             0.96
-source_recall@k_mean:                   1.0
-source_coverage@k_mean:  1.0
+total_cases:             17
+precision@k_mean:        0.3529
+vector_precision@k_mean: 0.3529
+rag_precision@k_mean:    0.4235
+rag_normalized_source_precision@k_mean: 0.7971
+rag_chunk_precision@k_mean:             0.5882
+source_recall@k_mean:                   0.7836
+source_coverage@k_mean:  0.7836
 accuracy_mean:           1.0
 faithfulness_mean:       1.0
-not_found_rate:          0.0
+not_found_rate:          0.0588
+not_found_success_rate:  1.0
 ```
 
 v0.4 검색 1차 목표: 실제 RAG 경로 기준 `rag_precision@k_mean` **0.60 이상** 달성
@@ -132,26 +140,25 @@ v0.4 평가셋 정합성 목표: 문서 근거와 평가 질문/키워드 정렬
 
 v0.4 검색 지표 정규화 목표: 기존 precision 상한 문제 해소와 해석 가능한 source/chunk 지표 추가 완료
 
-v0.4 생성 품질 목표: 현재 10개 평가 케이스 기준 `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_rate=0.0` 달성
+v0.4 생성 품질 목표: 현재 17개 평가 케이스 기준 `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_success_rate=1.0` 달성
 
 ---
 
 ## 추천 진행 순서 (잔여)
 
 ```
-현재 (현재 평가셋 기준 생성 품질 상한 달성)
+현재 (17개 평가 케이스 기준 생성 품질 상한 달성)
     │
     ▼
-평가셋 일반화 검토
-    │  → 현재 10개 케이스와 OR keyword group 과적합 여부 확인
+source scope policy 수립
+    │  → relevant_sources 범위를 전체 관련 문서 기준으로 볼지 대표 근거 기준으로 볼지 결정
     ▼
-hard case 후보 정의
-    │  → 신규 질문 3건 이상, 문서 간 충돌/부분 근거/표현 다양성 포함
+watch case 후속 보정 판단
+    │  → tc-02, tc-03, tc-07, tc-08, tc-14, tc-15 재검토
     ▼
-평가셋 확장 또는 판정 방식 보완
-    │  → 사용자 승인 후 별도 active plan으로 구현
+필요 시 평가셋 source 기준 보정 및 full eval 재실행
 ```
 
 ---
 
-*실측값은 `.venv/bin/python eval/pipeline.py --all`로 측정한다. 최신 결과는 `eval/results/eval_20260515_135903.json`과 `docs/references/2026-05-15-residual-keyword-accuracy.md`를 기준으로 한다.*
+*실측값은 `.venv/bin/python eval/pipeline.py --all`로 측정한다. 최신 결과는 `eval/results/eval_20260522_160844.json`, `docs/references/2026-05-22-eval-source-drift-calibration.md`, `docs/references/2026-05-22-watch-case-review.md`를 기준으로 한다.*

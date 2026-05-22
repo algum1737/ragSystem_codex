@@ -1,6 +1,6 @@
 # RAG 성능 변화 비교 보고서
 
-**최종 업데이트:** 2026-05-15
+**최종 업데이트:** 2026-05-22
 
 **목적:** 특정 카테고리 문서 기반 RAG 검색 및 문서 초안 생성
 
@@ -342,6 +342,99 @@ Precision@5 평균    미측정           미측정            0.46             
 
 ---
 
+---
+
+## 비교 9: 잔여 keyword accuracy 보정 → 평가셋 일반화 및 hard case 확장
+
+**비교 기준:** `eval/results/eval_20260515_135903.json` vs `eval/results/eval_20260522_091248.json`
+
+### 변경 내용
+
+| 항목 | Before | After |
+| --- | --- | --- |
+| 평가 케이스 수 | 10개 | 16개 |
+| corpus 범위 | 다음/네이버 중심 | 13개 약관/정책 문서, 318개 청크 |
+| 신규 hard case | 없음 | 유료서비스, 운영정책, 위치정보, 계정, no-answer 케이스 추가 |
+
+### 실측 지표 변화
+
+| Metric | Before | After | Delta |
+| --- | ---: | ---: | ---: |
+| `total_cases` | `10` | `16` | `+6` |
+| `accuracy_mean` | `1.0` | `0.9062` | `-0.0938` |
+| `faithfulness_mean` | `1.0` | `0.75` | `-0.25` |
+| `not_found_rate` | `0.0` | `0.0625` | `+0.0625` |
+
+이 하락은 시스템 전체 회귀가 아니라, 기존 평가셋이 다루지 못한 no-answer, source drift, 다문서 faithfulness 문제를 드러낸 결과다.
+
+---
+
+## 비교 10: 평가셋 확장 → no-answer / faithfulness triage
+
+**비교 기준:** `eval/results/eval_20260522_091248.json` vs `eval/results/eval_20260522_131753.json`
+
+### 변경 내용
+
+| 항목 | Before | After |
+| --- | --- | --- |
+| no-answer 평가 | 일반 accuracy/faithfulness 실패로 집계 | `expected_not_found`, `not_found_success_rate` 추가 |
+| faithfulness context | 상위 3개 context 중심 | 최대 5개 context로 확대 |
+| 주요 개선 케이스 | `tc-16`, `tc-09`, `tc-10` | negative/no-answer와 다문서 faithfulness 안정화 |
+
+### 실측 지표 변화
+
+| Metric | Before | After | Delta |
+| --- | ---: | ---: | ---: |
+| `accuracy_mean` | `0.9062` | `0.9219` | `+0.0157` |
+| `faithfulness_mean` | `0.75` | `0.9375` | `+0.1875` |
+| `not_found_success_rate` | N/A | `1.0` | 신규 |
+
+---
+
+## 비교 11: Failure triage → source drift calibration
+
+**비교 기준:** `eval/results/eval_20260522_131753.json` vs `eval/results/eval_20260522_160844.json`
+
+### 변경 내용
+
+| Case | Before | After |
+| --- | --- | --- |
+| `tc-04` | 자동 갱신/해지 복합 질문 | 자동 갱신 positive case |
+| `tc-06` | 다음/네이버 중심 분쟁 source | 카카오/다음/네이버 분쟁 source와 표현 반영 |
+| `tc-16` | negative case 유지 | 결제 주기/금액 변경 조건 no-answer 성공 |
+| `tc-17` | 없음 | 해지/개별 서비스 이용 종료 positive case 추가 |
+
+### 실측 지표 변화
+
+| Metric | Before | After | Delta |
+| --- | ---: | ---: | ---: |
+| `total_cases` | `16` | `17` | `+1` |
+| `accuracy_mean` | `0.9219` | `1.0` | `+0.0781` |
+| `faithfulness_mean` | `0.9375` | `1.0` | `+0.0625` |
+| `not_found_rate` | `0.125` | `0.0588` | `-0.0662` |
+| `not_found_success_rate` | `1.0` | `1.0` | `0.0` |
+| `rag_normalized_source_precision@k_mean` | `0.7188` | `0.7971` | `+0.0783` |
+| `source_recall@k_mean` | `0.7188` | `0.7836` | `+0.0648` |
+
+---
+
+## 비교 12: source drift calibration → regression guard / watch case review
+
+**비교 기준:** `eval/results/eval_20260522_160844.json` + `scripts/source_drift_report.py`
+
+### 변경 내용
+
+| 항목 | 결과 |
+| --- | --- |
+| source drift guard | 저장된 eval JSON에서 critical/watch case 자동 분류 |
+| critical case | 없음 |
+| watch case | `tc-02`, `tc-03`, `tc-06`, `tc-07`, `tc-08`, `tc-14`, `tc-15` |
+| 평가셋 즉시 보정 | 보류 |
+| 다음 작업 | source scope policy 수립 |
+
+watch case는 모두 `accuracy=1.0`, `faithfulness=1.0`이다. 따라서 검색 실패가 아니라 relevant source 범위 정책 문제로 분류했다.
+
+
 ## 실측 평가 실행 방법
 
 v0.3에서 평가 파이프라인이 구축되어 실제 수치 측정이 가능합니다.
@@ -356,7 +449,7 @@ python3 eval/pipeline.py --all
 # 결과: eval/results/eval_{YYYYMMDD_HHMMSS}.json
 ```
 
-**평가 케이스:** `eval/test_cases.json` — 이용약관 도메인 10개 질문
+**평가 케이스:** `eval/test_cases.json` — 이용약관 도메인 17개 질문
 
 **relevant_sources 매핑:** 완료 (Precision@K 즉시 측정 가능)
 
@@ -374,12 +467,12 @@ python3 eval/pipeline.py --all
 
 ## 다음 단계
 
-1. 최신 full eval 리포트 `eval/results/eval_20260515_135903.json` 기준 현재 10개 케이스의 상한 도달 상태를 확인한다.
+1. 최신 full eval 리포트 `eval/results/eval_20260522_160844.json` 기준 17개 케이스 상한 도달 상태를 유지한다.
 
-1. keyword OR group이 현재 케이스에 과적합됐는지 검토한다.
+1. source drift watch case 7건에 대해 `relevant_sources` 범위 정책을 먼저 정한다.
 
-1. hard case 후보를 3건 이상 추가해 평가셋 확장 계획을 수립한다.
+1. source scope policy 확정 후 필요한 경우 평가셋 source 기준을 보정하고 full eval을 재실행한다.
 
 ---
 
-*최종 업데이트: 2026-05-15 — accuracy/faithfulness/not_found 현재 평가셋 상한 달성*
+*최종 업데이트: 2026-05-22 — 17개 케이스 기준 accuracy/faithfulness/not_found_success 상한 달성, source drift watch case review 완료*
