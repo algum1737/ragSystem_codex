@@ -1,8 +1,11 @@
 # RAG 품질 개선 로드맵
 
-**최종 업데이트:** 2026-05-14  
-**현재 버전:** v0.4 진행 중 (평가셋 정합성 보정 완료)
-**목적:** 특정 카테고리 문서 기반 RAG 검색 및 문서 초안 생성 파이프라인  
+**최종 업데이트:** 2026-05-15
+
+**현재 버전:** v0.4 진행 중 (검색/평가 하네스 안정화 및 keyword accuracy 보정 완료)
+
+**목적:** 특정 카테고리 문서 기반 RAG 검색 및 문서 초안 생성 파이프라인
+
 **검증 도메인:** 이용약관 (예시 — 다른 도메인으로 교체 가능)
 
 ---
@@ -46,7 +49,13 @@
 └─────────────────────────────┘
     │
     ▼
-  최종 답변
+┌─────────────────────────────┐
+│  평가 하네스                 │  retrieval / accuracy / faithfulness
+│  eval/pipeline.py           │  judge용 context 선택과 keyword OR group
+└─────────────────────────────┘
+    │
+    ▼
+  최종 답변 및 평가 리포트
 ```
 
 ---
@@ -56,7 +65,7 @@
 ### ✅ 완료 항목
 
 | 개선 방법 | 완료 버전 | 효과 |
-|-----------|-----------|------|
+| --- | --- | --- |
 | 하이브리드 검색 (BM25 + Vector + RRF) | v0.1 Phase 5 | 키워드+의미 양쪽 재현율 향상 |
 | 다국어 임베딩 교체 (e5-large, 1024dim) | v0.3 Phase 10 | 한국어 검색 품질 +3~8%p 추정 |
 | Cross-Encoder 재순위 | v0.3 Phase 11 | NDCG@10 +5~12%p 추정 |
@@ -72,6 +81,8 @@
 | RAG 검색 source 다양성 선택 | 2026-05-14 | `rag_precision@k_mean` 0.54→0.60, coverage 0.925→1.0 |
 | 평가셋 정합성 보정 | 2026-05-14 | `accuracy_mean` 0.70→0.875, `faithfulness_mean` 0.90→1.0 |
 | Retrieval metric 정규화 | 2026-05-14 | `rag_normalized_source_precision@k_mean=1.0`, `rag_chunk_precision@k_mean=0.96` |
+| Faithfulness context 선택 개선 | 2026-05-15 | `faithfulness_mean=1.0` 안정화 |
+| 잔여 keyword accuracy 보정 | 2026-05-15 | `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_rate=0.0` |
 | 원본 파일명 메타데이터 보존 (버그 수정) | v0.3 | Precision@K 평가 정상화 |
 | TxtParser / MdParser 추가 | v0.2 Phase 7 | .txt, .md 파일 인제스천 가능 |
 
@@ -80,16 +91,16 @@
 ### 🔄 진행 중 (v0.4)
 
 | 개선 방법 | 대상 | 비고 |
-|-----------|------|------|
-| 잔여 답변 품질 분석 | `tc-06`, `tc-07`, `tc-09` | active plan: `2026-05-14-residual-answer-quality-analysis.md` |
-| 답변 accuracy 개선 후보 선정 | expected keyword / 답변 형식 / 프롬프트 | 검색 지표 정규화 이후 우선 후보 |
+| --- | --- | --- |
+| 평가셋 일반화 검토 | 현재 10개 케이스와 keyword OR group | active plan: `2026-05-15-eval-generalization-review.md` |
+| hard case 확장 후보 정의 | 신규 질문 3건 이상 | 현재 평가셋 상한 도달 이후 우선 후보 |
 
 ---
 
 ### ⬜ 미착수 (우선순위 순)
 
 | 개선 방법 | 대상 | 임팩트 | 구현 난이도 | 비고 |
-|-----------|------|--------|-------------|------|
+| --- | --- | --- | --- | --- |
 | MMR 다양성 검색 | 단일문서 집중 완화 | 중간 | 중간 | 1차 source 다양성 선택 적용 후 잔여 후보 |
 | 중복 문서 해시 감지 | 노이즈 감소 | 중간 | 낮음 | 파일 해시 기반 스킵 |
 | Query Rewriting | 모호한 쿼리 처리 | 중간 | 중간 | LLM 2회 호출 트레이드오프 |
@@ -98,10 +109,10 @@
 
 ---
 
-## 실측 기준선 (2026-05-14 retrieval metric 정규화 완료)
+## 실측 기준선 (2026-05-15 full eval)
 
 ```
-최신 리포트: eval/results/eval_20260514_164724.json
+최신 리포트: eval/results/eval_20260515_135903.json
 
 precision@k_mean:        0.48
 vector_precision@k_mean: 0.48
@@ -110,32 +121,37 @@ rag_normalized_source_precision@k_mean: 1.0
 rag_chunk_precision@k_mean:             0.96
 source_recall@k_mean:                   1.0
 source_coverage@k_mean:  1.0
-accuracy_mean:           0.90
+accuracy_mean:           1.0
 faithfulness_mean:       1.0
 not_found_rate:          0.0
 ```
 
 v0.4 검색 1차 목표: 실제 RAG 경로 기준 `rag_precision@k_mean` **0.60 이상** 달성
+
 v0.4 평가셋 정합성 목표: 문서 근거와 평가 질문/키워드 정렬 완료
+
 v0.4 검색 지표 정규화 목표: 기존 precision 상한 문제 해소와 해석 가능한 source/chunk 지표 추가 완료
+
+v0.4 생성 품질 목표: 현재 10개 평가 케이스 기준 `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_rate=0.0` 달성
 
 ---
 
 ## 추천 진행 순서 (잔여)
 
 ```
-현재 (retrieval metric 정규화 완료)
+현재 (현재 평가셋 기준 생성 품질 상한 달성)
     │
     ▼
-잔여 낮은 answer accuracy 케이스 분석
-    │  → tc-06, tc-07, tc-09 확인
+평가셋 일반화 검토
+    │  → 현재 10개 케이스와 OR keyword group 과적합 여부 확인
     ▼
-답변 품질 개선 후보 선정
-    │  → expected keyword / 답변 형식 / 프롬프트
+hard case 후보 정의
+    │  → 신규 질문 3건 이상, 문서 간 충돌/부분 근거/표현 다양성 포함
     ▼
-사용자 승인 후 별도 active plan으로 구현
+평가셋 확장 또는 판정 방식 보완
+    │  → 사용자 승인 후 별도 active plan으로 구현
 ```
 
 ---
 
-*실측값은 `.venv/bin/python eval/pipeline.py --all`로 측정한다. 최신 retrieval metric 정규화 결과는 `docs/references/2026-05-14-retrieval-metric-normalization.md`를 기준으로 한다.*
+*실측값은 `.venv/bin/python eval/pipeline.py --all`로 측정한다. 최신 결과는 `eval/results/eval_20260515_135903.json`과 `docs/references/2026-05-15-residual-keyword-accuracy.md`를 기준으로 한다.*

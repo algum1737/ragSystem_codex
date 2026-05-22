@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RAG 성능 변화 비교 보고서</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111827;
+      --muted: #4b5563;
+      --line: #d1d5db;
+      --panel: #f9fafb;
+      --accent: #1d4ed8;
+      --accent-soft: #eff6ff;
+      --code: #f3f4f6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Helvetica Neue", Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    main {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 40px 0 72px;
+    }
+    h1 {
+      margin: 0 0 20px;
+      font-size: 34px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+    h2 {
+      margin: 36px 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+      color: #0f172a;
+      font-size: 24px;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+    h3 {
+      margin: 26px 0 10px;
+      color: #1f2937;
+      font-size: 18px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    p { margin: 8px 0; }
+    blockquote {
+      margin: 16px 0;
+      padding: 12px 16px;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      color: #1e3a8a;
+    }
+    table {
+      width: 100%;
+      margin: 14px 0 24px;
+      border-collapse: collapse;
+      table-layout: auto;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+      vertical-align: top;
+      word-break: keep-all;
+    }
+    th {
+      background: var(--accent-soft);
+      color: #0f172a;
+      font-weight: 700;
+    }
+    tr:nth-child(even) td { background: #fbfdff; }
+    pre {
+      margin: 14px 0 24px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--code);
+      white-space: pre;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, "SF Mono", monospace;
+      font-size: 0.92em;
+      background: var(--code);
+      border-radius: 4px;
+      padding: 2px 4px;
+    }
+    pre code {
+      padding: 0;
+      background: transparent;
+      border-radius: 0;
+    }
+    ul, ol {
+      margin: 8px 0 16px 24px;
+      padding: 0;
+    }
+    li { margin: 4px 0; }
+    hr {
+      margin: 28px 0;
+      border: 0;
+      border-top: 1px solid var(--line);
+    }
+    del { color: var(--muted); }
+    @media print {
+      body { font-size: 11px; }
+      main {
+        width: 100%;
+        padding: 0;
+      }
+      h1 { font-size: 24px; }
+      h2 { font-size: 18px; page-break-after: avoid; }
+      h3 { font-size: 14px; page-break-after: avoid; }
+      table, pre, blockquote { page-break-inside: avoid; }
+    }
+    </style>
+</head>
+<body>
+  <main>
+    <h1>RAG 성능 변화 비교 보고서</h1>
+    <p><strong>최종 업데이트:</strong> 2026-05-15</p>
+    <p><strong>목적:</strong> 특정 카테고리 문서 기반 RAG 검색 및 문서 초안 생성</p>
+    <p><strong>검증 도메인:</strong> 이용약관 (예시 — 다른 도메인으로 교체 가능)</p>
+    <blockquote><strong>중요:</strong> 이 문서에서 &quot;추정 효과&quot;는 학술 연구 기반 추정치입니다.</blockquote>
+    <blockquote>실제 수치 측정은 <code>python3 eval/pipeline.py --all</code>로 실행 가능합니다. (v0.3 평가 파이프라인 구축 완료)</blockquote>
+    <hr>
+    <h2>비교 1: v0.1 초기 → v0.2</h2>
+    <p><strong>비교 기준:</strong> v0.1 초기 (Phase 1~4) vs v0.2 완료 (Phase 9)</p>
+    <h3>시스템 구성 변화</h3>
+    <table>
+  <thead>
+    <tr>
+      <th>구성 요소</th>
+      <th>v0.1 초기</th>
+      <th>v0.2 완료</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>검색 방식</td>
+      <td>벡터 검색 단독</td>
+      <td>BM25 + 벡터 + RRF 병합</td>
+    </tr>
+    <tr>
+      <td>임베딩 모델</td>
+      <td>multilingual-mpnet (768dim)</td>
+      <td>동일</td>
+    </tr>
+    <tr>
+      <td>chunk_size</td>
+      <td>500자</td>
+      <td>1,000자</td>
+    </tr>
+    <tr>
+      <td>chunk_overlap</td>
+      <td>50자</td>
+      <td>200자</td>
+    </tr>
+    <tr>
+      <td>청크 구분자</td>
+      <td>영문 기본값</td>
+      <td>한국어 문장 경계 10종 추가</td>
+    </tr>
+    <tr>
+      <td>인제스천 형식</td>
+      <td>PDF, DOCX, HWP</td>
+      <td>+ TXT, MD</td>
+    </tr>
+    <tr>
+      <td>컨텍스트 한도</td>
+      <td>4,000자</td>
+      <td>8,000자</td>
+    </tr>
+    <tr>
+      <td>프롬프트</td>
+      <td>도메인 고정</td>
+      <td>범용 문서 Q&amp;A</td>
+    </tr>
+  </tbody>
+</table>
+    <h3>청킹 실측 변화</h3>
+    <p>동일 문서(3,160자)를 두 방식으로 청킹한 결과:</p>
+    <table>
+  <thead>
+    <tr>
+      <th>지표</th>
+      <th>v0.1 초기</th>
+      <th>v0.2 완료</th>
+      <th>변화</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>청크 수</td>
+      <td>7개</td>
+      <td>4개</td>
+      <td>-43%</td>
+    </tr>
+    <tr>
+      <td>청크 평균 길이</td>
+      <td>454자</td>
+      <td>907자</td>
+      <td><strong>+100%</strong></td>
+    </tr>
+    <tr>
+      <td>overlap</td>
+      <td>50자 (10%)</td>
+      <td>200자 (20%)</td>
+      <td>+4배</td>
+    </tr>
+    <tr>
+      <td>구분자</td>
+      <td>영문 기본</td>
+      <td>한국어 종결어미 우선</td>
+      <td>질적 변화</td>
+    </tr>
+  </tbody>
+</table>
+    <h3>검색 방식 구조 변화</h3>
+    <p><strong>v0.1 초기: 벡터 검색 단독</strong></p>
+    <pre><code>쿼리 → 임베딩 → ChromaDB 유사도 검색 → top_k 청크 → LLM</code></pre>
+    <ul>
+    <li>정확한 키워드가 포함된 청크를 놓칠 수 있음</li>
+    <li>예: &quot;해지 시 환불&quot; 검색 시 &quot;환불&quot;이 직접 언급된 청크 누락 가능</li>
+    </ul>
+    <p><strong>v0.2 완료: 하이브리드 검색</strong></p>
+    <pre><code>쿼리
+ ├─ 임베딩 → 벡터 검색 (의미 유사도)
+ └─ 토크나이징 → BM25 검색 (키워드 매칭)
+        ↓
+    RRF 점수 병합 → top_k 청크 → LLM</code></pre>
+    <p><strong>측정 가능한 변화:</strong> 청크 평균 길이 +100% (실측)</p>
+    <p><strong>추정 변화:</strong> 검색 Recall +5~15% (BEIR 벤치마크 기준)</p>
+    <hr>
+    <h2>비교 2: v0.2 → v0.3</h2>
+    <p><strong>비교 기준:</strong> v0.2 완료 (Phase 9) vs v0.3 완료 (Phase 12)</p>
+    <h3>시스템 구성 변화</h3>
+    <table>
+  <thead>
+    <tr>
+      <th>구성 요소</th>
+      <th>v0.2 완료</th>
+      <th>v0.3 완료</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>임베딩 모델</td>
+      <td>multilingual-mpnet (768dim, 50개 언어)</td>
+      <td><strong>multilingual-e5-large (1024dim, 94개 언어)</strong></td>
+    </tr>
+    <tr>
+      <td>e5 prefix 처리</td>
+      <td>없음</td>
+      <td><code>passage:</code> / <code>query:</code> 자동 적용</td>
+    </tr>
+    <tr>
+      <td>재순위</td>
+      <td>없음</td>
+      <td><strong>Cross-Encoder (mmarco-mMiniLMv2-L12-H384-v1)</strong></td>
+    </tr>
+    <tr>
+      <td>검색 후보 수</td>
+      <td>top_k개 직접 사용</td>
+      <td>top_k×4 후보 → Cross-Encoder → top_k</td>
+    </tr>
+    <tr>
+      <td>평가 파이프라인</td>
+      <td>없음</td>
+      <td><strong>Precision@K / Accuracy / Faithfulness 자동 측정</strong></td>
+    </tr>
+    <tr>
+      <td>출처 메타데이터</td>
+      <td>temp 경로 저장 (버그)</td>
+      <td><strong>원본 파일명 저장 (수정 완료)</strong></td>
+    </tr>
+    <tr>
+      <td>도메인</td>
+      <td>범용</td>
+      <td><strong>이용약관 특화 (4개 문서 인제스천)</strong></td>
+    </tr>
+  </tbody>
+</table>
+    <h3>임베딩 모델 변화</h3>
+    <table>
+  <thead>
+    <tr>
+      <th>항목</th>
+      <th>v0.2 (mpnet)</th>
+      <th>v0.3 (e5-large)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>차원</td>
+      <td>768</td>
+      <td>1024</td>
+    </tr>
+    <tr>
+      <td>지원 언어 수</td>
+      <td>50개</td>
+      <td>94개</td>
+    </tr>
+    <tr>
+      <td>MTEB 다국어 순위</td>
+      <td>중위권</td>
+      <td>상위권</td>
+    </tr>
+    <tr>
+      <td>prefix 필요</td>
+      <td>없음</td>
+      <td>passage: / query:</td>
+    </tr>
+    <tr>
+      <td>추정 정확도 향상</td>
+      <td>—</td>
+      <td>+3~8%p</td>
+    </tr>
+  </tbody>
+</table>
+    <h3>재순위 파이프라인 추가</h3>
+    <p><strong>v0.2: 단일 패스</strong></p>
+    <pre><code>쿼리 → BM25+Vector → top_5 → LLM
+        (후보 5개)</code></pre>
+    <p><strong>v0.3: 2-stage 검색</strong></p>
+    <pre><code>쿼리 → BM25+Vector → top_20 → Cross-Encoder 재순위 → top_5 → LLM
+        (후보 20개)                (정밀 재순위)</code></pre>
+    <ul>
+    <li>초기 검색의 낮은 순위에 묻혀 있던 관련 청크를 Cross-Encoder가 재발굴</li>
+    <li>추정 효과: NDCG@10 기준 +5~12%p (학술 벤치마크)</li>
+    </ul>
+    <h3>현재 인제스천 상태</h3>
+    <table>
+  <thead>
+    <tr>
+      <th>파일명</th>
+      <th>청크 수</th>
+      <th>비고</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>다음 이용약관.txt</td>
+      <td>~32개</td>
+      <td>일반 이용약관</td>
+    </tr>
+    <tr>
+      <td>다음 위치기반서비스 이용약관.txt</td>
+      <td>~16개</td>
+      <td>위치기반서비스 약관</td>
+    </tr>
+    <tr>
+      <td>네이버 위치기반서비스 이용약관.txt</td>
+      <td>~10개</td>
+      <td>위치기반서비스 약관</td>
+    </tr>
+    <tr>
+      <td>네이버 이용약관.txt</td>
+      <td>~31개</td>
+      <td>일반 이용약관</td>
+    </tr>
+    <tr>
+      <td><strong>합계</strong></td>
+      <td><strong>~89개</strong></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+    <hr>
+    <h2>비교 3: v0.3 → v0.4 (Phase 13)</h2>
+    <p><strong>비교 기준:</strong> v0.3 완료 (Phase 12) vs v0.4 Phase 13 완료</p>
+    <h3>시스템 구성 변화</h3>
+    <table>
+  <thead>
+    <tr>
+      <th>구성 요소</th>
+      <th>v0.3 완료</th>
+      <th>v0.4 Phase 13</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>doc_type 메타데이터</td>
+      <td>없음</td>
+      <td><strong>일반약관 / 위치기반약관 저장</strong></td>
+    </tr>
+    <tr>
+      <td>인제스천 API</td>
+      <td><code>POST /ingest</code> (파일만)</td>
+      <td><code>POST /ingest</code> + <code>doc_type</code> Form 파라미터</td>
+    </tr>
+    <tr>
+      <td>쿼리 API</td>
+      <td><code>POST /query</code> (질문만)</td>
+      <td><code>POST /query</code> + <code>doc_type</code> JSON 필드</td>
+    </tr>
+    <tr>
+      <td>검색 필터</td>
+      <td>전체 문서 대상</td>
+      <td><strong>doc_type 지정 시 해당 유형만 검색</strong></td>
+    </tr>
+    <tr>
+      <td>Streamlit UI</td>
+      <td>파일 업로드만</td>
+      <td><strong>문서 유형 selectbox 추가 (인제스천/쿼리 탭)</strong></td>
+    </tr>
+    <tr>
+      <td>입력 검증</td>
+      <td>없음</td>
+      <td><code>_VALID_DOC_TYPES</code> 허용 목록 — API/모델 양쪽</td>
+    </tr>
+  </tbody>
+</table>
+    <h3>Precision@5 변화 (실측)</h3>
+    <table>
+  <thead>
+    <tr>
+      <th>케이스</th>
+      <th>v0.3</th>
+      <th>v0.4 Phase 13</th>
+      <th>변화</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>tc-05 위약금/손해배상</td>
+      <td>0.2</td>
+      <td><strong>0.4</strong></td>
+      <td><strong>+0.2 ✓</strong></td>
+    </tr>
+    <tr>
+      <td>tc-09 이용자의무</td>
+      <td>0.2</td>
+      <td>0.2</td>
+      <td>변화 없음 *</td>
+    </tr>
+    <tr>
+      <td>나머지 8개</td>
+      <td>0.4~0.8</td>
+      <td>0.4~0.8</td>
+      <td>회귀 없음</td>
+    </tr>
+    <tr>
+      <td><strong>전체 평균</strong></td>
+      <td><strong>0.46</strong></td>
+      <td><strong>0.48</strong></td>
+      <td><strong>+0.02</strong></td>
+    </tr>
+  </tbody>
+</table>
+    <p>\* tc-09는 위치기반약관 침범이 아닌 다음 이용약관 청크 쏠림 현상 — MMR 필요</p>
+    <hr>
+    <h2>전체 버전 누적 비교</h2>
+    <pre><code>                    v0.1 초기        v0.2 완료        v0.3 완료        v0.4 Phase 13       2026-05-15
+                    ─────────────    ────────────────  ──────────────── ──────────────────── ─────────────────────
+검색 방식           벡터 단독        하이브리드        하이브리드+재순위 하이브리드+재순위+필터 실제 RAG 경로 다양성 선택
+임베딩 차원         768dim           768dim            1024dim          1024dim
+지원 언어           50개             50개              94개             94개
+재순위              없음             없음              Cross-Encoder    Cross-Encoder        Cross-Encoder
+doc_type 필터       없음             없음              없음             ✅ 일반약관/위치기반약관 ✅ 4개 카테고리 기준 호환
+청크 평균 길이      454자            907자             907자            907자
+컨텍스트 한도       4,000자          8,000자           8,000자          8,000자
+파일 형식 지원      3종              5종               5종              5종
+평가 파이프라인     없음             없음              ✅ 구축 완료     ✅ 실측 완료       ✅ RAG/vector 지표 분리+정규화
+Precision@5 평균    미측정           미측정            0.46             0.48                vector 0.48 / RAG 0.60
+생성 품질           미측정           미측정            기준선 구축      accuracy 0.70       accuracy 1.0 / faithfulness 1.0</code></pre>
+    <hr>
+    <h2>비교 4: v0.4 Phase 13 → 2026-05-14 검색 품질 1차 개선</h2>
+    <p><strong>비교 기준:</strong> <code>eval/results/eval_20260513_164755.json</code> vs <code>eval/results/eval_20260514_113849.json</code></p>
+    <h3>시스템 구성 변화</h3>
+    <table>
+  <thead>
+    <tr>
+      <th>구성 요소</th>
+      <th>Before</th>
+      <th>After</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>RAG 검색 API</td>
+      <td><code>query()</code> 내부에 검색과 생성 결합</td>
+      <td><code>retrieve()</code>로 검색 단계 분리</td>
+    </tr>
+    <tr>
+      <td>eval retrieval</td>
+      <td>vector-only와 LLM query 의존 혼재</td>
+      <td>LLM 없이 실제 RAG 검색 경로 측정</td>
+    </tr>
+    <tr>
+      <td>최종 청크 선택</td>
+      <td>rerank top_k 직접 사용</td>
+      <td>상위 후보 창 안에서 source 다양성 보존</td>
+    </tr>
+    <tr>
+      <td>doc_type 전달</td>
+      <td>full eval query 경로에서 누락</td>
+      <td><code>RAGEngine.query(..., doc_type=...)</code> 전달</td>
+    </tr>
+  </tbody>
+</table>
+    <h3>실측 지표 변화</h3>
+    <table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Before</th>
+      <th>After</th>
+      <th>Delta</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>vector_precision@k_mean</code></td>
+      <td><code>0.48</code></td>
+      <td><code>0.48</code></td>
+      <td><code>0.00</code></td>
+    </tr>
+    <tr>
+      <td><code>rag_precision@k_mean</code></td>
+      <td><code>0.54</code></td>
+      <td><code>0.60</code></td>
+      <td><code>+0.06</code></td>
+    </tr>
+    <tr>
+      <td><code>source_coverage@k_mean</code></td>
+      <td><code>0.925</code></td>
+      <td><code>1.0</code></td>
+      <td><code>+0.075</code></td>
+    </tr>
+    <tr>
+      <td><code>accuracy_mean</code></td>
+      <td><code>0.675</code></td>
+      <td><code>0.70</code></td>
+      <td><code>+0.025</code></td>
+    </tr>
+    <tr>
+      <td><code>faithfulness_mean</code></td>
+      <td><code>0.8</code></td>
+      <td><code>0.9</code></td>
+      <td><code>+0.1</code></td>
+    </tr>
+    <tr>
+      <td><code>not_found_rate</code></td>
+      <td><code>0.1</code></td>
+      <td><code>0.1</code></td>
+      <td><code>0.0</code></td>
+    </tr>
+  </tbody>
+</table>
+    <h3>케이스별 주요 변화</h3>
+    <table>
+  <thead>
+    <tr>
+      <th>Case</th>
+      <th>변화</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>tc-04</code></td>
+      <td><code>rag_precision_at_k 0.4 -&gt; 0.8</code>, <code>source_coverage_at_k 0.5 -&gt; 1.0</code></td>
+    </tr>
+    <tr>
+      <td><code>tc-07</code></td>
+      <td><code>rag_precision_at_k 0.6 -&gt; 0.8</code>, <code>source_coverage_at_k 0.75 -&gt; 1.0</code></td>
+    </tr>
+    <tr>
+      <td><code>tc-09</code></td>
+      <td><code>answer_accuracy 0.5 -&gt; 0.75</code></td>
+    </tr>
+    <tr>
+      <td><code>tc-10</code></td>
+      <td><code>faithfulness 0.0 -&gt; 1.0</code></td>
+    </tr>
+  </tbody>
+</table>
+    <p>상세 before/after는 <code>docs/references/2026-05-14-before-after.md</code>에 기록한다.</p>
+    <hr>
+    <h2>비교 5: 검색 품질 1차 개선 → 평가셋 정합성 보정</h2>
+    <p><strong>비교 기준:</strong> <code>eval/results/eval_20260514_113849.json</code> vs <code>eval/results/eval_20260514_152044.json</code></p>
+    <h3>변경 내용</h3>
+    <table>
+  <thead>
+    <tr>
+      <th>Case</th>
+      <th>Before</th>
+      <th>After</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>tc-01</code></td>
+      <td>해지 시 환불 정책 질문</td>
+      <td>문서 근거가 있는 해지 후 데이터/게시물 처리 질문</td>
+    </tr>
+    <tr>
+      <td><code>tc-03</code></td>
+      <td>exact keyword 중심</td>
+      <td>이용 제한/정지/금지 표현 OR group 보정</td>
+    </tr>
+    <tr>
+      <td><code>tc-04</code></td>
+      <td>자동 갱신과 해지 복합 질문</td>
+      <td>자동 갱신 근거 부족을 인정하고 해지/데이터 처리 근거 평가</td>
+    </tr>
+    <tr>
+      <td><code>tc-09</code></td>
+      <td>일부 표현 불일치</td>
+      <td>권리/보유 등 약관식 표현 일부 허용</td>
+    </tr>
+  </tbody>
+</table>
+    <h3>실측 지표 변화</h3>
+    <table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Before</th>
+      <th>After</th>
+      <th>Delta</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>precision@k_mean</code></td>
+      <td><code>0.48</code></td>
+      <td><code>0.48</code></td>
+      <td><code>0.00</code></td>
+    </tr>
+    <tr>
+      <td><code>vector_precision@k_mean</code></td>
+      <td><code>0.48</code></td>
+      <td><code>0.48</code></td>
+      <td><code>0.00</code></td>
+    </tr>
+    <tr>
+      <td><code>rag_precision@k_mean</code></td>
+      <td><code>0.60</code></td>
+      <td><code>0.60</code></td>
+      <td><code>0.00</code></td>
+    </tr>
+    <tr>
+      <td><code>source_coverage@k_mean</code></td>
+      <td><code>1.0</code></td>
+      <td><code>1.0</code></td>
+      <td><code>0.0</code></td>
+    </tr>
+    <tr>
+      <td><code>accuracy_mean</code></td>
+      <td><code>0.70</code></td>
+      <td><code>0.875</code></td>
+      <td><code>+0.175</code></td>
+    </tr>
+    <tr>
+      <td><code>faithfulness_mean</code></td>
+      <td><code>0.90</code></td>
+      <td><code>1.0</code></td>
+      <td><code>+0.10</code></td>
+    </tr>
+    <tr>
+      <td><code>not_found_rate</code></td>
+      <td><code>0.10</code></td>
+      <td><code>0.0</code></td>
+      <td><code>-0.10</code></td>
+    </tr>
+  </tbody>
+</table>
+    <p>검색 경로는 바꾸지 않았기 때문에 검색 지표는 유지됐다. 개선은 문서 근거와 평가 질문/키워드 정합성을 맞춘 결과다.</p>
+    <p>상세 결과는 <code>docs/references/2026-05-14-eval-case-alignment.md</code>에 기록한다.</p>
+    <hr>
+    <h2>비교 6: 평가셋 정합성 보정 → Retrieval metric 정규화</h2>
+    <p><strong>비교 기준:</strong> <code>eval/results/eval_20260514_152044.json</code> vs <code>eval/results/eval_20260514_164724.json</code></p>
+    <h3>변경 내용</h3>
+    <table>
+  <thead>
+    <tr>
+      <th>항목</th>
+      <th>Before</th>
+      <th>After</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>source precision</td>
+      <td>고유 source 수를 <code>top_k=5</code>로 나눔</td>
+      <td>기존 지표 유지</td>
+    </tr>
+    <tr>
+      <td>source 수 상한 보정</td>
+      <td>없음</td>
+      <td><code>normalized_source_precision@k</code> 추가</td>
+    </tr>
+    <tr>
+      <td>context purity</td>
+      <td>명시 지표 없음</td>
+      <td><code>chunk_precision@k</code> 추가</td>
+    </tr>
+    <tr>
+      <td>source recall</td>
+      <td><code>source_coverage@k</code> 이름으로 제공</td>
+      <td><code>source_recall@k</code> alias 추가</td>
+    </tr>
+  </tbody>
+</table>
+    <h3>새 기준선</h3>
+    <table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>precision@k_mean</code></td>
+      <td><code>0.48</code></td>
+    </tr>
+    <tr>
+      <td><code>rag_precision@k_mean</code></td>
+      <td><code>0.60</code></td>
+    </tr>
+    <tr>
+      <td><code>rag_normalized_source_precision@k_mean</code></td>
+      <td><code>1.0</code></td>
+    </tr>
+    <tr>
+      <td><code>rag_chunk_precision@k_mean</code></td>
+      <td><code>0.96</code></td>
+    </tr>
+    <tr>
+      <td><code>source_recall@k_mean</code></td>
+      <td><code>1.0</code></td>
+    </tr>
+    <tr>
+      <td><code>accuracy_mean</code></td>
+      <td><code>0.90</code></td>
+    </tr>
+    <tr>
+      <td><code>faithfulness_mean</code></td>
+      <td><code>1.0</code></td>
+    </tr>
+    <tr>
+      <td><code>not_found_rate</code></td>
+      <td><code>0.0</code></td>
+    </tr>
+  </tbody>
+</table>
+    <p>기존 <code>rag_precision@k_mean=0.60</code>은 낮은 검색 성능이 아니라 현 metric 설계의 상한이다. 새 지표 기준으로 RAG 검색 경로는 source recall과 normalized source precision에서 모두 1.0이다.</p>
+    <p>상세 결과는 <code>docs/references/2026-05-14-retrieval-metric-normalization.md</code>에 기록한다.</p>
+    <hr>
+    <h2>비교 7: Retrieval metric 정규화 → Faithfulness context 선택 개선</h2>
+    <p><strong>비교 기준:</strong> <code>eval/results/eval_20260514_180006.json</code> vs <code>eval/results/eval_20260515_110900.json</code></p>
+    <h3>변경 내용</h3>
+    <table>
+  <thead>
+    <tr>
+      <th>항목</th>
+      <th>Before</th>
+      <th>After</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>faithfulness judge context</td>
+      <td>검색 결과 상위 context 일부를 그대로 사용</td>
+      <td>질문/답변 overlap과 source diversity 기반으로 judge용 context 선택</td>
+    </tr>
+    <tr>
+      <td>주요 실패 케이스</td>
+      <td><code>tc-10</code>에서 무관 context 혼입으로 <code>faithfulness=0.0</code></td>
+      <td><code>tc-10</code> 단건 및 full eval에서 faithfulness 안정화</td>
+    </tr>
+  </tbody>
+</table>
+    <h3>실측 지표 변화</h3>
+    <table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Before</th>
+      <th>After</th>
+      <th>Delta</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>accuracy_mean</code></td>
+      <td><code>0.975</code></td>
+      <td><code>0.95</code></td>
+      <td><code>-0.025</code></td>
+    </tr>
+    <tr>
+      <td><code>faithfulness_mean</code></td>
+      <td><code>0.90</code></td>
+      <td><code>1.0</code></td>
+      <td><code>+0.10</code></td>
+    </tr>
+    <tr>
+      <td><code>not_found_rate</code></td>
+      <td><code>0.0</code></td>
+      <td><code>0.0</code></td>
+      <td><code>0.0</code></td>
+    </tr>
+  </tbody>
+</table>
+    <p><code>accuracy_mean</code> 하락은 검색/생성 회귀보다 잔여 keyword 표현 차이에 따른 감점으로 분류됐다. 따라서 다음 단계는 답변 로직 변경이 아니라 keyword 기준 정합성 재검토로 진행했다.</p>
+    <p>상세 결과는 <code>docs/references/2026-05-15-faithfulness-eval-stability.md</code>와 <code>docs/exec-plans/completed/2026-05-15-faithfulness-context-selection.md</code>에 기록한다.</p>
+    <hr>
+    <h2>비교 8: Faithfulness context 선택 개선 → 잔여 keyword accuracy 보정</h2>
+    <p><strong>비교 기준:</strong> <code>eval/results/eval_20260515_110900.json</code> vs <code>eval/results/eval_20260515_135903.json</code></p>
+    <h3>변경 내용</h3>
+    <table>
+  <thead>
+    <tr>
+      <th>Case</th>
+      <th>Before</th>
+      <th>After</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>tc-03</code></td>
+      <td>이용 제한 exact keyword 중심</td>
+      <td>&quot;이용이 제한&quot;, &quot;제한될&quot; 등 자연 표현 허용</td>
+    </tr>
+    <tr>
+      <td><code>tc-07</code></td>
+      <td>책임/손해 exact keyword 중심</td>
+      <td>귀책사유, 고의·과실, 불가항력, 장애/방해 등 면책 표현 허용</td>
+    </tr>
+    <tr>
+      <td><code>tc-09</code></td>
+      <td>준수/약관/정책/권리/보유 중심</td>
+      <td>권한, 부여, 라이선스, 명예, 불이익, 복제/유통 표현 추가</td>
+    </tr>
+    <tr>
+      <td><code>tc-10</code></td>
+      <td>&quot;귀속&quot; exact keyword 중심</td>
+      <td>&quot;보유&quot;, &quot;보유하게&quot; 표현 허용</td>
+    </tr>
+  </tbody>
+</table>
+    <h3>실측 지표 변화</h3>
+    <table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Before</th>
+      <th>After</th>
+      <th>Delta</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>precision@k_mean</code></td>
+      <td><code>0.48</code></td>
+      <td><code>0.48</code></td>
+      <td><code>0.00</code></td>
+    </tr>
+    <tr>
+      <td><code>vector_precision@k_mean</code></td>
+      <td><code>0.48</code></td>
+      <td><code>0.48</code></td>
+      <td><code>0.00</code></td>
+    </tr>
+    <tr>
+      <td><code>rag_precision@k_mean</code></td>
+      <td><code>0.60</code></td>
+      <td><code>0.60</code></td>
+      <td><code>0.00</code></td>
+    </tr>
+    <tr>
+      <td><code>rag_normalized_source_precision@k_mean</code></td>
+      <td><code>1.0</code></td>
+      <td><code>1.0</code></td>
+      <td><code>0.0</code></td>
+    </tr>
+    <tr>
+      <td><code>rag_chunk_precision@k_mean</code></td>
+      <td><code>0.96</code></td>
+      <td><code>0.96</code></td>
+      <td><code>0.0</code></td>
+    </tr>
+    <tr>
+      <td><code>source_recall@k_mean</code></td>
+      <td><code>1.0</code></td>
+      <td><code>1.0</code></td>
+      <td><code>0.0</code></td>
+    </tr>
+    <tr>
+      <td><code>source_coverage@k_mean</code></td>
+      <td><code>1.0</code></td>
+      <td><code>1.0</code></td>
+      <td><code>0.0</code></td>
+    </tr>
+    <tr>
+      <td><code>accuracy_mean</code></td>
+      <td><code>0.95</code></td>
+      <td><code>1.0</code></td>
+      <td><code>+0.05</code></td>
+    </tr>
+    <tr>
+      <td><code>faithfulness_mean</code></td>
+      <td><code>1.0</code></td>
+      <td><code>1.0</code></td>
+      <td><code>0.0</code></td>
+    </tr>
+    <tr>
+      <td><code>not_found_rate</code></td>
+      <td><code>0.0</code></td>
+      <td><code>0.0</code></td>
+      <td><code>0.0</code></td>
+    </tr>
+  </tbody>
+</table>
+    <p>현재 10개 평가 케이스 기준으로 생성 품질 핵심 지표는 상한에 도달했다. 다음 비교 축은 모델/검색 추가 튜닝이 아니라 평가셋 일반화, hard case 확장, keyword 기반 판정 한계 점검이다.</p>
+    <p>상세 결과는 <code>docs/references/2026-05-15-residual-keyword-accuracy.md</code>에 기록한다.</p>
+    <hr>
+    <h2>실측 평가 실행 방법</h2>
+    <p>v0.3에서 평가 파이프라인이 구축되어 실제 수치 측정이 가능합니다.</p>
+    <pre><code># retrieval 지표만 측정 (빠름, Ollama 불필요)
+python3 eval/pipeline.py --metric retrieval
+
+# 전체 지표 측정 + JSON 리포트 저장
+python3 eval/pipeline.py --all
+
+# 결과: eval/results/eval_{YYYYMMDD_HHMMSS}.json</code></pre>
+    <p><strong>평가 케이스:</strong> <code>eval/test_cases.json</code> — 이용약관 도메인 10개 질문</p>
+    <p><strong>relevant_sources 매핑:</strong> 완료 (Precision@K 즉시 측정 가능)</p>
+    <hr>
+    <h2>변경되지 않은 항목</h2>
+    <table>
+  <thead>
+    <tr>
+      <th>항목</th>
+      <th>이유</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>chunk_size</td>
+      <td>v0.2에서 최적화 완료 (1,000자)</td>
+    </tr>
+    <tr>
+      <td>RRF 알고리즘</td>
+      <td>v0.1부터 적용 중, 변경 필요 없음</td>
+    </tr>
+    <tr>
+      <td>ChromaDB cosine</td>
+      <td>의미 검색 기준으로 적합</td>
+    </tr>
+  </tbody>
+</table>
+    <hr>
+    <h2>다음 단계</h2>
+    <ol>
+    <li>최신 full eval 리포트 <code>eval/results/eval_20260515_135903.json</code> 기준 현재 10개 케이스의 상한 도달 상태를 확인한다.</li>
+    <li>keyword OR group이 현재 케이스에 과적합됐는지 검토한다.</li>
+    <li>hard case 후보를 3건 이상 추가해 평가셋 확장 계획을 수립한다.</li>
+    </ol>
+    <hr>
+    <p><em>최종 업데이트: 2026-05-15 — accuracy/faithfulness/not_found 현재 평가셋 상한 달성</em></p>
+  </main>
+</body>
+</html>
