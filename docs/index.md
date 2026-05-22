@@ -51,7 +51,7 @@
 
 ## Active Work
 
-- [Source Drift Regression Guard Plan](./exec-plans/active/2026-05-22-source-drift-regression-guard.md)
+- [Source Drift Watch Case Review Plan](./exec-plans/active/2026-05-22-watch-case-review.md)
 
 ## Completed Work
 
@@ -79,3 +79,4 @@
 - [Eval Set Expansion Plan](./exec-plans/completed/2026-05-22-eval-set-expansion.md)
 - [Eval Failure Triage Plan](./exec-plans/completed/2026-05-22-eval-failure-triage.md)
 - [Eval Source Drift Calibration Plan](./exec-plans/completed/2026-05-22-eval-source-drift-calibration.md)
+- [Source Drift Regression Guard Plan](./exec-plans/completed/2026-05-22-source-drift-regression-guard.md)

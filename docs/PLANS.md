@@ -185,6 +185,12 @@
 
 - `2026-05-22-source-drift-regression-guard.md`
   - 목표: 신규 문서 추가 또는 평가셋 확장 후 source drift를 자동으로 발견할 수 있는 regression guard 후보를 검토한다.
+  - 상태: Completed
+
+### Source Drift Watch Case Review
+
+- `2026-05-22-watch-case-review.md`
+  - 목표: source drift 리포트의 watch case를 검토해 평가셋 relevant source를 더 좁힐지, 현 상태를 유지할지 결정한다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -197,7 +203,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-22-source-drift-regression-guard.md`
+- `exec-plans/active/2026-05-22-watch-case-review.md`
 
 ## Completed Plans
 
@@ -225,3 +231,4 @@
 - `exec-plans/completed/2026-05-22-eval-set-expansion.md`
 - `exec-plans/completed/2026-05-22-eval-failure-triage.md`
 - `exec-plans/completed/2026-05-22-eval-source-drift-calibration.md`
+- `exec-plans/completed/2026-05-22-source-drift-regression-guard.md`
