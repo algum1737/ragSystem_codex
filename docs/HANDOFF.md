@@ -42,17 +42,19 @@
 36. `docs/exec-plans/completed/2026-05-22-eval-source-drift-calibration.md`
 37. `docs/exec-plans/completed/2026-05-22-source-drift-regression-guard.md`
 38. `docs/references/2026-05-22-source-drift-regression-report.md`
-39. `docs/exec-plans/active/2026-05-22-watch-case-review.md`
-40. `docs/exec-plans/completed/2026-05-13-github-actions-ci.md`
-41. `docs/exec-plans/completed/2026-05-13-partial-answer-policy.md`
-42. `docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
-43. `docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md`
-44. `docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md`
-45. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
-46. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
-47. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
-48. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
-49. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
+39. `docs/references/2026-05-22-watch-case-review.md`
+40. `docs/exec-plans/completed/2026-05-22-watch-case-review.md`
+41. `docs/exec-plans/active/2026-05-22-source-scope-policy.md`
+42. `docs/exec-plans/completed/2026-05-13-github-actions-ci.md`
+43. `docs/exec-plans/completed/2026-05-13-partial-answer-policy.md`
+44. `docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
+45. `docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md`
+46. `docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md`
+47. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
+48. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
+49. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
+50. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
+51. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
 
 ## Current Baseline
 
@@ -247,6 +249,12 @@
   - 결정: critical case만 실패 조건으로 보고, watch case는 리포트와 후속 검토 후보로 유지한다.
   - 완료된 계획: `docs/exec-plans/completed/2026-05-22-source-drift-regression-guard.md`
   - 다음 active plan으로 `docs/exec-plans/active/2026-05-22-watch-case-review.md`를 생성했다.
+- source drift watch case 7건을 검토했다.
+  - 결과 문서: `docs/references/2026-05-22-watch-case-review.md`
+  - 결론: `eval/test_cases.json`을 즉시 보정하지 않고 watch 상태로 유지한다.
+  - 이유: 7건 모두 `answer_accuracy=1.0`, `faithfulness=1.0`이며, 현재 retrieved source에 맞춰 relevant source를 확장하면 평가셋 과적합 위험이 있다.
+  - 완료된 계획: `docs/exec-plans/completed/2026-05-22-watch-case-review.md`
+  - 다음 active plan으로 `docs/exec-plans/active/2026-05-22-source-scope-policy.md`를 생성했다.
 
 ## Current Gaps
 
@@ -257,7 +265,7 @@
 - 최신 full eval 생성 지표는 `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_rate=0.0588`, `not_found_success_rate=1.0`이다.
 - 최신 정규화 검색 지표는 `rag_normalized_source_precision@k_mean=0.7971`, `rag_chunk_precision@k_mean=0.5882`, `source_recall@k_mean=0.7836`이다.
 - 현재 평가셋 기준 잔여 낮은 accuracy/faithfulness 케이스는 없다.
-- 현재 active plan은 `docs/exec-plans/active/2026-05-22-watch-case-review.md`다.
+- 현재 active plan은 `docs/exec-plans/active/2026-05-22-source-scope-policy.md`다.
 - 이전 Cross-Encoder 캐시 반영 리포트는 `eval/results/eval_20260513_100727.json`에 저장되어 있다.
 - 검색/인제스천/평가 경로에 필요한 임베딩 모델 캐시는 준비됐다.
 - Cross-Encoder reranking 캐시도 준비됐다.
@@ -265,7 +273,7 @@
 
 ## Suggested Next Work
 
-1. active plan `docs/exec-plans/active/2026-05-22-watch-case-review.md`에 따라 watch case 7건의 relevant source 범위를 검토한다.
+1. active plan `docs/exec-plans/active/2026-05-22-source-scope-policy.md`에 따라 `relevant_sources` 범위 정책을 정한다.
 2. hard case를 추가할 경우 별도 active exec plan을 새로 작성하고 평가셋 과적합 여부를 먼저 확인한다.
 
 ## Handoff Prompt
@@ -312,17 +320,19 @@
 36. docs/exec-plans/completed/2026-05-22-eval-source-drift-calibration.md
 37. docs/exec-plans/completed/2026-05-22-source-drift-regression-guard.md
 38. docs/references/2026-05-22-source-drift-regression-report.md
-39. docs/exec-plans/active/2026-05-22-watch-case-review.md
-40. docs/exec-plans/completed/2026-05-13-github-actions-ci.md
-41. docs/exec-plans/completed/2026-05-13-partial-answer-policy.md
-42. docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md
-43. docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md
-44. docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md
-45. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
-46. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
-47. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
-48. docs/exec-plans/completed/2026-05-12-runtime-validation.md
-49. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
+39. docs/references/2026-05-22-watch-case-review.md
+40. docs/exec-plans/completed/2026-05-22-watch-case-review.md
+41. docs/exec-plans/active/2026-05-22-source-scope-policy.md
+42. docs/exec-plans/completed/2026-05-13-github-actions-ci.md
+43. docs/exec-plans/completed/2026-05-13-partial-answer-policy.md
+44. docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md
+45. docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md
+46. docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md
+47. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
+48. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
+49. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
+50. docs/exec-plans/completed/2026-05-12-runtime-validation.md
+51. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
 
 현재 기준:
 - branch: `git branch --show-current`
