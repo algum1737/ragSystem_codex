@@ -33,17 +33,21 @@
 27. `docs/exec-plans/completed/2026-05-15-faithfulness-context-selection.md`
 28. `docs/references/2026-05-15-residual-keyword-accuracy.md`
 29. `docs/exec-plans/completed/2026-05-15-residual-keyword-accuracy.md`
-30. `docs/exec-plans/active/2026-05-15-eval-generalization-review.md`
-31. `docs/exec-plans/completed/2026-05-13-github-actions-ci.md`
-32. `docs/exec-plans/completed/2026-05-13-partial-answer-policy.md`
-33. `docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
-34. `docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md`
-35. `docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md`
-36. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
-37. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
-38. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
-39. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
-40. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
+30. `docs/exec-plans/completed/2026-05-15-eval-generalization-review.md`
+31. `docs/references/2026-05-22-eval-generalization-review.md`
+32. `docs/exec-plans/completed/2026-05-22-eval-set-expansion.md`
+33. `docs/references/2026-05-22-eval-set-expansion-result.md`
+34. `docs/exec-plans/active/2026-05-22-eval-failure-triage.md`
+35. `docs/exec-plans/completed/2026-05-13-github-actions-ci.md`
+36. `docs/exec-plans/completed/2026-05-13-partial-answer-policy.md`
+37. `docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
+38. `docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md`
+39. `docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md`
+40. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
+41. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
+42. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
+43. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
+44. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
 
 ## Current Baseline
 
@@ -200,6 +204,18 @@
   - `RAG_BEFORE_AFTER.md`, `RAG_PERFORMANCE_REPORT.md`, `RAG_IMPROVEMENT_ROADMAP.md`
   - `RAG_BEFORE_AFTER.html`, `RAG_PERFORMANCE_REPORT.html`, `RAG_IMPROVEMENT_ROADMAP.html`
   - `RAG_BEFORE_AFTER.pdf`
+- 평가셋 일반화 검토를 수행했다.
+  - 분석 문서: `docs/references/2026-05-22-eval-generalization-review.md`
+  - 결론: 기존 10개 케이스는 다음/네이버 4개 약관 중심이라 최신 13개 문서, 318개 청크 corpus를 충분히 검증하지 못한다.
+  - 완료된 계획: `docs/exec-plans/completed/2026-05-15-eval-generalization-review.md`
+  - 다음 active plan으로 `docs/exec-plans/active/2026-05-22-eval-set-expansion.md`를 생성했다.
+- 평가셋을 16개 케이스로 확장하고 full eval을 실행했다.
+  - 최종 리포트: `eval/results/eval_20260522_091248.json`
+  - 결과 문서: `docs/references/2026-05-22-eval-set-expansion-result.md`
+  - `accuracy_mean=0.9062`, `faithfulness_mean=0.75`, `not_found_rate=0.0625`
+  - 신규 `tc-11`, `tc-12`, `tc-13`은 통과했고, `tc-16`은 negative/no-answer 채점 정책 이슈를 드러냈다.
+  - 완료된 계획: `docs/exec-plans/completed/2026-05-22-eval-set-expansion.md`
+  - 다음 active plan으로 `docs/exec-plans/active/2026-05-22-eval-failure-triage.md`를 생성했다.
 
 ## Current Gaps
 
@@ -210,7 +226,7 @@
 - 최신 full eval 생성 지표는 `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_rate=0.0`이다.
 - 최신 정규화 검색 지표는 `rag_normalized_source_precision@k_mean=1.0`, `rag_chunk_precision@k_mean=0.96`, `source_recall@k_mean=1.0`이다.
 - 현재 평가셋 기준 잔여 낮은 accuracy/faithfulness 케이스는 없다.
-- 현재 active plan은 `docs/exec-plans/active/2026-05-15-eval-generalization-review.md`다.
+- 현재 active plan은 `docs/exec-plans/active/2026-05-22-eval-failure-triage.md`다.
 - 이전 Cross-Encoder 캐시 반영 리포트는 `eval/results/eval_20260513_100727.json`에 저장되어 있다.
 - 검색/인제스천/평가 경로에 필요한 임베딩 모델 캐시는 준비됐다.
 - Cross-Encoder reranking 캐시도 준비됐다.
@@ -218,9 +234,9 @@
 
 ## Suggested Next Work
 
-1. active plan `docs/exec-plans/active/2026-05-15-eval-generalization-review.md`에 따라 평가셋 일반화와 확장 방향을 검토한다.
-2. 현재 10개 케이스와 keyword OR group이 과적합됐는지 점검한다.
-3. hard case 후보를 3개 이상 제안하고 다음 작업을 정한다.
+1. active plan `docs/exec-plans/active/2026-05-22-eval-failure-triage.md`에 따라 `tc-16` negative case 채점 정책과 `tc-09`, `tc-10` faithfulness 회귀를 분석한다.
+2. `tc-04`, `tc-06`의 source drift가 평가셋 문제인지 검색 문제인지 분리한다.
+3. 작은 구현 후보를 정하고 사용자 승인 후 진행한다.
 
 ## Handoff Prompt
 
@@ -257,17 +273,21 @@
 27. docs/exec-plans/completed/2026-05-15-faithfulness-context-selection.md
 28. docs/references/2026-05-15-residual-keyword-accuracy.md
 29. docs/exec-plans/completed/2026-05-15-residual-keyword-accuracy.md
-30. docs/exec-plans/active/2026-05-15-eval-generalization-review.md
-31. docs/exec-plans/completed/2026-05-13-github-actions-ci.md
-32. docs/exec-plans/completed/2026-05-13-partial-answer-policy.md
-33. docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md
-34. docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md
-35. docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md
-36. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
-37. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
-38. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
-39. docs/exec-plans/completed/2026-05-12-runtime-validation.md
-40. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
+30. docs/exec-plans/completed/2026-05-15-eval-generalization-review.md
+31. docs/references/2026-05-22-eval-generalization-review.md
+32. docs/exec-plans/completed/2026-05-22-eval-set-expansion.md
+33. docs/references/2026-05-22-eval-set-expansion-result.md
+34. docs/exec-plans/active/2026-05-22-eval-failure-triage.md
+35. docs/exec-plans/completed/2026-05-13-github-actions-ci.md
+36. docs/exec-plans/completed/2026-05-13-partial-answer-policy.md
+37. docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md
+38. docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md
+39. docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md
+40. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
+41. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
+42. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
+43. docs/exec-plans/completed/2026-05-12-runtime-validation.md
+44. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
 
 현재 기준:
 - branch: `git branch --show-current`

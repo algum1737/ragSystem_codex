@@ -43,10 +43,12 @@
 - [2026-05-14 잔여 답변 품질 분석](./references/2026-05-14-residual-answer-quality-analysis.md)
 - [2026-05-15 Faithfulness Eval Stability](./references/2026-05-15-faithfulness-eval-stability.md)
 - [2026-05-15 Residual Keyword Accuracy](./references/2026-05-15-residual-keyword-accuracy.md)
+- [2026-05-22 Eval Generalization Review](./references/2026-05-22-eval-generalization-review.md)
+- [2026-05-22 Eval Set Expansion Result](./references/2026-05-22-eval-set-expansion-result.md)
 
 ## Active Work
 
-- [Eval Generalization Review Plan](./exec-plans/active/2026-05-15-eval-generalization-review.md)
+- [Eval Failure Triage Plan](./exec-plans/active/2026-05-22-eval-failure-triage.md)
 
 ## Completed Work
 
@@ -70,3 +72,5 @@
 - [Faithfulness Eval Stability Plan](./exec-plans/completed/2026-05-14-faithfulness-eval-stability.md)
 - [Faithfulness Context Selection Plan](./exec-plans/completed/2026-05-15-faithfulness-context-selection.md)
 - [Residual Keyword Accuracy Plan](./exec-plans/completed/2026-05-15-residual-keyword-accuracy.md)
+- [Eval Generalization Review Plan](./exec-plans/completed/2026-05-15-eval-generalization-review.md)
+- [Eval Set Expansion Plan](./exec-plans/completed/2026-05-22-eval-set-expansion.md)
