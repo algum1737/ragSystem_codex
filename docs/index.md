@@ -46,10 +46,11 @@
 - [2026-05-22 Eval Generalization Review](./references/2026-05-22-eval-generalization-review.md)
 - [2026-05-22 Eval Set Expansion Result](./references/2026-05-22-eval-set-expansion-result.md)
 - [2026-05-22 Eval Failure Triage](./references/2026-05-22-eval-failure-triage.md)
+- [2026-05-22 Eval Source Drift Calibration](./references/2026-05-22-eval-source-drift-calibration.md)
 
 ## Active Work
 
-- [Eval Source Drift Calibration Plan](./exec-plans/active/2026-05-22-eval-source-drift-calibration.md)
+- [Source Drift Regression Guard Plan](./exec-plans/active/2026-05-22-source-drift-regression-guard.md)
 
 ## Completed Work
 
@@ -76,3 +77,4 @@
 - [Eval Generalization Review Plan](./exec-plans/completed/2026-05-15-eval-generalization-review.md)
 - [Eval Set Expansion Plan](./exec-plans/completed/2026-05-22-eval-set-expansion.md)
 - [Eval Failure Triage Plan](./exec-plans/completed/2026-05-22-eval-failure-triage.md)
+- [Eval Source Drift Calibration Plan](./exec-plans/completed/2026-05-22-eval-source-drift-calibration.md)

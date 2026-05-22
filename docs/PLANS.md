@@ -179,6 +179,12 @@
 
 - `2026-05-22-eval-source-drift-calibration.md`
   - 목표: 확장 corpus 기준으로 남은 `tc-04`, `tc-06` 실패를 정리해 평가셋 정의와 keyword 기준을 안정화한다.
+  - 상태: Completed
+
+### Source Drift Regression Guard
+
+- `2026-05-22-source-drift-regression-guard.md`
+  - 목표: 신규 문서 추가 또는 평가셋 확장 후 source drift를 자동으로 발견할 수 있는 regression guard 후보를 검토한다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -191,7 +197,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-22-eval-source-drift-calibration.md`
+- `exec-plans/active/2026-05-22-source-drift-regression-guard.md`
 
 ## Completed Plans
 
@@ -218,3 +224,4 @@
 - `exec-plans/completed/2026-05-15-eval-generalization-review.md`
 - `exec-plans/completed/2026-05-22-eval-set-expansion.md`
 - `exec-plans/completed/2026-05-22-eval-failure-triage.md`
+- `exec-plans/completed/2026-05-22-eval-source-drift-calibration.md`

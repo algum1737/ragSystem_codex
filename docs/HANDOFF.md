@@ -38,17 +38,19 @@
 32. `docs/exec-plans/completed/2026-05-22-eval-set-expansion.md`
 33. `docs/references/2026-05-22-eval-set-expansion-result.md`
 34. `docs/exec-plans/completed/2026-05-22-eval-failure-triage.md`
-35. `docs/exec-plans/active/2026-05-22-eval-source-drift-calibration.md`
-36. `docs/exec-plans/completed/2026-05-13-github-actions-ci.md`
-37. `docs/exec-plans/completed/2026-05-13-partial-answer-policy.md`
-38. `docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
-39. `docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md`
-40. `docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md`
-41. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
-42. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
-43. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
-44. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
-45. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
+35. `docs/references/2026-05-22-eval-source-drift-calibration.md`
+36. `docs/exec-plans/completed/2026-05-22-eval-source-drift-calibration.md`
+37. `docs/exec-plans/active/2026-05-22-source-drift-regression-guard.md`
+38. `docs/exec-plans/completed/2026-05-13-github-actions-ci.md`
+39. `docs/exec-plans/completed/2026-05-13-partial-answer-policy.md`
+40. `docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md`
+41. `docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md`
+42. `docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md`
+43. `docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md`
+44. `docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md`
+45. `docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
+46. `docs/exec-plans/completed/2026-05-12-runtime-validation.md`
+47. `docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md`
 
 ## Current Baseline
 
@@ -225,17 +227,26 @@
   - 최종 지표: `accuracy_mean=0.9219`, `faithfulness_mean=0.9375`, `not_found_success_rate=1.0`
   - 완료된 계획: `docs/exec-plans/completed/2026-05-22-eval-failure-triage.md`
   - 다음 active plan으로 `docs/exec-plans/active/2026-05-22-eval-source-drift-calibration.md`를 생성했다.
+- source drift calibration을 수행했다.
+  - 결과 문서: `docs/references/2026-05-22-eval-source-drift-calibration.md`
+  - `tc-04`를 자동 갱신 positive case로 재정의했다.
+  - `tc-17`을 추가해 해지/개별 서비스 이용 종료 positive case를 분리했다.
+  - `tc-06` 분쟁 해결 keyword와 relevant source를 확장 corpus 기준으로 보정했다.
+  - 최종 리포트: `eval/results/eval_20260522_160844.json`
+  - 최종 지표: `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_success_rate=1.0`
+  - 완료된 계획: `docs/exec-plans/completed/2026-05-22-eval-source-drift-calibration.md`
+  - 다음 active plan으로 `docs/exec-plans/active/2026-05-22-source-drift-regression-guard.md`를 생성했다.
 
 ## Current Gaps
 
 - `/stats`는 최신 인제스천 후 현재 `count=318`을 반환한다.
 - retrieval eval은 현재 `vector_precision@k_mean=0.48`, `rag_precision@k_mean=0.60`으로 정상 완료된다.
 - 현 `rag_precision@k_mean=0.60`은 current unique-source precision 계산 방식 기준 이론적 상한이다.
-- 최신 full eval 리포트는 `eval/results/eval_20260522_131753.json`에 저장되어 있다.
-- 최신 full eval 생성 지표는 `accuracy_mean=0.9219`, `faithfulness_mean=0.9375`, `not_found_rate=0.125`, `not_found_success_rate=1.0`이다.
+- 최신 full eval 리포트는 `eval/results/eval_20260522_160844.json`에 저장되어 있다.
+- 최신 full eval 생성 지표는 `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_rate=0.0588`, `not_found_success_rate=1.0`이다.
 - 최신 정규화 검색 지표는 `rag_normalized_source_precision@k_mean=1.0`, `rag_chunk_precision@k_mean=0.96`, `source_recall@k_mean=1.0`이다.
-- 현재 평가셋 기준 잔여 낮은 accuracy/faithfulness 케이스는 `tc-04`, `tc-06`이다.
-- 현재 active plan은 `docs/exec-plans/active/2026-05-22-eval-source-drift-calibration.md`다.
+- 현재 평가셋 기준 잔여 낮은 accuracy/faithfulness 케이스는 없다.
+- 현재 active plan은 `docs/exec-plans/active/2026-05-22-source-drift-regression-guard.md`다.
 - 이전 Cross-Encoder 캐시 반영 리포트는 `eval/results/eval_20260513_100727.json`에 저장되어 있다.
 - 검색/인제스천/평가 경로에 필요한 임베딩 모델 캐시는 준비됐다.
 - Cross-Encoder reranking 캐시도 준비됐다.
@@ -243,8 +254,8 @@
 
 ## Suggested Next Work
 
-1. active plan `docs/exec-plans/active/2026-05-22-eval-source-drift-calibration.md`에 따라 `tc-04`, `tc-06` 평가셋 calibration을 진행한다.
-2. full eval을 재실행해 남은 회귀를 확인한다.
+1. active plan `docs/exec-plans/active/2026-05-22-source-drift-regression-guard.md`에 따라 신규 문서 추가 시 source drift를 자동 탐지하는 regression guard 또는 리포트를 검토한다.
+2. hard case를 추가할 경우 별도 active exec plan을 새로 작성하고 평가셋 과적합 여부를 먼저 확인한다.
 
 ## Handoff Prompt
 
@@ -286,17 +297,19 @@
 32. docs/exec-plans/completed/2026-05-22-eval-set-expansion.md
 33. docs/references/2026-05-22-eval-set-expansion-result.md
 34. docs/exec-plans/completed/2026-05-22-eval-failure-triage.md
-35. docs/exec-plans/active/2026-05-22-eval-source-drift-calibration.md
-36. docs/exec-plans/completed/2026-05-13-github-actions-ci.md
-37. docs/exec-plans/completed/2026-05-13-partial-answer-policy.md
-38. docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md
-39. docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md
-40. docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md
-41. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
-42. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
-43. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
-44. docs/exec-plans/completed/2026-05-12-runtime-validation.md
-45. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
+35. docs/references/2026-05-22-eval-source-drift-calibration.md
+36. docs/exec-plans/completed/2026-05-22-eval-source-drift-calibration.md
+37. docs/exec-plans/active/2026-05-22-source-drift-regression-guard.md
+38. docs/exec-plans/completed/2026-05-13-github-actions-ci.md
+39. docs/exec-plans/completed/2026-05-13-partial-answer-policy.md
+40. docs/exec-plans/completed/2026-05-13-eval-accuracy-calibration.md
+41. docs/exec-plans/completed/2026-05-13-answer-quality-improvement.md
+42. docs/exec-plans/completed/2026-05-13-eval-harness-alignment.md
+43. docs/exec-plans/completed/2026-05-13-quality-baseline-improvement.md
+44. docs/exec-plans/completed/2026-05-13-architecture-doc-consolidation.md
+45. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
+46. docs/exec-plans/completed/2026-05-12-runtime-validation.md
+47. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
 
 현재 기준:
 - branch: `git branch --show-current`
