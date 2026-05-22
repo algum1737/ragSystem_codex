@@ -68,5 +68,7 @@
 
 ## Open Work
 
-- 로컬 source drift 리포트 스크립트 구현 완료.
-- 남은 판단: watch case 기준을 CI warning/report로만 둘지, 별도 PR에서 CI 실패 조건으로 승격할지 결정.
+- 남은 작업 없음.
+- 결정: 현 단계에서는 critical case만 실패 조건으로 보고, watch case는 리포트와 후속 검토 후보로 유지한다.
+- 이유: watch case 7건은 모두 `answer_accuracy=1.0`, `faithfulness=1.0`이며, source drift가 생성 품질 실패로 이어지지 않았다. 따라서 CI 실패 조건으로 즉시 승격하면 신규 corpus의 동등 근거 검색까지 불필요하게 차단할 수 있다.
+- 다음 active plan: `docs/exec-plans/active/2026-05-22-watch-case-review.md`
