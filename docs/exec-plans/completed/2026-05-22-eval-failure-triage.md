@@ -49,12 +49,30 @@
 
 ## Skipped/Not Run
 
-- 아직 실행 전.
+- 없음.
 
 ## Validation Result
 
-- 아직 실행 전.
+- Pre-flight checks
+  - `docs/references/2026-05-22-eval-set-expansion-result.md` 확인.
+  - `eval/results/eval_20260522_091248.json` 확인.
+  - `eval/pipeline.py`의 `not_found`, `answer_accuracy`, `faithfulness` 집계 방식 확인.
+- Automated tests
+  - `bash scripts/validate-docs.sh` 통과.
+  - `.venv/bin/python -m py_compile eval/pipeline.py retriever/engine.py api/models.py api/main.py app.py` 통과.
+  - `.venv/bin/python eval/pipeline.py --all` 실행 완료.
+    - 최종 리포트: `eval/results/eval_20260522_131753.json`
+    - `accuracy_mean=0.9219`
+    - `faithfulness_mean=0.9375`
+    - `not_found_rate=0.125`
+    - `not_found_success_rate=1.0`
+- Manual/Runtime QA
+  - `tc-16` expected no-answer 정책을 적용해 정상화.
+  - `tc-09`, `tc-10` faithfulness 회귀가 다문서 context 부족 문제임을 확인하고 개선.
+  - `tc-04`, `tc-06`은 남은 source drift/keyword calibration 후보로 분류.
+  - 결과 문서: `docs/references/2026-05-22-eval-failure-triage.md`
 
 ## Open Work
 
-- 실패 케이스 triage 진행.
+- 남은 작업 없음.
+- 다음 후보: `tc-04`, `tc-06` source drift 및 keyword calibration 정리.

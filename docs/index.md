@@ -45,10 +45,11 @@
 - [2026-05-15 Residual Keyword Accuracy](./references/2026-05-15-residual-keyword-accuracy.md)
 - [2026-05-22 Eval Generalization Review](./references/2026-05-22-eval-generalization-review.md)
 - [2026-05-22 Eval Set Expansion Result](./references/2026-05-22-eval-set-expansion-result.md)
+- [2026-05-22 Eval Failure Triage](./references/2026-05-22-eval-failure-triage.md)
 
 ## Active Work
 
-- [Eval Failure Triage Plan](./exec-plans/active/2026-05-22-eval-failure-triage.md)
+- [Eval Source Drift Calibration Plan](./exec-plans/active/2026-05-22-eval-source-drift-calibration.md)
 
 ## Completed Work
 
@@ -74,3 +75,4 @@
 - [Residual Keyword Accuracy Plan](./exec-plans/completed/2026-05-15-residual-keyword-accuracy.md)
 - [Eval Generalization Review Plan](./exec-plans/completed/2026-05-15-eval-generalization-review.md)
 - [Eval Set Expansion Plan](./exec-plans/completed/2026-05-22-eval-set-expansion.md)
+- [Eval Failure Triage Plan](./exec-plans/completed/2026-05-22-eval-failure-triage.md)
