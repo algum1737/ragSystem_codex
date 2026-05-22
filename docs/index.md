@@ -47,6 +47,7 @@
 - [2026-05-22 Eval Set Expansion Result](./references/2026-05-22-eval-set-expansion-result.md)
 - [2026-05-22 Eval Failure Triage](./references/2026-05-22-eval-failure-triage.md)
 - [2026-05-22 Eval Source Drift Calibration](./references/2026-05-22-eval-source-drift-calibration.md)
+- [2026-05-22 Source Drift Regression Report](./references/2026-05-22-source-drift-regression-report.md)
 
 ## Active Work
 
