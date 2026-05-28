@@ -24,115 +24,43 @@
       font-size: 15px;
       line-height: 1.65;
     }
-    main {
-      width: min(1120px, calc(100% - 48px));
-      margin: 0 auto;
-      padding: 40px 0 72px;
-    }
-    h1 {
-      margin: 0 0 20px;
-      font-size: 34px;
-      line-height: 1.2;
-      letter-spacing: 0;
-    }
-    h2 {
-      margin: 36px 0 14px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--line);
-      color: #0f172a;
-      font-size: 24px;
-      line-height: 1.3;
-      letter-spacing: 0;
-    }
-    h3 {
-      margin: 26px 0 10px;
-      color: #1f2937;
-      font-size: 18px;
-      line-height: 1.35;
-      letter-spacing: 0;
-    }
+    main { width: min(1120px, calc(100% - 48px)); margin: 0 auto; padding: 40px 0 72px; }
+    h1 { margin: 0 0 20px; font-size: 34px; line-height: 1.2; letter-spacing: 0; }
+    h2 { margin: 36px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--line); color: #0f172a; font-size: 24px; line-height: 1.3; letter-spacing: 0; }
+    h3 { margin: 26px 0 10px; color: #1f2937; font-size: 18px; line-height: 1.35; letter-spacing: 0; }
     p { margin: 8px 0; }
-    blockquote {
-      margin: 16px 0;
-      padding: 12px 16px;
-      border-left: 4px solid var(--accent);
-      background: var(--accent-soft);
-      color: #1e3a8a;
-    }
-    table {
-      width: 100%;
-      margin: 14px 0 24px;
-      border-collapse: collapse;
-      table-layout: auto;
-      font-size: 14px;
-    }
-    th, td {
-      border: 1px solid var(--line);
-      padding: 8px 10px;
-      vertical-align: top;
-      word-break: keep-all;
-    }
-    th {
-      background: var(--accent-soft);
-      color: #0f172a;
-      font-weight: 700;
-    }
+    blockquote { margin: 16px 0; padding: 12px 16px; border-left: 4px solid var(--accent); background: var(--accent-soft); color: #1e3a8a; }
+    table { width: 100%; margin: 14px 0 24px; border-collapse: collapse; table-layout: auto; font-size: 14px; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; vertical-align: top; word-break: keep-all; }
+    th { background: var(--accent-soft); color: #0f172a; font-weight: 700; }
     tr:nth-child(even) td { background: #fbfdff; }
-    pre {
-      margin: 14px 0 24px;
-      padding: 14px 16px;
-      overflow-x: auto;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--code);
-      white-space: pre;
-    }
-    code {
-      font-family: Menlo, Monaco, Consolas, "SF Mono", monospace;
-      font-size: 0.92em;
-      background: var(--code);
-      border-radius: 4px;
-      padding: 2px 4px;
-    }
-    pre code {
-      padding: 0;
-      background: transparent;
-      border-radius: 0;
-    }
-    ul, ol {
-      margin: 8px 0 16px 24px;
-      padding: 0;
-    }
+    pre { margin: 14px 0 24px; padding: 14px 16px; overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--code); white-space: pre; }
+    code { font-family: Menlo, Monaco, Consolas, "SF Mono", monospace; font-size: 0.92em; background: var(--code); border-radius: 4px; padding: 2px 4px; }
+    pre code { padding: 0; background: transparent; border-radius: 0; }
+    ul, ol { margin: 8px 0 16px 24px; padding: 0; }
     li { margin: 4px 0; }
-    hr {
-      margin: 28px 0;
-      border: 0;
-      border-top: 1px solid var(--line);
-    }
+    hr { margin: 28px 0; border: 0; border-top: 1px solid var(--line); }
     del { color: var(--muted); }
     @media print {
       body { font-size: 11px; }
-      main {
-        width: 100%;
-        padding: 0;
-      }
+      main { width: 100%; padding: 0; }
       h1 { font-size: 24px; }
       h2 { font-size: 18px; page-break-after: avoid; }
       h3 { font-size: 14px; page-break-after: avoid; }
-      table, pre, blockquote { page-break-inside: avoid; }
+      table, pre { page-break-inside: avoid; }
     }
-    </style>
+  </style>
 </head>
 <body>
   <main>
-    <h1>RAG 품질 개선 로드맵</h1>
-    <p><strong>최종 업데이트:</strong> 2026-05-15</p>
-    <p><strong>현재 버전:</strong> v0.4 진행 중 (검색/평가 하네스 안정화 및 keyword accuracy 보정 완료)</p>
-    <p><strong>목적:</strong> 특정 카테고리 문서 기반 RAG 검색 및 문서 초안 생성 파이프라인</p>
-    <p><strong>검증 도메인:</strong> 이용약관 (예시 — 다른 도메인으로 교체 가능)</p>
-    <hr>
-    <h2>ragSystem 모델 구조</h2>
-    <pre><code>질문 입력
+<h1>RAG 품질 개선 로드맵</h1>
+<p><strong>최종 업데이트:</strong> 2026-05-22</p>
+<p><strong>현재 버전:</strong> v0.4 진행 중 (확장 평가셋 안정화 및 source scope 정책 정리 중)</p>
+<p><strong>목적:</strong> 특정 카테고리 문서 기반 RAG 검색 및 문서 초안 생성 파이프라인</p>
+<p><strong>검증 도메인:</strong> 이용약관 (예시 — 다른 도메인으로 교체 가능)</p>
+<hr>
+<h2>ragSystem 모델 구조</h2>
+<pre><code>질문 입력
     │
     ▼
 ┌─────────────────────────────┐
@@ -175,221 +103,85 @@
     │
     ▼
   최종 답변 및 평가 리포트</code></pre>
-    <hr>
-    <h2>개선 항목 현황</h2>
-    <h3>✅ 완료 항목</h3>
-    <table>
-  <thead>
-    <tr>
-      <th>개선 방법</th>
-      <th>완료 버전</th>
-      <th>효과</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>하이브리드 검색 (BM25 + Vector + RRF)</td>
-      <td>v0.1 Phase 5</td>
-      <td>키워드+의미 양쪽 재현율 향상</td>
-    </tr>
-    <tr>
-      <td>다국어 임베딩 교체 (e5-large, 1024dim)</td>
-      <td>v0.3 Phase 10</td>
-      <td>한국어 검색 품질 +3~8%p 추정</td>
-    </tr>
-    <tr>
-      <td>Cross-Encoder 재순위</td>
-      <td>v0.3 Phase 11</td>
-      <td>NDCG@10 +5~12%p 추정</td>
-    </tr>
-    <tr>
-      <td>청킹 최적화 (size 1000, overlap 200)</td>
-      <td>v0.2 Phase 8</td>
-      <td>청크 맥락 증가, 조항 경계 잘림 감소</td>
-    </tr>
-    <tr>
-      <td>컨텍스트 한도 확장 (4000→8000자)</td>
-      <td>v0.2 Phase 9</td>
-      <td>더 많은 청크 참조, 답변 완결성 향상</td>
-    </tr>
-    <tr>
-      <td>범용 프롬프트</td>
-      <td>v0.2 Phase 9</td>
-      <td>이용약관 도메인 답변 품질 향상</td>
-    </tr>
-    <tr>
-      <td>평가 파이프라인 구축</td>
-      <td>v0.3 Phase 12</td>
-      <td>Precision@K / Accuracy / Faithfulness 측정 가능</td>
-    </tr>
-    <tr>
-      <td>doc_type 메타데이터 필터링</td>
-      <td>v0.4 Phase 13</td>
-      <td>tc-05 Precision@5 0.2→0.4, 전체 0.46→0.48</td>
-    </tr>
-    <tr>
-      <td>평가 하네스 정렬</td>
-      <td>2026-05-13</td>
-      <td>vector-only / RAG 검색 지표 분리</td>
-    </tr>
-    <tr>
-      <td>Accuracy 평가 보정</td>
-      <td>2026-05-13</td>
-      <td>OR keyword group으로 의미상 동등 표현 반영</td>
-    </tr>
-    <tr>
-      <td>부분 답변 정책</td>
-      <td>2026-05-13</td>
-      <td>일부 근거가 있을 때 no-answer 대신 확인/미확인 분리</td>
-    </tr>
-    <tr>
-      <td>GitHub Actions 최소 CI</td>
-      <td>2026-05-14</td>
-      <td>PR checks에서 문서 검증과 Python compile 검증</td>
-    </tr>
-    <tr>
-      <td>RAG 검색 source 다양성 선택</td>
-      <td>2026-05-14</td>
-      <td><code>rag_precision@k_mean</code> 0.54→0.60, coverage 0.925→1.0</td>
-    </tr>
-    <tr>
-      <td>평가셋 정합성 보정</td>
-      <td>2026-05-14</td>
-      <td><code>accuracy_mean</code> 0.70→0.875, <code>faithfulness_mean</code> 0.90→1.0</td>
-    </tr>
-    <tr>
-      <td>Retrieval metric 정규화</td>
-      <td>2026-05-14</td>
-      <td><code>rag_normalized_source_precision@k_mean=1.0</code>, <code>rag_chunk_precision@k_mean=0.96</code></td>
-    </tr>
-    <tr>
-      <td>Faithfulness context 선택 개선</td>
-      <td>2026-05-15</td>
-      <td><code>faithfulness_mean=1.0</code> 안정화</td>
-    </tr>
-    <tr>
-      <td>잔여 keyword accuracy 보정</td>
-      <td>2026-05-15</td>
-      <td><code>accuracy_mean=1.0</code>, <code>faithfulness_mean=1.0</code>, <code>not_found_rate=0.0</code></td>
-    </tr>
-    <tr>
-      <td>원본 파일명 메타데이터 보존 (버그 수정)</td>
-      <td>v0.3</td>
-      <td>Precision@K 평가 정상화</td>
-    </tr>
-    <tr>
-      <td>TxtParser / MdParser 추가</td>
-      <td>v0.2 Phase 7</td>
-      <td>.txt, .md 파일 인제스천 가능</td>
-    </tr>
-  </tbody>
-</table>
-    <hr>
-    <h3>🔄 진행 중 (v0.4)</h3>
-    <table>
-  <thead>
-    <tr>
-      <th>개선 방법</th>
-      <th>대상</th>
-      <th>비고</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>평가셋 일반화 검토</td>
-      <td>현재 10개 케이스와 keyword OR group</td>
-      <td>active plan: <code>2026-05-15-eval-generalization-review.md</code></td>
-    </tr>
-    <tr>
-      <td>hard case 확장 후보 정의</td>
-      <td>신규 질문 3건 이상</td>
-      <td>현재 평가셋 상한 도달 이후 우선 후보</td>
-    </tr>
-  </tbody>
-</table>
-    <hr>
-    <h3>⬜ 미착수 (우선순위 순)</h3>
-    <table>
-  <thead>
-    <tr>
-      <th>개선 방법</th>
-      <th>대상</th>
-      <th>임팩트</th>
-      <th>구현 난이도</th>
-      <th>비고</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>MMR 다양성 검색</td>
-      <td>단일문서 집중 완화</td>
-      <td>중간</td>
-      <td>중간</td>
-      <td>1차 source 다양성 선택 적용 후 잔여 후보</td>
-    </tr>
-    <tr>
-      <td>중복 문서 해시 감지</td>
-      <td>노이즈 감소</td>
-      <td>중간</td>
-      <td>낮음</td>
-      <td>파일 해시 기반 스킵</td>
-    </tr>
-    <tr>
-      <td>Query Rewriting</td>
-      <td>모호한 쿼리 처리</td>
-      <td>중간</td>
-      <td>중간</td>
-      <td>LLM 2회 호출 트레이드오프</td>
-    </tr>
-    <tr>
-      <td>Parent-Child 청킹</td>
-      <td>검색 정밀도+컨텍스트</td>
-      <td>중간</td>
-      <td>높음</td>
-      <td>ChromaDB 저장 구조 변경 필요</td>
-    </tr>
-    <tr>
-      <td>이용약관 특화 QLoRA</td>
-      <td>도메인 어투/형식</td>
-      <td>높음</td>
-      <td>높음</td>
-      <td>데이터 수집 선행 필요</td>
-    </tr>
-  </tbody>
-</table>
-    <hr>
-    <h2>실측 기준선 (2026-05-15 full eval)</h2>
-    <pre><code>최신 리포트: eval/results/eval_20260515_135903.json
+<hr>
+<h2>개선 항목 현황</h2>
+<h3>✅ 완료 항목</h3>
+<table><thead><tr><th>개선 방법</th><th>완료 버전</th><th>효과</th></tr></thead><tbody>
+<tr><td>하이브리드 검색 (BM25 + Vector + RRF)</td><td>v0.1 Phase 5</td><td>키워드+의미 양쪽 재현율 향상</td></tr>
+<tr><td>다국어 임베딩 교체 (e5-large, 1024dim)</td><td>v0.3 Phase 10</td><td>한국어 검색 품질 +3~8%p 추정</td></tr>
+<tr><td>Cross-Encoder 재순위</td><td>v0.3 Phase 11</td><td>NDCG@10 +5~12%p 추정</td></tr>
+<tr><td>청킹 최적화 (size 1000, overlap 200)</td><td>v0.2 Phase 8</td><td>청크 맥락 증가, 조항 경계 잘림 감소</td></tr>
+<tr><td>컨텍스트 한도 확장 (4000→8000자)</td><td>v0.2 Phase 9</td><td>더 많은 청크 참조, 답변 완결성 향상</td></tr>
+<tr><td>범용 프롬프트</td><td>v0.2 Phase 9</td><td>이용약관 도메인 답변 품질 향상</td></tr>
+<tr><td>평가 파이프라인 구축</td><td>v0.3 Phase 12</td><td>Precision@K / Accuracy / Faithfulness 측정 가능</td></tr>
+<tr><td>doc_type 메타데이터 필터링</td><td>v0.4 Phase 13</td><td>tc-05 Precision@5 0.2→0.4, 전체 0.46→0.48</td></tr>
+<tr><td>평가 하네스 정렬</td><td>2026-05-13</td><td>vector-only / RAG 검색 지표 분리</td></tr>
+<tr><td>Accuracy 평가 보정</td><td>2026-05-13</td><td>OR keyword group으로 의미상 동등 표현 반영</td></tr>
+<tr><td>부분 답변 정책</td><td>2026-05-13</td><td>일부 근거가 있을 때 no-answer 대신 확인/미확인 분리</td></tr>
+<tr><td>GitHub Actions 최소 CI</td><td>2026-05-14</td><td>PR checks에서 문서 검증과 Python compile 검증</td></tr>
+<tr><td>RAG 검색 source 다양성 선택</td><td>2026-05-14</td><td><code>rag_precision@k_mean</code> 0.54→0.60, coverage 0.925→1.0</td></tr>
+<tr><td>평가셋 정합성 보정</td><td>2026-05-14</td><td><code>accuracy_mean</code> 0.70→0.875, <code>faithfulness_mean</code> 0.90→1.0</td></tr>
+<tr><td>Retrieval metric 정규화</td><td>2026-05-14</td><td><code>rag_normalized_source_precision@k_mean=1.0</code>, <code>rag_chunk_precision@k_mean=0.96</code></td></tr>
+<tr><td>Faithfulness context 선택 개선</td><td>2026-05-15</td><td><code>faithfulness_mean=1.0</code> 안정화</td></tr>
+<tr><td>잔여 keyword accuracy 보정</td><td>2026-05-15</td><td><code>accuracy_mean=1.0</code>, <code>faithfulness_mean=1.0</code>, <code>not_found_rate=0.0</code></td></tr>
+<tr><td>원본 파일명 메타데이터 보존 (버그 수정)</td><td>v0.3</td><td>Precision@K 평가 정상화</td></tr>
+<tr><td>TxtParser / MdParser 추가</td><td>v0.2 Phase 7</td><td>.txt, .md 파일 인제스천 가능</td></tr>
+<tr><td>평가셋 일반화 검토</td><td>2026-05-22</td><td>기존 10개 케이스의 과적합 가능성과 hard case 확장 필요성 확인</td></tr>
+<tr><td>hard case 확장</td><td>2026-05-22</td><td>10개→16개→17개 케이스로 확장, 13개 문서/318개 청크 corpus 검증</td></tr>
+<tr><td>expected no-answer 평가 정책</td><td>2026-05-22</td><td><code>expected_not_found</code>, <code>not_found_success_rate</code> 추가</td></tr>
+<tr><td>Source drift calibration</td><td>2026-05-22</td><td><code>tc-04</code>, <code>tc-06</code>, <code>tc-16</code>, <code>tc-17</code> 정리 후 생성 지표 1.0 회복</td></tr>
+<tr><td>Source drift regression guard</td><td>2026-05-22</td><td>critical/watch case 자동 리포트 스크립트 추가</td></tr>
+<tr><td>Watch case review</td><td>2026-05-22</td><td>watch case 7건을 source scope 정책 후보로 분리</td></tr>
+</tbody></table>
+<hr>
+<h3>🔄 진행 중 (v0.4)</h3>
+<table><thead><tr><th>개선 방법</th><th>대상</th><th>비고</th></tr></thead><tbody>
+<tr><td>Source scope policy</td><td><code>relevant_sources</code> 범위 기준</td><td>active plan: <code>2026-05-22-source-scope-policy.md</code></td></tr>
+<tr><td>Watch case 후속 보정 판단</td><td><code>tc-02</code>, <code>tc-03</code>, <code>tc-07</code>, <code>tc-08</code>, <code>tc-14</code>, <code>tc-15</code></td><td>source scope 정책 확정 후 재검토</td></tr>
+</tbody></table>
+<hr>
+<h3>⬜ 미착수 (우선순위 순)</h3>
+<table><thead><tr><th>개선 방법</th><th>대상</th><th>임팩트</th><th>구현 난이도</th><th>비고</th></tr></thead><tbody>
+<tr><td>MMR 다양성 검색</td><td>단일문서 집중 완화</td><td>중간</td><td>중간</td><td>1차 source 다양성 선택 적용 후 잔여 후보</td></tr>
+<tr><td>중복 문서 해시 감지</td><td>노이즈 감소</td><td>중간</td><td>낮음</td><td>파일 해시 기반 스킵</td></tr>
+<tr><td>Query Rewriting</td><td>모호한 쿼리 처리</td><td>중간</td><td>중간</td><td>LLM 2회 호출 트레이드오프</td></tr>
+<tr><td>Parent-Child 청킹</td><td>검색 정밀도+컨텍스트</td><td>중간</td><td>높음</td><td>ChromaDB 저장 구조 변경 필요</td></tr>
+<tr><td>이용약관 특화 QLoRA</td><td>도메인 어투/형식</td><td>높음</td><td>높음</td><td>데이터 수집 선행 필요</td></tr>
+</tbody></table>
+<hr>
+<h2>실측 기준선 (2026-05-22 full eval)</h2>
+<pre><code>최신 리포트: eval/results/eval_20260522_160844.json
 
-precision@k_mean:        0.48
-vector_precision@k_mean: 0.48
-rag_precision@k_mean:    0.60
-rag_normalized_source_precision@k_mean: 1.0
-rag_chunk_precision@k_mean:             0.96
-source_recall@k_mean:                   1.0
-source_coverage@k_mean:  1.0
+total_cases:             17
+precision@k_mean:        0.3529
+vector_precision@k_mean: 0.3529
+rag_precision@k_mean:    0.4235
+rag_normalized_source_precision@k_mean: 0.7971
+rag_chunk_precision@k_mean:             0.5882
+source_recall@k_mean:                   0.7836
+source_coverage@k_mean:  0.7836
 accuracy_mean:           1.0
 faithfulness_mean:       1.0
-not_found_rate:          0.0</code></pre>
-    <p>v0.4 검색 1차 목표: 실제 RAG 경로 기준 <code>rag_precision@k_mean</code> <strong>0.60 이상</strong> 달성</p>
-    <p>v0.4 평가셋 정합성 목표: 문서 근거와 평가 질문/키워드 정렬 완료</p>
-    <p>v0.4 검색 지표 정규화 목표: 기존 precision 상한 문제 해소와 해석 가능한 source/chunk 지표 추가 완료</p>
-    <p>v0.4 생성 품질 목표: 현재 10개 평가 케이스 기준 <code>accuracy_mean=1.0</code>, <code>faithfulness_mean=1.0</code>, <code>not_found_rate=0.0</code> 달성</p>
-    <hr>
-    <h2>추천 진행 순서 (잔여)</h2>
-    <pre><code>현재 (현재 평가셋 기준 생성 품질 상한 달성)
+not_found_rate:          0.0588
+not_found_success_rate:  1.0</code></pre>
+<p>v0.4 검색 1차 목표: 실제 RAG 경로 기준 <code>rag_precision@k_mean</code> <strong>0.60 이상</strong> 달성</p>
+<p>v0.4 평가셋 정합성 목표: 문서 근거와 평가 질문/키워드 정렬 완료</p>
+<p>v0.4 검색 지표 정규화 목표: 기존 precision 상한 문제 해소와 해석 가능한 source/chunk 지표 추가 완료</p>
+<p>v0.4 생성 품질 목표: 현재 17개 평가 케이스 기준 <code>accuracy_mean=1.0</code>, <code>faithfulness_mean=1.0</code>, <code>not_found_success_rate=1.0</code> 달성</p>
+<hr>
+<h2>추천 진행 순서 (잔여)</h2>
+<pre><code>현재 (17개 평가 케이스 기준 생성 품질 상한 달성)
     │
     ▼
-평가셋 일반화 검토
-    │  → 현재 10개 케이스와 OR keyword group 과적합 여부 확인
+source scope policy 수립
+    │  → relevant_sources 범위를 전체 관련 문서 기준으로 볼지 대표 근거 기준으로 볼지 결정
     ▼
-hard case 후보 정의
-    │  → 신규 질문 3건 이상, 문서 간 충돌/부분 근거/표현 다양성 포함
+watch case 후속 보정 판단
+    │  → tc-02, tc-03, tc-07, tc-08, tc-14, tc-15 재검토
     ▼
-평가셋 확장 또는 판정 방식 보완
-    │  → 사용자 승인 후 별도 active plan으로 구현</code></pre>
-    <hr>
-    <p><em>실측값은 <code>.venv/bin/python eval/pipeline.py --all</code>로 측정한다. 최신 결과는 <code>eval/results/eval_20260515_135903.json</code>과 <code>docs/references/2026-05-15-residual-keyword-accuracy.md</code>를 기준으로 한다.</em></p>
+필요 시 평가셋 source 기준 보정 및 full eval 재실행</code></pre>
+<hr>
+<p>*실측값은 <code>.venv/bin/python eval/pipeline.py --all</code>로 측정한다. 최신 결과는 <code>eval/results/eval_20260522_160844.json</code>, <code>docs/references/2026-05-22-eval-source-drift-calibration.md</code>, <code>docs/references/2026-05-22-watch-case-review.md</code>를 기준으로 한다.*</p>
   </main>
 </body>
 </html>

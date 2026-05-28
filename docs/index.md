@@ -48,10 +48,11 @@
 - [2026-05-22 Eval Failure Triage](./references/2026-05-22-eval-failure-triage.md)
 - [2026-05-22 Eval Source Drift Calibration](./references/2026-05-22-eval-source-drift-calibration.md)
 - [2026-05-22 Source Drift Regression Report](./references/2026-05-22-source-drift-regression-report.md)
+- [2026-05-22 Watch Case Review](./references/2026-05-22-watch-case-review.md)
 
 ## Active Work
 
-- [Source Drift Watch Case Review Plan](./exec-plans/active/2026-05-22-watch-case-review.md)
+- [Source Scope Policy Plan](./exec-plans/active/2026-05-22-source-scope-policy.md)
 
 ## Completed Work
 
@@ -80,3 +81,4 @@
 - [Eval Failure Triage Plan](./exec-plans/completed/2026-05-22-eval-failure-triage.md)
 - [Eval Source Drift Calibration Plan](./exec-plans/completed/2026-05-22-eval-source-drift-calibration.md)
 - [Source Drift Regression Guard Plan](./exec-plans/completed/2026-05-22-source-drift-regression-guard.md)
+- [Source Drift Watch Case Review Plan](./exec-plans/completed/2026-05-22-watch-case-review.md)
