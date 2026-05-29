@@ -233,6 +233,12 @@
 
 - `2026-05-29-pr-28-merge-followup.md`
   - 목표: PR #28의 CI 통과 상태를 바탕으로 사용자 승인 후 머지와 후속 handoff 정리를 수행한다.
+  - 상태: Completed
+
+### Ubuntu Server Runtime Verification
+
+- `2026-05-29-ubuntu-server-runtime-verification.md`
+  - 목표: 머지된 배포 호환 변경을 기준으로 Ubuntu 서버 런타임 상태를 재확인하고 필요한 후속 운영 작업을 정리한다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -245,7 +251,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-29-pr-28-merge-followup.md`
+- `exec-plans/active/2026-05-29-ubuntu-server-runtime-verification.md`
 
 ## Completed Plans
 
@@ -281,3 +287,4 @@
 - `exec-plans/completed/2026-05-28-location-dispute-case-review.md`
 - `exec-plans/completed/2026-05-28-source-drift-ci-promotion.md`
 - `exec-plans/completed/2026-05-29-ubuntu-deployment-runtime-hardening.md`
+- `exec-plans/completed/2026-05-29-pr-28-merge-followup.md`
