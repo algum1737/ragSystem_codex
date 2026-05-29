@@ -385,6 +385,8 @@ class RAGEvaluator:
         summary = {
             "total_cases": len(cases),
             "metrics_evaluated": metrics,
+            "llm_model": self._llm_model,
+            "top_k": self._top_k,
             "precision@k_mean": _mean("precision_at_k"),
             "vector_precision@k_mean": _mean("vector_precision_at_k"),
             "rag_precision@k_mean": _mean("rag_precision_at_k"),

@@ -335,11 +335,18 @@
   - 코드 기본값, CLI 기본값, Streamlit 추천 모델, 아키텍처 문서, 배포/기동 가이드를 `gemma4:26b` 기준으로 맞췄다.
   - 완료된 계획: `docs/exec-plans/completed/2026-05-29-operating-model-default-policy.md`
 
+- 평가 기준 모델과 튜닝 정책을 정리했다.
+  - 운영 기본 모델은 `gemma4:26b`, 평가 기준 모델은 `gemma3:12b`로 분리했다.
+  - `eval/pipeline.py` 리포트 summary에 `llm_model`과 `top_k`를 기록하도록 보강했다.
+  - `docs/references/2026-05-29-eval-model-tuning-policy.md`에 표준 eval 명령, 튜닝 순서, 안정화 판단 기준을 문서화했다.
+  - retrieval-only 검증에서 `llm_model=gemma3:12b`, `top_k=5`, `rag_normalized_source_precision=0.9891`, `source_recall=0.9891` 출력을 확인했다.
+  - 완료된 계획: `docs/exec-plans/completed/2026-05-29-eval-model-tuning-policy.md`
+
 ## Current Gaps
 
 - `/stats`는 최신 인제스천 후 현재 `count=318`을 반환한다.
-- retrieval eval은 현재 `vector_precision@k_mean=0.48`, `rag_precision@k_mean=0.60`으로 정상 완료된다.
-- 현 `rag_precision@k_mean=0.60`은 current unique-source precision 계산 방식 기준 이론적 상한이다.
+- retrieval-only 기준 검증은 현재 `vector_precision@k_mean=0.4522`, `rag_precision@k_mean=0.5478`로 정상 완료된다.
+- 튜닝 판단은 raw precision보다 `rag_normalized_source_precision@k_mean=0.9891`과 `source_recall@k_mean=0.9891` 중심으로 본다.
 - 최신 추가 리포트는 `eval/results/eval_20260528_115250_location_dispute_added.json`에 저장되어 있다.
 - 최신 생성 지표는 `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_rate=0.0455`, `not_found_success_rate=1.0`이다.
 - 최신 정규화 검색 지표는 `rag_normalized_source_precision@k_mean=0.9891`, `rag_chunk_precision@k_mean=0.8609`, `source_recall@k_mean=0.9891`이다.

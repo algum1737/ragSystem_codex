@@ -253,6 +253,12 @@
   - 목표: 코드 기본 모델 `gemma4:26b` 변경이 Ubuntu 서버 재배포 또는 서비스 재시작 시 의도대로 적용되는지 확인한다.
   - 상태: Active
 
+### Eval Model Tuning Policy
+
+- `2026-05-29-eval-model-tuning-policy.md`
+  - 목표: 운영 모델과 평가 기준 모델을 분리하고 튜닝 기준선 절차를 문서화한다.
+  - 상태: Completed
+
 ### Follow-Up Candidates
 
 - 런타임 환경 복구와 smoke test 계획
@@ -302,3 +308,4 @@
 - `exec-plans/completed/2026-05-29-pr-28-merge-followup.md`
 - `exec-plans/completed/2026-05-29-ubuntu-server-runtime-verification.md`
 - `exec-plans/completed/2026-05-29-operating-model-default-policy.md`
+- `exec-plans/completed/2026-05-29-eval-model-tuning-policy.md`

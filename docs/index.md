@@ -56,6 +56,7 @@
 - [2026-05-28 TC06 Source Scope Report](./references/2026-05-28-tc06-source-scope-report.md)
 - [2026-05-28 Location Dispute Case Review](./references/2026-05-28-location-dispute-case-review.md)
 - [2026-05-28 Location Dispute Case Report](./references/2026-05-28-location-dispute-case-report.md)
+- [2026-05-29 Eval Model Tuning Policy](./references/2026-05-29-eval-model-tuning-policy.md)
 
 ## Active Work
 
@@ -68,6 +69,7 @@
 - [PR 28 Merge Follow-Up Plan](./exec-plans/completed/2026-05-29-pr-28-merge-followup.md)
 - [Ubuntu Server Runtime Verification Plan](./exec-plans/completed/2026-05-29-ubuntu-server-runtime-verification.md)
 - [Operating Model Default Policy Plan](./exec-plans/completed/2026-05-29-operating-model-default-policy.md)
+- [Eval Model Tuning Policy Plan](./exec-plans/completed/2026-05-29-eval-model-tuning-policy.md)
 
 - [Bootstrap And Migration Plan](./exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md)
 - [Runtime Validation Plan](./exec-plans/completed/2026-05-12-runtime-validation.md)
