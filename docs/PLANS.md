@@ -197,6 +197,42 @@
 
 - `2026-05-22-source-scope-policy.md`
   - 목표: 평가셋의 `relevant_sources` 범위를 어떻게 정의할지 기준을 정한다.
+  - 상태: Completed
+
+### Watch Case Split
+
+- `2026-05-28-watch-case-split.md`
+  - 목표: source scope policy에 따라 broad watch case를 목적별 평가 케이스로 분리할지 결정한다.
+  - 상태: Completed
+
+### TC06 Source Scope Review
+
+- `2026-05-28-tc06-source-scope-review.md`
+  - 목표: `tc-06` 분쟁 해결 케이스의 `relevant_sources` 범위를 source scope policy 기준으로 재검토한다.
+  - 상태: Completed
+
+### Location Dispute Case Review
+
+- `2026-05-28-location-dispute-case-review.md`
+  - 목표: 위치기반서비스 분쟁 해결 절차를 별도 hard case로 추가할지 검토한다.
+  - 상태: Completed
+
+### Source Drift CI Promotion
+
+- `2026-05-28-source-drift-ci-promotion.md`
+  - 목표: source drift report를 CI 또는 정적 검증 루프에 승격할지 검토한다.
+  - 상태: Completed
+
+### Ubuntu Deployment Runtime Hardening
+
+- `2026-05-29-ubuntu-deployment-runtime-hardening.md`
+  - 목표: Ubuntu 20.04 서버 수동 배포 중 확인한 Python, SQLite, GPU/PyTorch 런타임 이슈를 재배포 가능한 운영 절차로 문서화한다.
+  - 상태: Completed
+
+### PR 28 Merge Follow-Up
+
+- `2026-05-29-pr-28-merge-followup.md`
+  - 목표: PR #28의 CI 통과 상태를 바탕으로 사용자 승인 후 머지와 후속 handoff 정리를 수행한다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -209,7 +245,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-22-source-scope-policy.md`
+- `exec-plans/active/2026-05-29-pr-28-merge-followup.md`
 
 ## Completed Plans
 
@@ -239,3 +275,9 @@
 - `exec-plans/completed/2026-05-22-eval-source-drift-calibration.md`
 - `exec-plans/completed/2026-05-22-source-drift-regression-guard.md`
 - `exec-plans/completed/2026-05-22-watch-case-review.md`
+- `exec-plans/completed/2026-05-22-source-scope-policy.md`
+- `exec-plans/completed/2026-05-28-watch-case-split.md`
+- `exec-plans/completed/2026-05-28-tc06-source-scope-review.md`
+- `exec-plans/completed/2026-05-28-location-dispute-case-review.md`
+- `exec-plans/completed/2026-05-28-source-drift-ci-promotion.md`
+- `exec-plans/completed/2026-05-29-ubuntu-deployment-runtime-hardening.md`

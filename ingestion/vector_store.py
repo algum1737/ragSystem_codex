@@ -1,5 +1,15 @@
 import logging
+import sqlite3
+import sys
 from pathlib import Path
+
+if sqlite3.sqlite_version_info < (3, 35, 0):
+    try:
+        import pysqlite3
+    except ImportError:
+        pass
+    else:
+        sys.modules["sqlite3"] = pysqlite3
 
 import chromadb
 import numpy as np
