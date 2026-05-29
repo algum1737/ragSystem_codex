@@ -144,7 +144,17 @@ class RAGEvaluator:
     def _is_not_found_answer(self, answer: str | None) -> bool:
         if not answer:
             return False
-        return "찾을 수 없습니다" in answer
+        normalized = answer.strip()
+        if "찾을 수 없습니다" in normalized:
+            return True
+        # Partial answers may contain a separate "not confirmed" section.
+        # Treat it as no-answer only when the whole response starts that way.
+        no_answer_prefixes = (
+            "문서에서 확인되지 않는 내용입니다",
+            "제공된 문서에는",
+            "제공된 문서에서 확인되지 않습니다",
+        )
+        return normalized.startswith(no_answer_prefixes)
 
     def expected_not_found_accuracy(self, answer: str | None, expected_not_found: bool) -> float | None:
         if not expected_not_found:

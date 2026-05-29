@@ -57,10 +57,11 @@
 - [2026-05-28 Location Dispute Case Review](./references/2026-05-28-location-dispute-case-review.md)
 - [2026-05-28 Location Dispute Case Report](./references/2026-05-28-location-dispute-case-report.md)
 - [2026-05-29 Eval Model Tuning Policy](./references/2026-05-29-eval-model-tuning-policy.md)
+- [2026-05-29 Performance Tuning Baseline Result](./references/2026-05-29-performance-tuning-baseline-result.md)
 
 ## Active Work
 
-- [Ubuntu Default Model Redeploy Verification Plan](./exec-plans/active/2026-05-29-ubuntu-default-model-redeploy-verification.md)
+- [Residual Tuning Case Review Plan](./exec-plans/active/2026-05-29-residual-tuning-case-review.md)
 
 ## Completed Work
 
@@ -69,7 +70,9 @@
 - [PR 28 Merge Follow-Up Plan](./exec-plans/completed/2026-05-29-pr-28-merge-followup.md)
 - [Ubuntu Server Runtime Verification Plan](./exec-plans/completed/2026-05-29-ubuntu-server-runtime-verification.md)
 - [Operating Model Default Policy Plan](./exec-plans/completed/2026-05-29-operating-model-default-policy.md)
+- [Ubuntu Default Model Redeploy Verification Plan](./exec-plans/completed/2026-05-29-ubuntu-default-model-redeploy-verification.md)
 - [Eval Model Tuning Policy Plan](./exec-plans/completed/2026-05-29-eval-model-tuning-policy.md)
+- [Performance Tuning Baseline Plan](./exec-plans/completed/2026-05-29-performance-tuning-baseline.md)
 
 - [Bootstrap And Migration Plan](./exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md)
 - [Runtime Validation Plan](./exec-plans/completed/2026-05-12-runtime-validation.md)

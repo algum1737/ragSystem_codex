@@ -46,8 +46,28 @@
 
 ## Skipped/Not Run
 
-- 아직 서버 재배포 확인은 실행하지 않았다.
+- 없음. 서버 배포본 갱신, 서비스 재기동, health/stats/query/web 확인을 수행했다.
+
+## Completion
+
+- 로컬 main과 origin/main이 `d74a822`로 일치함을 확인했다.
+- 서버 배포본의 `retriever/llm.py`가 기존 `gemma3:12b` 기본값 상태임을 확인했다.
+- `.venv`와 `chroma_db`를 제외한 최신 코드 압축본을 서버에 업로드하고 `/opt/ragSystem_codex`에 반영했다.
+- 서버 배포본의 `DEFAULT_MODEL = "gemma4:26b"` 반영을 확인했다.
+- `ragsystem-api`, `ragsystem-web`, `ollama`가 재기동 후 active 상태임을 확인했다.
+- `/health`는 `model=gemma4:26b`, `/stats`는 `count=318`, Streamlit은 HTTP 200을 반환했다.
+- 실제 RAG query 1건이 HTTP 응답과 5개 source를 반환했다.
+
+## Validation Result
+
+- 통과: `git status --short --branch`
+- 통과: 서버 배포본 `DEFAULT_MODEL = "gemma4:26b"` 확인
+- 통과: `curl http://localhost:8000/health` -> `{"status":"ok","model":"gemma4:26b"}`
+- 통과: `curl http://localhost:8000/stats` -> `{"collection_name":"ragSystem","count":318}`
+- 통과: Streamlit HTTP 200
+- 통과: 실제 RAG query 1건 응답 및 5개 source 확인
+- 주의: `sudo systemctl restart`는 비대화형 SSH에서 sudo 암호를 요구해 직접 실행하지 못했다. 대신 `ragadmin` 소유 API/Web 프로세스를 종료했고 systemd `Restart=always` 정책으로 재기동됨을 확인했다.
 
 ## Open Work
 
-- 서버 배포본 갱신 및 재시작 검증 필요 여부 확인.
+- 없음.

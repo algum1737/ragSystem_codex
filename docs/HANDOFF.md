@@ -342,16 +342,35 @@
   - retrieval-only 검증에서 `llm_model=gemma3:12b`, `top_k=5`, `rag_normalized_source_precision=0.9891`, `source_recall=0.9891` 출력을 확인했다.
   - 완료된 계획: `docs/exec-plans/completed/2026-05-29-eval-model-tuning-policy.md`
 
+- Ubuntu 기본 모델 재배포 검증을 완료했다.
+  - 서버 배포본의 `DEFAULT_MODEL`이 `gemma3:12b`로 남아 있음을 확인하고 최신 main 코드로 갱신했다.
+  - 갱신 후 서버 배포본의 `DEFAULT_MODEL = "gemma4:26b"` 반영을 확인했다.
+  - `ragsystem-api`, `ragsystem-web`, `ollama` 재기동 후 active 상태를 확인했다.
+  - `/health`는 `model=gemma4:26b`, `/stats`는 `count=318`, Streamlit은 HTTP 200을 반환했다.
+  - 실제 RAG query 1건이 응답과 5개 source를 반환했다.
+  - 완료된 계획: `docs/exec-plans/completed/2026-05-29-ubuntu-default-model-redeploy-verification.md`
+  - 다음 active plan: `docs/exec-plans/active/2026-05-29-performance-tuning-baseline.md`
+
+- 튜닝 전 기준선과 1차 no-answer 탐지 보정을 완료했다.
+  - 기준선 full eval: `eval/results/eval_20260529_172801.json`
+  - 보정 후 full eval: `eval/results/eval_20260529_173928.json`
+  - no-answer 탐지식을 `문서에서 확인되지 않는 내용입니다`, `제공된 문서에는`, `제공된 문서에서 확인되지 않습니다` 시작 응답까지 인식하도록 보강했다.
+  - 결과는 `accuracy_mean=1.0`, `faithfulness_mean=0.9565`, `not_found_success_rate=1.0`로 집계 지표 기준을 통과했다.
+  - 다만 source drift guard는 `tc-04` faithfulness 0.0을 critical로 분류해 잔여 리뷰가 필요하다.
+  - 결과 문서: `docs/references/2026-05-29-performance-tuning-baseline-result.md`
+  - 완료된 계획: `docs/exec-plans/completed/2026-05-29-performance-tuning-baseline.md`
+  - 다음 active plan: `docs/exec-plans/active/2026-05-29-residual-tuning-case-review.md`
+
 ## Current Gaps
 
 - `/stats`는 최신 인제스천 후 현재 `count=318`을 반환한다.
 - retrieval-only 기준 검증은 현재 `vector_precision@k_mean=0.4522`, `rag_precision@k_mean=0.5478`로 정상 완료된다.
 - 튜닝 판단은 raw precision보다 `rag_normalized_source_precision@k_mean=0.9891`과 `source_recall@k_mean=0.9891` 중심으로 본다.
-- 최신 추가 리포트는 `eval/results/eval_20260528_115250_location_dispute_added.json`에 저장되어 있다.
-- 최신 생성 지표는 `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_rate=0.0455`, `not_found_success_rate=1.0`이다.
+- 최신 full eval 리포트는 `eval/results/eval_20260529_173928.json`에 저장되어 있다.
+- 최신 생성 지표는 `accuracy_mean=1.0`, `faithfulness_mean=0.9565`, `not_found_rate=0.0435`, `not_found_success_rate=1.0`이다.
 - 최신 정규화 검색 지표는 `rag_normalized_source_precision@k_mean=0.9891`, `rag_chunk_precision@k_mean=0.8609`, `source_recall@k_mean=0.9891`이다.
-- 현재 평가셋 기준 잔여 낮은 accuracy/faithfulness 케이스는 없다.
-- 현재 active plan은 `docs/exec-plans/active/2026-05-29-ubuntu-default-model-redeploy-verification.md`다.
+- 현재 평가셋 기준 집계 지표는 통과했지만 source drift guard critical 대상은 `tc-04` faithfulness이고, 추가 잔여 리뷰 대상은 `tc-17` source recall이다.
+- 현재 active plan은 `docs/exec-plans/active/2026-05-29-residual-tuning-case-review.md`다.
 - 이전 Cross-Encoder 캐시 반영 리포트는 `eval/results/eval_20260513_100727.json`에 저장되어 있다.
 - 검색/인제스천/평가 경로에 필요한 임베딩 모델 캐시는 준비됐다.
 - Cross-Encoder reranking 캐시도 준비됐다.
@@ -359,8 +378,8 @@
 
 ## Suggested Next Work
 
-1. active plan `docs/exec-plans/active/2026-05-29-ubuntu-default-model-redeploy-verification.md`에 따라 서버 배포본 갱신 여부를 확인한다.
-2. 필요 시 서버 재배포 또는 API 재시작 후 `/health` 기본 모델 값을 재확인한다.
+1. active plan `docs/exec-plans/active/2026-05-29-residual-tuning-case-review.md`에 따라 `tc-04` faithfulness와 `tc-17` source recall 잔여 케이스를 리뷰한다.
+2. 추가 구현, 평가셋 보정, 문서화 예외 중 하나로 결정한다.
 
 ## Handoff Prompt
 

@@ -251,6 +251,18 @@
 
 - `2026-05-29-ubuntu-default-model-redeploy-verification.md`
   - 목표: 코드 기본 모델 `gemma4:26b` 변경이 Ubuntu 서버 재배포 또는 서비스 재시작 시 의도대로 적용되는지 확인한다.
+  - 상태: Completed
+
+### Performance Tuning Baseline
+
+- `2026-05-29-performance-tuning-baseline.md`
+  - 목표: 성능 튜닝 전 기준선 full eval을 고정하고 1차 튜닝 후보를 결정한다.
+  - 상태: Completed
+
+### Residual Tuning Case Review
+
+- `2026-05-29-residual-tuning-case-review.md`
+  - 목표: 안정화 기준 통과 이후 남은 `tc-04`, `tc-17` 케이스의 추가 튜닝 필요 여부를 결정한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -269,7 +281,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-29-ubuntu-default-model-redeploy-verification.md`
+- `exec-plans/active/2026-05-29-residual-tuning-case-review.md`
 
 ## Completed Plans
 
@@ -308,4 +320,6 @@
 - `exec-plans/completed/2026-05-29-pr-28-merge-followup.md`
 - `exec-plans/completed/2026-05-29-ubuntu-server-runtime-verification.md`
 - `exec-plans/completed/2026-05-29-operating-model-default-policy.md`
+- `exec-plans/completed/2026-05-29-ubuntu-default-model-redeploy-verification.md`
 - `exec-plans/completed/2026-05-29-eval-model-tuning-policy.md`
+- `exec-plans/completed/2026-05-29-performance-tuning-baseline.md`
