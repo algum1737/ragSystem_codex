@@ -320,7 +320,15 @@
 - PR #28 `Source drift guard와 Ubuntu 배포 절차 보강`을 생성했고 Static checks 통과 후 main에 머지했다.
   - PR: https://github.com/algum1737/ragSystem_codex/pull/28
   - 완료된 계획: `docs/exec-plans/completed/2026-05-29-pr-28-merge-followup.md`
-  - 다음 active plan: `docs/exec-plans/active/2026-05-29-ubuntu-server-runtime-verification.md`
+  - 완료된 계획: `docs/exec-plans/completed/2026-05-29-ubuntu-server-runtime-verification.md`
+  - 다음 active plan: `docs/exec-plans/active/2026-05-29-operating-model-default-policy.md`
+
+- Ubuntu 서버 런타임 검증을 완료했다.
+  - `ragsystem-api`, `ragsystem-web`, `ollama` 모두 active 상태였다.
+  - `/health`는 `model=gemma4:26b`, `/stats`는 `count=318`을 반환했다.
+  - PyTorch는 `2.3.1+cu118`, CUDA `11.8`, GPU `NVIDIA GeForce RTX 2080 Ti`를 정상 인식했다.
+  - 위치기반서비스 분쟁 해결 RAG query가 HTTP 200과 5개 source를 반환했고, 쿼리 후 API 서비스가 계속 active 상태임을 확인했다.
+  - Streamlit은 HTTP 200을 반환했다.
 
 ## Current Gaps
 
@@ -331,7 +339,7 @@
 - 최신 생성 지표는 `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_rate=0.0455`, `not_found_success_rate=1.0`이다.
 - 최신 정규화 검색 지표는 `rag_normalized_source_precision@k_mean=0.9891`, `rag_chunk_precision@k_mean=0.8609`, `source_recall@k_mean=0.9891`이다.
 - 현재 평가셋 기준 잔여 낮은 accuracy/faithfulness 케이스는 없다.
-- 현재 active plan은 `docs/exec-plans/active/2026-05-29-ubuntu-server-runtime-verification.md`다.
+- 현재 active plan은 `docs/exec-plans/active/2026-05-29-operating-model-default-policy.md`다.
 - 이전 Cross-Encoder 캐시 반영 리포트는 `eval/results/eval_20260513_100727.json`에 저장되어 있다.
 - 검색/인제스천/평가 경로에 필요한 임베딩 모델 캐시는 준비됐다.
 - Cross-Encoder reranking 캐시도 준비됐다.
@@ -339,8 +347,8 @@
 
 ## Suggested Next Work
 
-1. active plan `docs/exec-plans/active/2026-05-29-ubuntu-server-runtime-verification.md`에 따라 Ubuntu 서버 런타임 상태를 재확인한다.
-2. 운영 기본 모델을 `gemma4:24b`로 영구화할지 결정한다.
+1. active plan `docs/exec-plans/active/2026-05-29-operating-model-default-policy.md`에 따라 운영 기본 모델 정책을 결정한다.
+2. 서버 운영 모델 `gemma4:26b`와 코드 기본값 `gemma3:12b`, 기존 문서의 `gemma4:24b` 표현을 정리한다.
 
 ## Handoff Prompt
 

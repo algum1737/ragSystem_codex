@@ -239,6 +239,12 @@
 
 - `2026-05-29-ubuntu-server-runtime-verification.md`
   - 목표: 머지된 배포 호환 변경을 기준으로 Ubuntu 서버 런타임 상태를 재확인하고 필요한 후속 운영 작업을 정리한다.
+  - 상태: Completed
+
+### Operating Model Default Policy
+
+- `2026-05-29-operating-model-default-policy.md`
+  - 목표: 운영 서버 모델 상태와 코드 기본값 차이를 정리하고 기본 모델 운영 정책을 결정한다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -251,7 +257,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-29-ubuntu-server-runtime-verification.md`
+- `exec-plans/active/2026-05-29-operating-model-default-policy.md`
 
 ## Completed Plans
 
@@ -288,3 +294,4 @@
 - `exec-plans/completed/2026-05-28-source-drift-ci-promotion.md`
 - `exec-plans/completed/2026-05-29-ubuntu-deployment-runtime-hardening.md`
 - `exec-plans/completed/2026-05-29-pr-28-merge-followup.md`
+- `exec-plans/completed/2026-05-29-ubuntu-server-runtime-verification.md`

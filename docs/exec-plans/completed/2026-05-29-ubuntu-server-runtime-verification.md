@@ -46,8 +46,26 @@
 
 ## Skipped/Not Run
 
-- 아직 서버 런타임 검증은 실행하지 않았다.
+- 브라우저 수동 조작은 실행하지 않았다. 대신 Streamlit 포트의 HTTP 200과 API 쿼리 응답으로 런타임 상태를 확인했다.
+
+## Completion
+
+- 서버 `srv01`에서 `ragsystem-api`, `ragsystem-web`, `ollama`가 모두 `active`임을 확인했다.
+- `GET http://localhost:8000/health`는 `status=ok`, `model=gemma4:26b`를 반환했다.
+- `GET http://localhost:8000/stats`는 `collection_name=ragSystem`, `count=318`을 반환했다.
+- PyTorch는 `2.3.1+cu118`, CUDA runtime은 `11.8`, GPU는 `NVIDIA GeForce RTX 2080 Ti`로 인식됐다.
+- 위치기반서비스 분쟁 해결 질의에 대해 `POST /query`가 HTTP 200과 5개 source를 반환했고, 쿼리 후 API 서비스가 계속 `active` 상태임을 확인했다.
+- Streamlit `http://localhost:8501`은 HTTP 200을 반환했다.
+
+## Validation Result
+
+- 통과: `ssh ragadmin.10.220.5 systemctl is-active ragsystem-api ragsystem-web ollama`
+- 통과: `curl http://localhost:8000/health`
+- 통과: `curl http://localhost:8000/stats`
+- 통과: 서버 가상환경 PyTorch CUDA 확인
+- 통과: 위치기반서비스 분쟁 해결 RAG query API 응답 확인
+- 통과: Streamlit HTTP 200 확인
 
 ## Open Work
 
-- Ubuntu 서버 런타임 검증 진행 여부 결정.
+- 운영 서버는 현재 `gemma4:26b`로 동작한다. 코드 기본값과 문서의 `gemma4:24b` 표현을 운영 모델 정책으로 정리해야 한다.
