@@ -49,12 +49,21 @@
 - [2026-05-22 Eval Source Drift Calibration](./references/2026-05-22-eval-source-drift-calibration.md)
 - [2026-05-22 Source Drift Regression Report](./references/2026-05-22-source-drift-regression-report.md)
 - [2026-05-22 Watch Case Review](./references/2026-05-22-watch-case-review.md)
+- [2026-05-28 Source Scope Policy](./references/2026-05-28-source-scope-policy.md)
+- [2026-05-28 Watch Case Split Result](./references/2026-05-28-watch-case-split-result.md)
+- [2026-05-28 Watch Case Split Source Drift Report](./references/2026-05-28-watch-case-split-source-drift-report.md)
+- [2026-05-28 TC06 Source Scope Review](./references/2026-05-28-tc06-source-scope-review.md)
+- [2026-05-28 TC06 Source Scope Report](./references/2026-05-28-tc06-source-scope-report.md)
+- [2026-05-28 Location Dispute Case Review](./references/2026-05-28-location-dispute-case-review.md)
+- [2026-05-28 Location Dispute Case Report](./references/2026-05-28-location-dispute-case-report.md)
 
 ## Active Work
 
-- [Source Scope Policy Plan](./exec-plans/active/2026-05-22-source-scope-policy.md)
+- [Ubuntu Deployment Runtime Hardening Plan](./exec-plans/active/2026-05-29-ubuntu-deployment-runtime-hardening.md)
 
 ## Completed Work
+
+- [Source Drift CI Promotion Plan](./exec-plans/completed/2026-05-28-source-drift-ci-promotion.md)
 
 - [Bootstrap And Migration Plan](./exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md)
 - [Runtime Validation Plan](./exec-plans/completed/2026-05-12-runtime-validation.md)
@@ -82,3 +91,7 @@
 - [Eval Source Drift Calibration Plan](./exec-plans/completed/2026-05-22-eval-source-drift-calibration.md)
 - [Source Drift Regression Guard Plan](./exec-plans/completed/2026-05-22-source-drift-regression-guard.md)
 - [Source Drift Watch Case Review Plan](./exec-plans/completed/2026-05-22-watch-case-review.md)
+- [Source Scope Policy Plan](./exec-plans/completed/2026-05-22-source-scope-policy.md)
+- [Watch Case Split Plan](./exec-plans/completed/2026-05-28-watch-case-split.md)
+- [TC06 Source Scope Review Plan](./exec-plans/completed/2026-05-28-tc06-source-scope-review.md)
+- [Location Dispute Case Review Plan](./exec-plans/completed/2026-05-28-location-dispute-case-review.md)

@@ -38,6 +38,26 @@ curl http://localhost:11434/api/tags
 ollama pull gemma3:12b
 ```
 
+Ubuntu 20.04.6 환경에서 `python3.11` 패키지가 PPA에 없거나 APT 저장소 문제로 설치되지 않으면 시스템 기본 `python3`를 바꾸지 말고 Python 3.11을 별도 경로에 소스 빌드한다.
+
+```bash
+sudo apt install -y \
+  wget build-essential libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev \
+  libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev \
+  libexpat1-dev liblzma-dev tk-dev libffi-dev uuid-dev
+
+cd /tmp
+wget https://www.python.org/ftp/python/3.11.14/Python-3.11.14.tgz
+tar -xzf Python-3.11.14.tgz
+cd Python-3.11.14
+./configure --prefix=/opt/python-3.11.14 --enable-optimizations --with-ensurepip=install
+make -j$(nproc)
+sudo make altinstall
+/opt/python-3.11.14/bin/python3.11 --version
+```
+
+이 경우 이후 `python3.11` 명령 대신 `/opt/python-3.11.14/bin/python3.11`을 사용한다.
+
 ## 2. Deployment Account
 
 전용 계정이 없다면 생성한다.
@@ -115,6 +135,12 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
+Ubuntu 20.04의 기본 SQLite가 낮으면 Chroma가 `sqlite3 >= 3.35.0` 오류로 기동을 막을 수 있다. 이 저장소는 Linux에서 `pysqlite3-binary`를 설치하고 `ingestion/vector_store.py`에서 낮은 SQLite 버전일 때 이를 우선 사용한다. 설치 후 아래 명령으로 import를 확인한다.
+
+```bash
+python -c "import api.main; print('api import ok')"
+```
+
 ## 6. Model Cache
 
 임베딩 모델 캐시를 준비한다.
@@ -129,6 +155,22 @@ python -c "from sentence_transformers import SentenceTransformer; m=SentenceTran
 정상 출력은 `1024`다.
 
 서버가 오프라인이면 로컬 머신의 `~/.cache/huggingface/`를 서버의 같은 사용자 홈으로 복사한 뒤 위 확인 명령을 실행한다.
+
+GPU를 사용할 때는 NVIDIA driver와 PyTorch CUDA wheel 버전이 맞는지 먼저 확인한다. driver가 오래된 상태에서 더 새 CUDA wheel을 설치하면 쿼리 시 PyTorch 초기화 경고 또는 프로세스 종료가 발생할 수 있다.
+
+```bash
+nvidia-smi
+python -c "import torch; print(torch.__version__); print(torch.version.cuda); print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'no gpu')"
+```
+
+Ubuntu 20.04 서버가 NVIDIA 525 계열 driver를 사용하고 driver 업그레이드가 어렵다면 PyTorch `cu118` wheel로 맞춘다.
+
+```bash
+pip uninstall -y torch torchvision torchaudio
+pip install torch==2.3.1 torchvision==0.18.1 torchaudio==2.3.1 --index-url https://download.pytorch.org/whl/cu118
+```
+
+GPU를 사용할 서비스 파일에는 `CUDA_VISIBLE_DEVICES=`를 넣지 않는다. 이 환경변수는 GPU를 숨긴다.
 
 ## 7. Manual Run
 
@@ -219,6 +261,17 @@ sudo systemctl status ragsystem-web
 journalctl -u ragsystem-api -f
 journalctl -u ragsystem-web -f
 ```
+
+기본 코드는 API 시작 시 `gemma3:12b`로 초기화된다. 운영 모델로 `gemma4:24b`를 사용할 때는 Ollama에 모델을 준비한 뒤 FastAPI 기동 후 모델 변경 API를 호출한다.
+
+```bash
+ollama pull gemma4:24b
+curl -X PUT http://localhost:8000/model \
+  -H "Content-Type: application/json" \
+  -d '{"model":"gemma4:24b"}'
+```
+
+FastAPI 서비스가 재시작되면 기본값으로 돌아가므로 영구 기본값이 필요하면 `retriever/llm.py`의 기본 모델 변경 또는 별도 기동 후처리 서비스를 검토한다.
 
 ## 9. Update And Redeploy Without Git
 

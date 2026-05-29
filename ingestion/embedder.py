@@ -21,7 +21,7 @@ class EmbeddingEngine:
         self._needs_prefix = _needs_prefix(model_name)
         self._model: Any | None = None
 
-    def _ensure_model(self) -> SentenceTransformer:
+    def _ensure_model(self) -> Any:
         if self._model is not None:
             return self._model
         logger.info("임베딩 모델 로드 중: %s", self.model_name)

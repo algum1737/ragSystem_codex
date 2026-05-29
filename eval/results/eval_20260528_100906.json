@@ -1,0 +1,906 @@
+{
+  "cases": [
+    {
+      "id": "tc-01",
+      "question": "서비스 해지 시 데이터 및 게시물은 어떻게 처리되는가?",
+      "precision_at_k": 0.4,
+      "vector_precision_at_k": 0.4,
+      "rag_precision_at_k": 0.4,
+      "normalized_source_precision_at_k": 1.0,
+      "vector_normalized_source_precision_at_k": 1.0,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 0.4,
+      "rag_chunk_precision_at_k": 0.4,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "네이버 이용약관.txt",
+        "다음 이용약관.txt",
+        "카카오 서비스 약관_20260221_F.pdf",
+        "카카오통합서비스약관20210701.pdf",
+        "카카오 서비스 약관_20260221_F.pdf"
+      ],
+      "retrieved_sources": [
+        "네이버 이용약관.txt",
+        "다음 이용약관.txt",
+        "카카오 서비스 약관_20260221_F.pdf",
+        "카카오통합서비스약관20210701.pdf",
+        "카카오 서비스 약관_20260221_F.pdf"
+      ],
+      "rag_retrieved_sources": [
+        "다음 이용약관.txt",
+        "카카오통합서비스약관20210701.pdf",
+        "네이버 이용약관.txt",
+        "카카오 서비스 약관_20260221_F.pdf",
+        "카카오계정약관20240416.pdf"
+      ]
+    },
+    {
+      "id": "tc-02",
+      "question": "일반 서비스 약관에서 개인정보는 어떤 목적으로 이용되는가?",
+      "precision_at_k": 0.6,
+      "vector_precision_at_k": 0.6,
+      "rag_precision_at_k": 1.0,
+      "normalized_source_precision_at_k": 0.6,
+      "vector_normalized_source_precision_at_k": 0.6,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 1.0,
+      "rag_chunk_precision_at_k": 1.0,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "카카오통합서비스약관20210701.pdf",
+        "카카오통합서비스약관20210701.pdf",
+        "네이버 이용약관.txt",
+        "네이버 이용약관.txt",
+        "다음 이용약관.txt"
+      ],
+      "retrieved_sources": [
+        "카카오통합서비스약관20210701.pdf",
+        "카카오통합서비스약관20210701.pdf",
+        "네이버 이용약관.txt",
+        "네이버 이용약관.txt",
+        "다음 이용약관.txt"
+      ],
+      "rag_retrieved_sources": [
+        "카카오통합서비스약관20210701.pdf",
+        "카카오계정약관20240416.pdf",
+        "다음 이용약관.txt",
+        "네이버 이용약관.txt",
+        "카카오 서비스 약관_20260221_F.pdf"
+      ]
+    },
+    {
+      "id": "tc-03",
+      "question": "일반 서비스 약관에서 서비스 이용이 제한되거나 정지되는 조건은 무엇인가?",
+      "precision_at_k": 0.6,
+      "vector_precision_at_k": 0.6,
+      "rag_precision_at_k": 0.8,
+      "normalized_source_precision_at_k": 0.75,
+      "vector_normalized_source_precision_at_k": 0.75,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 1.0,
+      "rag_chunk_precision_at_k": 1.0,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "다음 이용약관.txt",
+        "네이버 이용약관.txt",
+        "카카오통합서비스약관20210701.pdf",
+        "네이버 이용약관.txt",
+        "네이버 이용약관.txt"
+      ],
+      "retrieved_sources": [
+        "다음 이용약관.txt",
+        "네이버 이용약관.txt",
+        "카카오통합서비스약관20210701.pdf",
+        "네이버 이용약관.txt",
+        "네이버 이용약관.txt"
+      ],
+      "rag_retrieved_sources": [
+        "네이버 이용약관.txt",
+        "다음 이용약관.txt",
+        "카카오통합서비스약관20210701.pdf",
+        "카카오계정약관20240416.pdf",
+        "카카오통합서비스약관20210701.pdf"
+      ]
+    },
+    {
+      "id": "tc-04",
+      "question": "자동 갱신 조건은 문서에서 어떻게 정해져 있는가?",
+      "precision_at_k": 0.4,
+      "vector_precision_at_k": 0.4,
+      "rag_precision_at_k": 0.4,
+      "normalized_source_precision_at_k": 1.0,
+      "vector_normalized_source_precision_at_k": 1.0,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 1.0,
+      "rag_chunk_precision_at_k": 1.0,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "네이버 유료서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt"
+      ],
+      "retrieved_sources": [
+        "네이버 유료서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt"
+      ],
+      "rag_retrieved_sources": [
+        "네이버 유료서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt"
+      ]
+    },
+    {
+      "id": "tc-05",
+      "question": "위약금 또는 손해배상 조건은 무엇인가?",
+      "precision_at_k": 0.2,
+      "vector_precision_at_k": 0.2,
+      "rag_precision_at_k": 0.4,
+      "normalized_source_precision_at_k": 0.5,
+      "vector_normalized_source_precision_at_k": 0.5,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 0.2,
+      "rag_chunk_precision_at_k": 0.4,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "카카오계정약관20240416.pdf",
+        "다음 이용약관.txt",
+        "카카오계정약관20240416.pdf",
+        "카카오통합서비스약관20210701.pdf",
+        "카카오통합서비스약관20210701.pdf"
+      ],
+      "retrieved_sources": [
+        "카카오계정약관20240416.pdf",
+        "다음 이용약관.txt",
+        "카카오계정약관20240416.pdf",
+        "카카오통합서비스약관20210701.pdf",
+        "카카오통합서비스약관20210701.pdf"
+      ],
+      "rag_retrieved_sources": [
+        "다음 이용약관.txt",
+        "카카오통합서비스약관20210701.pdf",
+        "카카오계정약관20240416.pdf",
+        "카카오 서비스 약관_20260221_F.pdf",
+        "네이버 이용약관.txt"
+      ]
+    },
+    {
+      "id": "tc-06",
+      "question": "분쟁 발생 시 해결 절차는 어떻게 되는가?",
+      "precision_at_k": 1.0,
+      "vector_precision_at_k": 1.0,
+      "rag_precision_at_k": 0.8,
+      "normalized_source_precision_at_k": 1.0,
+      "vector_normalized_source_precision_at_k": 1.0,
+      "rag_normalized_source_precision_at_k": 0.8,
+      "vector_chunk_precision_at_k": 1.0,
+      "rag_chunk_precision_at_k": 0.8,
+      "source_recall_at_k": 0.5714285714285714,
+      "source_coverage_at_k": 0.5714285714285714,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "카카오 유료:결제서비스 이용약관.txt",
+        "다음 이용약관.txt",
+        "카카오계정약관20240416.pdf",
+        "네이버 위치기반서비스 이용약관.txt",
+        "네이버 이용약관.txt"
+      ],
+      "retrieved_sources": [
+        "카카오 유료:결제서비스 이용약관.txt",
+        "다음 이용약관.txt",
+        "카카오계정약관20240416.pdf",
+        "네이버 위치기반서비스 이용약관.txt",
+        "네이버 이용약관.txt"
+      ],
+      "rag_retrieved_sources": [
+        "카카오통합서비스약관20210701.pdf",
+        "카카오계정약관20240416.pdf",
+        "다음 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 운영정책.txt"
+      ]
+    },
+    {
+      "id": "tc-07",
+      "question": "위치기반서비스 약관에서 서비스 제공자의 면책 조항은 무엇인가?",
+      "precision_at_k": 0.6,
+      "vector_precision_at_k": 0.6,
+      "rag_precision_at_k": 0.6,
+      "normalized_source_precision_at_k": 1.0,
+      "vector_normalized_source_precision_at_k": 1.0,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 1.0,
+      "rag_chunk_precision_at_k": 1.0,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "다음 위치기반서비스 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "다음 위치기반서비스 이용약관.txt",
+        "네이버 위치기반서비스 이용약관.txt"
+      ],
+      "retrieved_sources": [
+        "다음 위치기반서비스 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "다음 위치기반서비스 이용약관.txt",
+        "네이버 위치기반서비스 이용약관.txt"
+      ],
+      "rag_retrieved_sources": [
+        "다음 위치기반서비스 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "네이버 위치기반서비스 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "카카오 위치정보 이용약관.txt"
+      ]
+    },
+    {
+      "id": "tc-08",
+      "question": "다음과 카카오 위치기반서비스 약관에서 서비스 변경 또는 중단 시 이용자에게 어떻게 고지하는가?",
+      "precision_at_k": 0.4,
+      "vector_precision_at_k": 0.4,
+      "rag_precision_at_k": 0.4,
+      "normalized_source_precision_at_k": 1.0,
+      "vector_normalized_source_precision_at_k": 1.0,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 1.0,
+      "rag_chunk_precision_at_k": 1.0,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "다음 위치기반서비스 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "다음 위치기반서비스 이용약관.txt",
+        "카카오 위치정보 이용약관.txt"
+      ],
+      "retrieved_sources": [
+        "다음 위치기반서비스 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "다음 위치기반서비스 이용약관.txt",
+        "카카오 위치정보 이용약관.txt"
+      ],
+      "rag_retrieved_sources": [
+        "다음 위치기반서비스 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "다음 위치기반서비스 이용약관.txt"
+      ]
+    },
+    {
+      "id": "tc-09",
+      "question": "이용자의 주요 의무 사항은 무엇인가?",
+      "precision_at_k": 0.2,
+      "vector_precision_at_k": 0.2,
+      "rag_precision_at_k": 0.4,
+      "normalized_source_precision_at_k": 0.5,
+      "vector_normalized_source_precision_at_k": 0.5,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 0.4,
+      "rag_chunk_precision_at_k": 0.4,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "다음 이용약관.txt",
+        "카카오계정약관20240416.pdf",
+        "카카오통합서비스약관20210701.pdf",
+        "카카오 서비스 약관_20260221_F.pdf",
+        "다음 이용약관.txt"
+      ],
+      "retrieved_sources": [
+        "다음 이용약관.txt",
+        "카카오계정약관20240416.pdf",
+        "카카오통합서비스약관20210701.pdf",
+        "카카오 서비스 약관_20260221_F.pdf",
+        "다음 이용약관.txt"
+      ],
+      "rag_retrieved_sources": [
+        "다음 이용약관.txt",
+        "카카오 서비스 약관_20260221_F.pdf",
+        "카카오통합서비스약관20210701.pdf",
+        "네이버 이용약관.txt",
+        "카카오계정약관20240416.pdf"
+      ]
+    },
+    {
+      "id": "tc-10",
+      "question": "서비스 내 콘텐츠의 저작권 및 지적재산권 귀속은 어떻게 되는가?",
+      "precision_at_k": 0.2,
+      "vector_precision_at_k": 0.2,
+      "rag_precision_at_k": 0.4,
+      "normalized_source_precision_at_k": 0.5,
+      "vector_normalized_source_precision_at_k": 0.5,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 0.2,
+      "rag_chunk_precision_at_k": 0.4,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "다음 이용약관.txt",
+        "카카오통합서비스약관20210701.pdf",
+        "카카오통합서비스약관20210701.pdf",
+        "카카오 서비스 약관_20260221_F.pdf",
+        "카카오 서비스 약관_20260221_F.pdf"
+      ],
+      "retrieved_sources": [
+        "다음 이용약관.txt",
+        "카카오통합서비스약관20210701.pdf",
+        "카카오통합서비스약관20210701.pdf",
+        "카카오 서비스 약관_20260221_F.pdf",
+        "카카오 서비스 약관_20260221_F.pdf"
+      ],
+      "rag_retrieved_sources": [
+        "다음 이용약관.txt",
+        "카카오통합서비스약관20210701.pdf",
+        "네이버 이용약관.txt",
+        "카카오 서비스 약관_20260221_F.pdf",
+        "게시물 운영정책.txt"
+      ]
+    },
+    {
+      "id": "tc-11",
+      "question": "유료서비스 결제 후 청약철회 또는 환불이 제한되는 조건은 무엇인가?",
+      "precision_at_k": 0.4,
+      "vector_precision_at_k": 0.4,
+      "rag_precision_at_k": 0.4,
+      "normalized_source_precision_at_k": 1.0,
+      "vector_normalized_source_precision_at_k": 1.0,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 1.0,
+      "rag_chunk_precision_at_k": 1.0,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt"
+      ],
+      "retrieved_sources": [
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt"
+      ],
+      "rag_retrieved_sources": [
+        "카카오 유료:결제서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt"
+      ]
+    },
+    {
+      "id": "tc-12",
+      "question": "게시물이 삭제되거나 노출 제한될 수 있는 운영정책 위반 유형은 무엇인가?",
+      "precision_at_k": 0.4,
+      "vector_precision_at_k": 0.4,
+      "rag_precision_at_k": 0.4,
+      "normalized_source_precision_at_k": 1.0,
+      "vector_normalized_source_precision_at_k": 1.0,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 1.0,
+      "rag_chunk_precision_at_k": 1.0,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "게시물 운영정책.txt",
+        "게시물 운영정책.txt",
+        "카카오 운영정책.txt",
+        "게시물 운영정책.txt",
+        "게시물 운영정책.txt"
+      ],
+      "retrieved_sources": [
+        "게시물 운영정책.txt",
+        "게시물 운영정책.txt",
+        "카카오 운영정책.txt",
+        "게시물 운영정책.txt",
+        "게시물 운영정책.txt"
+      ],
+      "rag_retrieved_sources": [
+        "카카오 운영정책.txt",
+        "게시물 운영정책.txt",
+        "게시물 운영정책.txt",
+        "게시물 운영정책.txt",
+        "카카오 운영정책.txt"
+      ]
+    },
+    {
+      "id": "tc-13",
+      "question": "위치정보 이용 동의 철회와 개인위치정보 보유 기간은 어떻게 처리되는가?",
+      "precision_at_k": 0.6,
+      "vector_precision_at_k": 0.6,
+      "rag_precision_at_k": 0.6,
+      "normalized_source_precision_at_k": 1.0,
+      "vector_normalized_source_precision_at_k": 1.0,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 1.0,
+      "rag_chunk_precision_at_k": 1.0,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "다음 위치기반서비스 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "네이버 위치기반서비스 이용약관.txt",
+        "네이버 위치기반서비스 이용약관.txt",
+        "네이버 위치기반서비스 이용약관.txt"
+      ],
+      "retrieved_sources": [
+        "다음 위치기반서비스 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "네이버 위치기반서비스 이용약관.txt",
+        "네이버 위치기반서비스 이용약관.txt",
+        "네이버 위치기반서비스 이용약관.txt"
+      ],
+      "rag_retrieved_sources": [
+        "다음 위치기반서비스 이용약관.txt",
+        "네이버 위치기반서비스 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "카카오 위치정보 이용약관.txt"
+      ]
+    },
+    {
+      "id": "tc-14",
+      "question": "일반 서비스 및 계정 약관에서 계정이 휴면, 정지 또는 삭제될 수 있는 조건은 무엇인가?",
+      "precision_at_k": 0.6,
+      "vector_precision_at_k": 0.6,
+      "rag_precision_at_k": 0.8,
+      "normalized_source_precision_at_k": 0.75,
+      "vector_normalized_source_precision_at_k": 0.75,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 1.0,
+      "rag_chunk_precision_at_k": 1.0,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "다음 이용약관.txt",
+        "카카오계정약관20240416.pdf",
+        "카카오계정약관20240416.pdf",
+        "카카오계정약관20240416.pdf",
+        "네이버 이용약관.txt"
+      ],
+      "retrieved_sources": [
+        "다음 이용약관.txt",
+        "카카오계정약관20240416.pdf",
+        "카카오계정약관20240416.pdf",
+        "카카오계정약관20240416.pdf",
+        "네이버 이용약관.txt"
+      ],
+      "rag_retrieved_sources": [
+        "다음 이용약관.txt",
+        "카카오계정약관20240416.pdf",
+        "네이버 이용약관.txt",
+        "카카오 서비스 약관_20260221_F.pdf",
+        "네이버 이용약관.txt"
+      ]
+    },
+    {
+      "id": "tc-15",
+      "question": "일반 서비스 약관에서 회사가 서비스를 변경하거나 종료할 때 사전 고지 없이 가능한 예외는 무엇인가?",
+      "precision_at_k": 0.6,
+      "vector_precision_at_k": 0.6,
+      "rag_precision_at_k": 0.8,
+      "normalized_source_precision_at_k": 0.75,
+      "vector_normalized_source_precision_at_k": 0.75,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 0.8,
+      "rag_chunk_precision_at_k": 1.0,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "다음 이용약관.txt",
+        "카카오계정약관20240416.pdf",
+        "카카오통합서비스약관20210701.pdf",
+        "카카오 서비스 약관_20260221_F.pdf",
+        "다음 이용약관.txt"
+      ],
+      "retrieved_sources": [
+        "다음 이용약관.txt",
+        "카카오계정약관20240416.pdf",
+        "카카오통합서비스약관20210701.pdf",
+        "카카오 서비스 약관_20260221_F.pdf",
+        "다음 이용약관.txt"
+      ],
+      "rag_retrieved_sources": [
+        "카카오계정약관20240416.pdf",
+        "카카오통합서비스약관20210701.pdf",
+        "다음 이용약관.txt",
+        "네이버 이용약관.txt",
+        "다음 이용약관.txt"
+      ]
+    },
+    {
+      "id": "tc-16",
+      "question": "유료서비스 자동 갱신의 결제 주기와 금액 변경 조건은 문서에서 어떻게 정해져 있는가?",
+      "precision_at_k": 0.4,
+      "vector_precision_at_k": 0.4,
+      "rag_precision_at_k": 0.4,
+      "normalized_source_precision_at_k": 1.0,
+      "vector_normalized_source_precision_at_k": 1.0,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 1.0,
+      "rag_chunk_precision_at_k": 1.0,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": true,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt"
+      ],
+      "retrieved_sources": [
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt"
+      ],
+      "rag_retrieved_sources": [
+        "카카오 유료:결제서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt"
+      ]
+    },
+    {
+      "id": "tc-17",
+      "question": "서비스 이용계약 해지 또는 개별 서비스 이용 종료는 문서에서 어떻게 설명되는가?",
+      "precision_at_k": 0.4,
+      "vector_precision_at_k": 0.4,
+      "rag_precision_at_k": 0.6,
+      "normalized_source_precision_at_k": 0.5,
+      "vector_normalized_source_precision_at_k": 0.5,
+      "rag_normalized_source_precision_at_k": 0.75,
+      "vector_chunk_precision_at_k": 0.6,
+      "rag_chunk_precision_at_k": 0.6,
+      "source_recall_at_k": 0.75,
+      "source_coverage_at_k": 0.75,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "카카오통합서비스약관20210701.pdf",
+        "네이버 유료서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오계정약관20240416.pdf",
+        "카카오통합서비스약관20210701.pdf"
+      ],
+      "retrieved_sources": [
+        "카카오통합서비스약관20210701.pdf",
+        "네이버 유료서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오계정약관20240416.pdf",
+        "카카오통합서비스약관20210701.pdf"
+      ],
+      "rag_retrieved_sources": [
+        "카카오통합서비스약관20210701.pdf",
+        "다음 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "네이버 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt"
+      ]
+    },
+    {
+      "id": "tc-18",
+      "question": "위치기반서비스 약관에서 개인위치정보는 어떤 목적으로 이용되는가?",
+      "precision_at_k": 0.6,
+      "vector_precision_at_k": 0.6,
+      "rag_precision_at_k": 0.6,
+      "normalized_source_precision_at_k": 1.0,
+      "vector_normalized_source_precision_at_k": 1.0,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 1.0,
+      "rag_chunk_precision_at_k": 1.0,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "다음 위치기반서비스 이용약관.txt",
+        "다음 위치기반서비스 이용약관.txt",
+        "네이버 위치기반서비스 이용약관.txt",
+        "네이버 위치기반서비스 이용약관.txt",
+        "카카오 위치정보 이용약관.txt"
+      ],
+      "retrieved_sources": [
+        "다음 위치기반서비스 이용약관.txt",
+        "다음 위치기반서비스 이용약관.txt",
+        "네이버 위치기반서비스 이용약관.txt",
+        "네이버 위치기반서비스 이용약관.txt",
+        "카카오 위치정보 이용약관.txt"
+      ],
+      "rag_retrieved_sources": [
+        "다음 위치기반서비스 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "네이버 위치기반서비스 이용약관.txt",
+        "카카오 위치정보 이용약관.txt",
+        "카카오 위치정보 이용약관.txt"
+      ]
+    },
+    {
+      "id": "tc-19",
+      "question": "운영정책에서 계정 또는 게시물 이용이 제한되는 조건은 무엇인가?",
+      "precision_at_k": 0.4,
+      "vector_precision_at_k": 0.4,
+      "rag_precision_at_k": 0.6,
+      "normalized_source_precision_at_k": 0.6666666666666666,
+      "vector_normalized_source_precision_at_k": 0.6666666666666666,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 1.0,
+      "rag_chunk_precision_at_k": 1.0,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "카카오 운영정책.txt",
+        "게시물 운영정책.txt",
+        "카카오 운영정책.txt",
+        "카카오 운영정책.txt",
+        "게시물 운영정책.txt"
+      ],
+      "retrieved_sources": [
+        "카카오 운영정책.txt",
+        "게시물 운영정책.txt",
+        "카카오 운영정책.txt",
+        "카카오 운영정책.txt",
+        "게시물 운영정책.txt"
+      ],
+      "rag_retrieved_sources": [
+        "카카오 운영정책.txt",
+        "게시물 운영정책.txt",
+        "계정 운영정책.txt",
+        "계정 운영정책.txt",
+        "게시물 운영정책.txt"
+      ]
+    },
+    {
+      "id": "tc-20",
+      "question": "유료서비스 약관에서 회사의 책임 제한 또는 면책 조건은 무엇인가?",
+      "precision_at_k": 0.4,
+      "vector_precision_at_k": 0.4,
+      "rag_precision_at_k": 0.4,
+      "normalized_source_precision_at_k": 1.0,
+      "vector_normalized_source_precision_at_k": 1.0,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 1.0,
+      "rag_chunk_precision_at_k": 1.0,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "네이버 유료서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt"
+      ],
+      "retrieved_sources": [
+        "네이버 유료서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt"
+      ],
+      "rag_retrieved_sources": [
+        "네이버 유료서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt"
+      ]
+    },
+    {
+      "id": "tc-21",
+      "question": "유료서비스 약관에서 서비스 제공 중단 또는 약관 변경 시 회원에게 어떻게 통지하는가?",
+      "precision_at_k": 0.4,
+      "vector_precision_at_k": 0.4,
+      "rag_precision_at_k": 0.4,
+      "normalized_source_precision_at_k": 1.0,
+      "vector_normalized_source_precision_at_k": 1.0,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 1.0,
+      "rag_chunk_precision_at_k": 1.0,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt"
+      ],
+      "retrieved_sources": [
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt"
+      ],
+      "rag_retrieved_sources": [
+        "카카오 유료:결제서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt",
+        "네이버 유료서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt",
+        "카카오 유료:결제서비스 이용약관.txt"
+      ]
+    },
+    {
+      "id": "tc-22",
+      "question": "운영정책에서 계정 이용이 제한되거나 해지될 수 있는 조건은 무엇인가?",
+      "precision_at_k": 0.4,
+      "vector_precision_at_k": 0.4,
+      "rag_precision_at_k": 0.4,
+      "normalized_source_precision_at_k": 1.0,
+      "vector_normalized_source_precision_at_k": 1.0,
+      "rag_normalized_source_precision_at_k": 1.0,
+      "vector_chunk_precision_at_k": 0.8,
+      "rag_chunk_precision_at_k": 0.8,
+      "source_recall_at_k": 1.0,
+      "source_coverage_at_k": 1.0,
+      "answer_accuracy": null,
+      "faithfulness": null,
+      "not_found": null,
+      "expected_not_found": false,
+      "not_found_success": null,
+      "vector_retrieved_sources": [
+        "게시물 운영정책.txt",
+        "계정 운영정책.txt",
+        "카카오 운영정책.txt",
+        "카카오 운영정책.txt",
+        "카카오 운영정책.txt"
+      ],
+      "retrieved_sources": [
+        "게시물 운영정책.txt",
+        "계정 운영정책.txt",
+        "카카오 운영정책.txt",
+        "카카오 운영정책.txt",
+        "카카오 운영정책.txt"
+      ],
+      "rag_retrieved_sources": [
+        "카카오 운영정책.txt",
+        "게시물 운영정책.txt",
+        "계정 운영정책.txt",
+        "카카오 운영정책.txt",
+        "카카오 운영정책.txt"
+      ]
+    }
+  ],
+  "summary": {
+    "total_cases": 22,
+    "metrics_evaluated": [
+      "retrieval",
+      "accuracy",
+      "faithfulness"
+    ],
+    "precision@k_mean": 0.4636,
+    "vector_precision@k_mean": 0.4636,
+    "rag_precision@k_mean": 0.5455,
+    "normalized_source_precision@k_mean": 0.8417,
+    "vector_normalized_source_precision@k_mean": 0.8417,
+    "rag_normalized_source_precision@k_mean": 0.9795,
+    "vector_chunk_precision@k_mean": 0.8364,
+    "rag_chunk_precision@k_mean": 0.8545,
+    "source_recall@k_mean": 0.9692,
+    "source_coverage@k_mean": 0.9692,
+    "accuracy_mean": null,
+    "faithfulness_mean": null,
+    "not_found_rate": null,
+    "not_found_success_rate": null
+  }
+}
