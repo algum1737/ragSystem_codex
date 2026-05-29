@@ -59,11 +59,12 @@
 
 ## Active Work
 
-- [Ubuntu Deployment Runtime Hardening Plan](./exec-plans/active/2026-05-29-ubuntu-deployment-runtime-hardening.md)
+- [PR 28 Merge Follow-Up Plan](./exec-plans/active/2026-05-29-pr-28-merge-followup.md)
 
 ## Completed Work
 
 - [Source Drift CI Promotion Plan](./exec-plans/completed/2026-05-28-source-drift-ci-promotion.md)
+- [Ubuntu Deployment Runtime Hardening Plan](./exec-plans/completed/2026-05-29-ubuntu-deployment-runtime-hardening.md)
 
 - [Bootstrap And Migration Plan](./exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md)
 - [Runtime Validation Plan](./exec-plans/completed/2026-05-12-runtime-validation.md)

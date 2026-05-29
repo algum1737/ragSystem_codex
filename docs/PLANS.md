@@ -227,6 +227,12 @@
 
 - `2026-05-29-ubuntu-deployment-runtime-hardening.md`
   - 목표: Ubuntu 20.04 서버 수동 배포 중 확인한 Python, SQLite, GPU/PyTorch 런타임 이슈를 재배포 가능한 운영 절차로 문서화한다.
+  - 상태: Completed
+
+### PR 28 Merge Follow-Up
+
+- `2026-05-29-pr-28-merge-followup.md`
+  - 목표: PR #28의 CI 통과 상태를 바탕으로 사용자 승인 후 머지와 후속 handoff 정리를 수행한다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -239,7 +245,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-29-ubuntu-deployment-runtime-hardening.md`
+- `exec-plans/active/2026-05-29-pr-28-merge-followup.md`
 
 ## Completed Plans
 
@@ -274,3 +280,4 @@
 - `exec-plans/completed/2026-05-28-tc06-source-scope-review.md`
 - `exec-plans/completed/2026-05-28-location-dispute-case-review.md`
 - `exec-plans/completed/2026-05-28-source-drift-ci-promotion.md`
+- `exec-plans/completed/2026-05-29-ubuntu-deployment-runtime-hardening.md`

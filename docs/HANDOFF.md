@@ -316,7 +316,10 @@
 - Ubuntu 배포 런타임 하드닝 문서화를 진행했다.
   - `docs/manual-deployment-guide.md`에 Python 3.11 소스 빌드 대체 경로, Chroma SQLite 대응, GPU/PyTorch CUDA 정합성 확인, `gemma4:24b` 모델 변경 절차를 추가했다.
   - 검증: `bash scripts/validate-docs.sh`, Python compile, source drift guard 통과.
-  - 현재 active plan: `docs/exec-plans/active/2026-05-29-ubuntu-deployment-runtime-hardening.md`
+  - 완료된 계획: `docs/exec-plans/completed/2026-05-29-ubuntu-deployment-runtime-hardening.md`
+- PR #28 `Source drift guard와 Ubuntu 배포 절차 보강`을 생성했고 Static checks가 통과했다.
+  - PR: https://github.com/algum1737/ragSystem_codex/pull/28
+  - 다음 active plan: `docs/exec-plans/active/2026-05-29-pr-28-merge-followup.md`
 
 ## Current Gaps
 
@@ -327,7 +330,7 @@
 - 최신 생성 지표는 `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_rate=0.0455`, `not_found_success_rate=1.0`이다.
 - 최신 정규화 검색 지표는 `rag_normalized_source_precision@k_mean=0.9891`, `rag_chunk_precision@k_mean=0.8609`, `source_recall@k_mean=0.9891`이다.
 - 현재 평가셋 기준 잔여 낮은 accuracy/faithfulness 케이스는 없다.
-- 현재 active plan은 `docs/exec-plans/active/2026-05-29-ubuntu-deployment-runtime-hardening.md`다.
+- 현재 active plan은 `docs/exec-plans/active/2026-05-29-pr-28-merge-followup.md`다.
 - 이전 Cross-Encoder 캐시 반영 리포트는 `eval/results/eval_20260513_100727.json`에 저장되어 있다.
 - 검색/인제스천/평가 경로에 필요한 임베딩 모델 캐시는 준비됐다.
 - Cross-Encoder reranking 캐시도 준비됐다.
@@ -335,8 +338,8 @@
 
 ## Suggested Next Work
 
-1. active plan `docs/exec-plans/active/2026-05-29-ubuntu-deployment-runtime-hardening.md`에 따라 Ubuntu 배포 런타임 하드닝 문서화를 완료한다.
-2. CI 실행 결과를 PR에서 확인하고, 통과하면 source drift CI promotion과 배포 가이드 변경을 머지한다.
+1. 사용자 승인 후 PR #28을 머지한다.
+2. 머지 후 로컬 main을 동기화하고 handoff/plan 상태를 completed로 정리한다.
 
 ## Handoff Prompt
 
@@ -405,7 +408,7 @@
 59. docs/exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md
 60. docs/exec-plans/completed/2026-05-12-runtime-validation.md
 61. docs/exec-plans/completed/2026-05-13-cross-encoder-offline.md
-62. docs/exec-plans/active/2026-05-29-ubuntu-deployment-runtime-hardening.md
+62. docs/exec-plans/completed/2026-05-29-ubuntu-deployment-runtime-hardening.md
 
 현재 기준:
 - branch: `git branch --show-current`
