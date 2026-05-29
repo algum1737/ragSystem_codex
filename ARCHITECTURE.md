@@ -7,7 +7,7 @@
 - 언어와 런타임: Python 3.14
 - 인터페이스: CLI, FastAPI, Streamlit
 - 검색 스택: Chroma, `multilingual-e5-large`, BM25, RRF, Cross-Encoder
-- 생성 스택: Ollama + `gemma3:12b`
+- 생성 스택: Ollama + `gemma4:26b`
 - 출력 형식: 현재는 PPTX 템플릿 채우기
 
 ## Top-Level Layout

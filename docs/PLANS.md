@@ -245,6 +245,12 @@
 
 - `2026-05-29-operating-model-default-policy.md`
   - 목표: 운영 서버 모델 상태와 코드 기본값 차이를 정리하고 기본 모델 운영 정책을 결정한다.
+  - 상태: Completed
+
+### Ubuntu Default Model Redeploy Verification
+
+- `2026-05-29-ubuntu-default-model-redeploy-verification.md`
+  - 목표: 코드 기본 모델 `gemma4:26b` 변경이 Ubuntu 서버 재배포 또는 서비스 재시작 시 의도대로 적용되는지 확인한다.
   - 상태: Active
 
 ### Follow-Up Candidates
@@ -257,7 +263,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-29-operating-model-default-policy.md`
+- `exec-plans/active/2026-05-29-ubuntu-default-model-redeploy-verification.md`
 
 ## Completed Plans
 
@@ -295,3 +301,4 @@
 - `exec-plans/completed/2026-05-29-ubuntu-deployment-runtime-hardening.md`
 - `exec-plans/completed/2026-05-29-pr-28-merge-followup.md`
 - `exec-plans/completed/2026-05-29-ubuntu-server-runtime-verification.md`
+- `exec-plans/completed/2026-05-29-operating-model-default-policy.md`

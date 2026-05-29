@@ -35,7 +35,7 @@ curl http://localhost:11434/api/tags
 기본 LLM 모델을 준비한다.
 
 ```bash
-ollama pull gemma3:12b
+ollama pull gemma4:26b
 ```
 
 Ubuntu 20.04.6 환경에서 `python3.11` 패키지가 PPA에 없거나 APT 저장소 문제로 설치되지 않으면 시스템 기본 `python3`를 바꾸지 말고 Python 3.11을 별도 경로에 소스 빌드한다.
@@ -262,16 +262,16 @@ journalctl -u ragsystem-api -f
 journalctl -u ragsystem-web -f
 ```
 
-기본 코드는 API 시작 시 `gemma3:12b`로 초기화된다. 운영 모델로 `gemma4:24b`를 사용할 때는 Ollama에 모델을 준비한 뒤 FastAPI 기동 후 모델 변경 API를 호출한다.
+기본 코드는 API 시작 시 `gemma4:26b`로 초기화된다. 운영 서버에서 확인한 표준 모델도 `gemma4:26b`다. 다른 모델을 사용할 때는 Ollama에 모델을 준비한 뒤 FastAPI 기동 후 모델 변경 API를 호출한다.
 
 ```bash
-ollama pull gemma4:24b
+ollama pull gemma4:26b
 curl -X PUT http://localhost:8000/model \
   -H "Content-Type: application/json" \
-  -d '{"model":"gemma4:24b"}'
+  -d '{"model":"gemma4:26b"}'
 ```
 
-FastAPI 서비스가 재시작되면 기본값으로 돌아가므로 영구 기본값이 필요하면 `retriever/llm.py`의 기본 모델 변경 또는 별도 기동 후처리 서비스를 검토한다.
+FastAPI 서비스가 재시작되면 코드 기본값인 `gemma4:26b`로 돌아간다. 임시 모델 변경이 필요하면 위 모델 변경 API를 다시 호출한다.
 
 ## 9. Update And Redeploy Without Git
 

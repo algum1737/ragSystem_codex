@@ -8,7 +8,7 @@
 
 - FastAPI와 Streamlit 서비스 상태 확인 절차 정리
 - GPU/PyTorch CUDA 조합 확인 결과 기록 여부 판단
-- `gemma4:24b` 운영 모델 적용 방식 확인
+- `gemma4:26b` 운영 모델 적용 방식 확인
 - 필요 시 서버 재배포 또는 systemd 보강 작업 계획화
 
 ## Out Of Scope
@@ -32,7 +32,7 @@
 
 1. 로컬 main과 origin/main 동기화 상태를 확인한다.
 2. 서버에서 `ragsystem-api`, `ragsystem-web`, `ollama` 상태 확인 절차를 실행할지 결정한다.
-3. GPU/PyTorch CUDA 상태와 `gemma4:24b` 모델 적용 상태를 확인한다.
+3. GPU/PyTorch CUDA 상태와 `gemma4:26b` 모델 적용 상태를 확인한다.
 4. 필요 시 운영 자동화 또는 기본 모델 영구화 작업을 별도 계획으로 분리한다.
 
 ## Automated tests
@@ -68,4 +68,4 @@
 
 ## Open Work
 
-- 운영 서버는 현재 `gemma4:26b`로 동작한다. 코드 기본값과 문서의 `gemma4:24b` 표현을 운영 모델 정책으로 정리해야 한다.
+- 운영 서버는 현재 `gemma4:26b`로 동작한다. 코드 기본값과 문서의 `gemma4:26b` 표현을 운영 모델 정책으로 정리해야 한다.

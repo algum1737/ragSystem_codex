@@ -20,7 +20,7 @@ def main() -> int:
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument("question", help="자연어 질문")
-    parser.add_argument("--model", default="gemma3:12b", help="Ollama 모델명 (기본: gemma3:12b)")
+    parser.add_argument("--model", default="gemma4:26b", help="Ollama 모델명 (기본: gemma4:26b)")
     parser.add_argument("--ollama-url", default="http://localhost:11434", help="Ollama 서버 URL")
     parser.add_argument("--db-path", default="./chroma_db", help="Chroma DB 경로 (기본: ./chroma_db)")
     parser.add_argument("--collection", default="ragSystem", help="Chroma 컬렉션 이름")

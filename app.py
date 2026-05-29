@@ -218,7 +218,8 @@ with tab_system:
     RECOMMENDED_MODELS = [
         {"name": "gemma3:1b",    "size": "815 MB", "desc": "Gemma 3 초경량"},
         {"name": "gemma3:4b",    "size": "3.3 GB",  "desc": "Gemma 3 경량 (빠름)"},
-        {"name": "gemma3:12b",   "size": "8.1 GB",  "desc": "Gemma 3 표준 (기본값)"},
+        {"name": "gemma4:26b",   "size": "17 GB",   "desc": "Gemma 4 운영 기본값"},
+        {"name": "gemma3:12b",   "size": "8.1 GB",  "desc": "Gemma 3 표준"},
         {"name": "gemma3:27b",   "size": "17 GB",   "desc": "Gemma 3 고성능"},
         {"name": "llama3.2:1b",  "size": "1.3 GB",  "desc": "Meta Llama 3.2 초경량"},
         {"name": "llama3.2:3b",  "size": "2.0 GB",  "desc": "Meta Llama 3.2 경량"},

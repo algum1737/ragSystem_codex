@@ -59,7 +59,7 @@
 
 ## Active Work
 
-- [Operating Model Default Policy Plan](./exec-plans/active/2026-05-29-operating-model-default-policy.md)
+- [Ubuntu Default Model Redeploy Verification Plan](./exec-plans/active/2026-05-29-ubuntu-default-model-redeploy-verification.md)
 
 ## Completed Work
 
@@ -67,6 +67,7 @@
 - [Ubuntu Deployment Runtime Hardening Plan](./exec-plans/completed/2026-05-29-ubuntu-deployment-runtime-hardening.md)
 - [PR 28 Merge Follow-Up Plan](./exec-plans/completed/2026-05-29-pr-28-merge-followup.md)
 - [Ubuntu Server Runtime Verification Plan](./exec-plans/completed/2026-05-29-ubuntu-server-runtime-verification.md)
+- [Operating Model Default Policy Plan](./exec-plans/completed/2026-05-29-operating-model-default-policy.md)
 
 - [Bootstrap And Migration Plan](./exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md)
 - [Runtime Validation Plan](./exec-plans/completed/2026-05-12-runtime-validation.md)

@@ -23,7 +23,7 @@ flowchart TD
         H["RFP 섹션 분석"]
         I["유사도 검색\nVectorStore.similarity_search()"]
         J["프롬프트 조립\nRAGEngine"]
-        K["LLM 답변 생성\nOllama + gemma3:12b"]
+        K["LLM 답변 생성\nOllama + gemma4:26b"]
     end
 
     subgraph OUTPUT["📤 출력"]
@@ -86,7 +86,7 @@ graph TD
     end
 
     subgraph external["⚙️ 외부 런타임"]
-        ollama["Ollama\ngemma3:12b (localhost:11434)"]
+        ollama["Ollama\ngemma4:26b (localhost:11434)"]
         chroma["ChromaDB\n(./chroma_db)"]
         stmodel["sentence-transformers\n(로컬 캐시)"]
     end

@@ -2,7 +2,7 @@
 
 ## Goal
 
-운영 서버에서 확인된 `gemma4:26b` 사용 상태와 코드 기본값 `gemma3:12b`, 기존 문서의 `gemma4:24b` 표현 사이의 차이를 정리하고 기본 모델 운영 정책을 결정한다.
+운영 서버에서 확인된 `gemma4:26b` 사용 상태와 코드 기본값 `gemma4:26b`, 기존 문서의 이전 운영 모델 표현 사이의 차이를 정리하고 기본 모델 운영 정책을 결정한다.
 
 ## Scope
 
@@ -20,8 +20,8 @@
 ## Assumptions
 
 - 운영 서버는 현재 `gemma4:26b`로 정상 응답한다.
-- 코드 기본값은 아직 `gemma3:12b`다.
-- 기본 모델 영구화는 운영 판단이 필요하다.
+- 코드 기본값은 `gemma4:26b`로 정리한다.
+- 기본 모델은 `gemma4:26b`로 영구화한다.
 
 ## Pre-flight checks
 
@@ -47,8 +47,21 @@
 
 ## Skipped/Not Run
 
-- 아직 운영 기본 모델 방식은 결정하지 않았다.
+- 신규 LLM 품질 비교 평가는 수행하지 않았다. 이번 작업은 운영 서버에서 이미 정상 응답한 `gemma4:26b`를 코드와 문서 기본값으로 맞추는 범위다.
+
+## Completion
+
+- `retriever/llm.py`의 기본 Ollama 모델을 `gemma4:26b`로 변경했다.
+- `query.py` CLI 기본 모델과 도움말을 `gemma4:26b`로 변경했다.
+- Streamlit 모델 추천 목록에 `gemma4:26b`를 운영 기본값으로 추가했다.
+- 루트 아키텍처 문서, Mermaid 아키텍처 문서, 수동 배포 가이드, 서버 기동 가이드의 현재 운영 모델 표기를 `gemma4:26b`로 정리했다.
+
+## Validation Result
+
+- 통과: `bash scripts/validate-docs.sh`
+- 통과: `.venv/bin/python -m py_compile retriever/llm.py api/main.py app.py query.py`
+- 통과: 서버 `/health` 모델 값 재확인 (`model=gemma4:26b`)
 
 ## Open Work
 
-- `gemma4:26b`를 기본 운영 모델로 영구화할지 사용자 결정 필요.
+- 없음.
