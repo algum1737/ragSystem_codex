@@ -361,6 +361,14 @@
   - 완료된 계획: `docs/exec-plans/completed/2026-05-29-performance-tuning-baseline.md`
   - 다음 active plan: `docs/exec-plans/active/2026-05-29-residual-tuning-case-review.md`
 
+- 잔여 튜닝 케이스 리뷰를 완료했다.
+  - `tc-04`는 검색 누락이 아니라 답변 citation 표현 또는 faithfulness judge 안정성 문제로 분류했다.
+  - 전역 출처 번호 프롬프트 보강은 단건 응답에서는 개선됐지만 full eval에서 `tc-05`, `tc-07`, `tc-11` 회귀가 발생해 채택하지 않았다.
+  - `tc-17`은 답변 품질이 아니라 relevant source scope가 넓은 평가셋 문제 후보로 분류했다.
+  - 결과 문서: `docs/references/2026-06-01-residual-tuning-case-review.md`
+  - 완료된 계획: `docs/exec-plans/completed/2026-05-29-residual-tuning-case-review.md`
+  - 다음 active plan: `docs/exec-plans/active/2026-06-01-tc04-faithfulness-tc17-source-scope.md`
+
 ## Current Gaps
 
 - `/stats`는 최신 인제스천 후 현재 `count=318`을 반환한다.
@@ -370,7 +378,7 @@
 - 최신 생성 지표는 `accuracy_mean=1.0`, `faithfulness_mean=0.9565`, `not_found_rate=0.0435`, `not_found_success_rate=1.0`이다.
 - 최신 정규화 검색 지표는 `rag_normalized_source_precision@k_mean=0.9891`, `rag_chunk_precision@k_mean=0.8609`, `source_recall@k_mean=0.9891`이다.
 - 현재 평가셋 기준 집계 지표는 통과했지만 source drift guard critical 대상은 `tc-04` faithfulness이고, 추가 잔여 리뷰 대상은 `tc-17` source recall이다.
-- 현재 active plan은 `docs/exec-plans/active/2026-05-29-residual-tuning-case-review.md`다.
+- 현재 active plan은 `docs/exec-plans/active/2026-06-01-tc04-faithfulness-tc17-source-scope.md`다.
 - 이전 Cross-Encoder 캐시 반영 리포트는 `eval/results/eval_20260513_100727.json`에 저장되어 있다.
 - 검색/인제스천/평가 경로에 필요한 임베딩 모델 캐시는 준비됐다.
 - Cross-Encoder reranking 캐시도 준비됐다.
@@ -378,8 +386,8 @@
 
 ## Suggested Next Work
 
-1. active plan `docs/exec-plans/active/2026-05-29-residual-tuning-case-review.md`에 따라 `tc-04` faithfulness와 `tc-17` source recall 잔여 케이스를 리뷰한다.
-2. 추가 구현, 평가셋 보정, 문서화 예외 중 하나로 결정한다.
+1. active plan `docs/exec-plans/active/2026-06-01-tc04-faithfulness-tc17-source-scope.md`에 따라 `tc-04` faithfulness judge 입력을 재현한다.
+2. `tc-17` relevant source 범위를 source scope policy 기준으로 보정할지 결정한다.
 
 ## Handoff Prompt
 

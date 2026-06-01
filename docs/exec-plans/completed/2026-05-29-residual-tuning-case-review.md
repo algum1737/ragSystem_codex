@@ -46,8 +46,26 @@
 
 ## Skipped/Not Run
 
-- 아직 잔여 케이스 리뷰는 수행하지 않았다.
+- 채택하지 않은 전역 프롬프트 실험 리포트 `eval/results/eval_20260601_085420.json`은 기준 리포트로 커밋하지 않았다.
+
+## Completion
+
+- `eval/results/eval_20260529_173928.json` 기준 `tc-04`, `tc-17` 잔여 케이스를 분석했다.
+- `tc-04`는 검색 누락이 아니라 답변 citation 표현 또는 faithfulness judge 안정성 문제로 분류했다.
+- 전역 출처 번호 프롬프트 보강을 서버에서 실험했지만 full eval에서 `tc-05`, `tc-07`, `tc-11` 회귀가 발생해 채택하지 않았다.
+- `tc-17`은 답변 품질이 아니라 relevant source scope가 넓은 평가셋 문제 후보로 분류했다.
+- 결과 문서 `docs/references/2026-06-01-residual-tuning-case-review.md`를 추가했다.
+- 다음 active plan `docs/exec-plans/active/2026-06-01-tc04-faithfulness-tc17-source-scope.md`를 생성했다.
+
+## Validation Result
+
+- 통과: `git status --short --branch`
+- 통과: `eval/results/eval_20260529_173928.json`의 `tc-04`, `tc-17` 분석
+- 실패/미채택: 전역 출처 번호 프롬프트 실험 full eval
+  - `accuracy_mean=0.9783`, `faithfulness_mean=0.9565`, `not_found_success_rate=1.0`
+  - source drift guard critical: `tc-05`, `tc-07`, `tc-11`
+- 통과: 서버 배포본은 채택하지 않은 프롬프트 변경을 원복했다.
 
 ## Open Work
 
-- `tc-04`, `tc-17` 잔여 케이스 리뷰.
+- 없음.

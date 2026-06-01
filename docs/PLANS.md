@@ -263,6 +263,12 @@
 
 - `2026-05-29-residual-tuning-case-review.md`
   - 목표: 안정화 기준 통과 이후 남은 `tc-04`, `tc-17` 케이스의 추가 튜닝 필요 여부를 결정한다.
+  - 상태: Completed
+
+### TC04 Faithfulness And TC17 Source Scope
+
+- `2026-06-01-tc04-faithfulness-tc17-source-scope.md`
+  - 목표: `tc-04` faithfulness와 `tc-17` source scope를 좁게 보정한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -281,7 +287,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-05-29-residual-tuning-case-review.md`
+- `exec-plans/active/2026-06-01-tc04-faithfulness-tc17-source-scope.md`
 
 ## Completed Plans
 
@@ -323,3 +329,4 @@
 - `exec-plans/completed/2026-05-29-ubuntu-default-model-redeploy-verification.md`
 - `exec-plans/completed/2026-05-29-eval-model-tuning-policy.md`
 - `exec-plans/completed/2026-05-29-performance-tuning-baseline.md`
+- `exec-plans/completed/2026-05-29-residual-tuning-case-review.md`
