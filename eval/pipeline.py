@@ -25,6 +25,13 @@ def _tokenize_for_overlap(text: str) -> set[str]:
     return {t for t in tokens if len(t) > 1}
 
 
+def _strip_citation_markers(text: str) -> str:
+    cleaned = re.sub(r"\s*\[[0-9,\s]+\]", "", text)
+    cleaned = re.sub(r"(,\s*){2,}", ", ", cleaned)
+    cleaned = re.sub(r"\s+,", ",", cleaned)
+    return cleaned.strip()
+
+
 def _doc_type_where(doc_type: str | None) -> dict | None:
     if not doc_type:
         return None
@@ -242,7 +249,7 @@ class RAGEvaluator:
         prompt = (
             "다음 답변이 참고 문서에만 근거하는지 판단하세요.\n\n"
             f"[참고 문서]\n{context}\n\n"
-            f"[답변]\n{answer}\n\n"
+            f"[답변]\n{_strip_citation_markers(answer)}\n\n"
             '"YES" 또는 "NO"로만 답하세요.'
         )
         try:

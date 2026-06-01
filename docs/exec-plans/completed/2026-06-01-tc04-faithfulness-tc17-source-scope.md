@@ -52,8 +52,32 @@
 
 ## Skipped/Not Run
 
-- 아직 보정 구현과 재평가는 실행하지 않았다.
+- GPU 모드 full eval 재실행은 서버 GPU 메모리 경합으로 실패했다. 최종 검증은 `CUDA_VISIBLE_DEVICES=''`로 평가 프로세스만 CPU 모드로 실행했다.
+
+## Completion
+
+- `tc-04` faithfulness judge 입력에서 숫자 citation marker를 제거하도록 보강했다.
+- `tc-17` relevant source를 representative evidence 기준에 맞춰 3개 문서로 좁혔다.
+- 검증 과정에서 `tc-21` 질문이 서비스 변경과 약관 개정을 섞고 있어 서비스 제공 중단/서비스 변경 범위로 좁혔다.
+- `retriever/engine.py`에 문서 밖 추론 표현 금지 규칙을 한 문장 추가했다.
+- 최종 리포트 `eval/results/eval_20260601_164832.json`을 저장했다.
+- 결과 문서 `docs/references/2026-06-01-tc04-faithfulness-tc17-source-scope-result.md`를 추가했다.
+- 다음 active plan으로 `docs/exec-plans/active/2026-06-01-observability-langfuse-review.md`를 생성했다.
+
+## Validation Result
+
+- 통과: `bash scripts/validate-docs.sh`
+- 통과: `.venv/bin/python -m py_compile eval/pipeline.py retriever/engine.py`
+- 통과: `CUDA_VISIBLE_DEVICES='' .venv/bin/python eval/pipeline.py --all --model gemma3:12b --top-k 5`
+  - `accuracy_mean=1.0`
+  - `faithfulness_mean=1.0`
+  - `not_found_success_rate=1.0`
+  - `rag_normalized_source_precision=1.0`
+  - `source_recall=1.0`
+- 통과: `.venv/bin/python scripts/source_drift_report.py eval/results/eval_20260601_164832.json --fail-on-critical`
+  - critical case 없음
+  - watch case 없음
 
 ## Open Work
 
-- `tc-04` faithfulness diagnostic과 `tc-17` source scope calibration.
+- 없음.

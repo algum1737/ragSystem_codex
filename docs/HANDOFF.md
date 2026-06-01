@@ -369,16 +369,27 @@
   - 완료된 계획: `docs/exec-plans/completed/2026-05-29-residual-tuning-case-review.md`
   - 다음 active plan: `docs/exec-plans/active/2026-06-01-tc04-faithfulness-tc17-source-scope.md`
 
+- `tc-04` faithfulness와 `tc-17` source scope 보정을 완료했다.
+  - faithfulness judge 입력에서 숫자 citation marker를 제거하도록 보강했다.
+  - `tc-17` relevant source를 representative evidence 기준에 맞춰 3개 문서로 좁혔다.
+  - `tc-21`은 서비스 제공 중단/서비스 변경 범위로 질문과 keyword를 좁혔다.
+  - 문서 밖 추론 표현 금지 규칙을 RAG 프롬프트에 한 문장 추가했다.
+  - 최종 full eval 리포트: `eval/results/eval_20260601_164832.json`
+  - 최종 지표: `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_success_rate=1.0`, `rag_normalized_source_precision=1.0`, `source_recall=1.0`
+  - source drift guard 기준 critical/watch case는 없다.
+  - 완료된 계획: `docs/exec-plans/completed/2026-06-01-tc04-faithfulness-tc17-source-scope.md`
+  - 다음 active plan: `docs/exec-plans/active/2026-06-01-observability-langfuse-review.md`
+
 ## Current Gaps
 
 - `/stats`는 최신 인제스천 후 현재 `count=318`을 반환한다.
 - retrieval-only 기준 검증은 현재 `vector_precision@k_mean=0.4522`, `rag_precision@k_mean=0.5478`로 정상 완료된다.
 - 튜닝 판단은 raw precision보다 `rag_normalized_source_precision@k_mean=0.9891`과 `source_recall@k_mean=0.9891` 중심으로 본다.
-- 최신 full eval 리포트는 `eval/results/eval_20260529_173928.json`에 저장되어 있다.
-- 최신 생성 지표는 `accuracy_mean=1.0`, `faithfulness_mean=0.9565`, `not_found_rate=0.0435`, `not_found_success_rate=1.0`이다.
+- 최신 full eval 리포트는 `eval/results/eval_20260601_164832.json`에 저장되어 있다.
+- 최신 생성 지표는 `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_rate=0.0435`, `not_found_success_rate=1.0`이다.
 - 최신 정규화 검색 지표는 `rag_normalized_source_precision@k_mean=0.9891`, `rag_chunk_precision@k_mean=0.8609`, `source_recall@k_mean=0.9891`이다.
-- 현재 평가셋 기준 집계 지표는 통과했지만 source drift guard critical 대상은 `tc-04` faithfulness이고, 추가 잔여 리뷰 대상은 `tc-17` source recall이다.
-- 현재 active plan은 `docs/exec-plans/active/2026-06-01-tc04-faithfulness-tc17-source-scope.md`다.
+- 현재 평가셋 기준 source drift guard critical/watch case는 없다.
+- 현재 active plan은 `docs/exec-plans/active/2026-06-01-observability-langfuse-review.md`다.
 - 이전 Cross-Encoder 캐시 반영 리포트는 `eval/results/eval_20260513_100727.json`에 저장되어 있다.
 - 검색/인제스천/평가 경로에 필요한 임베딩 모델 캐시는 준비됐다.
 - Cross-Encoder reranking 캐시도 준비됐다.
@@ -386,8 +397,8 @@
 
 ## Suggested Next Work
 
-1. active plan `docs/exec-plans/active/2026-06-01-tc04-faithfulness-tc17-source-scope.md`에 따라 `tc-04` faithfulness judge 입력을 재현한다.
-2. `tc-17` relevant source 범위를 source scope policy 기준으로 보정할지 결정한다.
+1. active plan `docs/exec-plans/active/2026-06-01-observability-langfuse-review.md`에 따라 Langfuse 같은 observability 도구 도입 여부를 검토한다.
+2. 외부 전송 없이 self-hosted 또는 로컬 추적 방식으로 시작할 수 있는지 판단한다.
 
 ## Handoff Prompt
 
