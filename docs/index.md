@@ -62,6 +62,7 @@
 - [2026-06-01 TC04 Faithfulness And TC17 Source Scope Result](./references/2026-06-01-tc04-faithfulness-tc17-source-scope-result.md)
 - [2026-06-02 Observability And Langfuse Review](./references/2026-06-02-observability-langfuse-review.md)
 - [2026-06-02 Local Observability Trace Result](./references/2026-06-02-local-observability-trace-result.md)
+- [2026-06-02 Trace Runtime Verification Result](./references/2026-06-02-trace-runtime-verification-result.md)
 
 ## Active Work
 

@@ -273,7 +273,51 @@ curl -X PUT http://localhost:8000/model \
 
 FastAPI 서비스가 재시작되면 코드 기본값인 `gemma4:26b`로 돌아간다. 임시 모델 변경이 필요하면 위 모델 변경 API를 다시 호출한다.
 
-## 9. Update And Redeploy Without Git
+## 9. Local Trace Runtime
+
+trace는 기본 off다. 운영 query와 eval 실행을 로컬 JSONL로 남기려면 명시적으로 켠다.
+
+FastAPI systemd 서비스에 trace를 적용한다.
+
+```bash
+sudo systemctl edit ragsystem-api.service
+```
+
+에디터에 아래 내용을 입력한다.
+
+```ini
+[Service]
+Environment=RAG_TRACE_ENABLED=true
+Environment=RAG_TRACE_PATH=/opt/ragSystem_codex/logs/rag_traces.jsonl
+```
+
+서비스를 재시작한다.
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart ragsystem-api.service
+sudo systemctl status ragsystem-api.service
+curl http://localhost:8000/health
+```
+
+query를 실행한 뒤 trace를 확인한다.
+
+```bash
+tail -n 5 /opt/ragSystem_codex/logs/rag_traces.jsonl
+```
+
+eval 실행 trace만 임시로 켜려면 환경변수를 명령 앞에 붙인다.
+
+```bash
+cd /opt/ragSystem_codex
+RAG_TRACE_ENABLED=true \
+RAG_TRACE_PATH=/opt/ragSystem_codex/logs/rag_traces_eval.jsonl \
+.venv/bin/python eval/pipeline.py --metric retrieval --top-k 5
+```
+
+trace payload는 기본적으로 full prompt, full answer, chunk text를 저장하지 않는다. 질문 원문도 기본 저장하지 않고 `question_hash`만 기록한다.
+
+## 10. Update And Redeploy Without Git
 
 수정 사항을 반영할 때는 로컬에서 다시 압축해 서버에 올리고, 서버에서 기존 디렉터리를 백업한 뒤 교체한다.
 
@@ -348,7 +392,7 @@ curl http://localhost:8000/stats
 
 브라우저에서 `http://SERVER_IP:8501` 접속을 확인한다.
 
-## 10. Firewall And Exposure
+## 11. Firewall And Exposure
 
 직접 포트 접속을 허용해야 한다면 최소한 Streamlit 포트만 제한적으로 연다.
 
@@ -358,7 +402,7 @@ sudo ufw allow from TRUSTED_IP to any port 8501 proto tcp
 
 FastAPI `8000`과 Ollama `11434`는 외부에 직접 공개하지 않는 것을 원칙으로 한다. 외부 공개가 필요하면 Nginx reverse proxy, VPN, 사내망 접근 제한, 인증 계층을 먼저 둔다.
 
-## 11. Rollback
+## 12. Rollback
 
 배포 후 문제가 생기면 백업 디렉터리로 되돌린다.
 
