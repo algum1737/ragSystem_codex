@@ -64,13 +64,15 @@
 - [2026-06-02 Local Observability Trace Result](./references/2026-06-02-local-observability-trace-result.md)
 - [2026-06-02 Trace Runtime Verification Result](./references/2026-06-02-trace-runtime-verification-result.md)
 - [2026-06-02 LLM Latency Triage Result](./references/2026-06-02-llm-latency-triage-result.md)
+- [2026-06-02 Operating Model Latency Experiment Result](./references/2026-06-02-operating-model-latency-experiment-result.md)
 
 ## Active Work
 
-- [Operating Model Latency Experiment Plan](./exec-plans/active/2026-06-02-operating-model-latency-experiment.md)
+- [Gemma3 Quality Gap Review Plan](./exec-plans/active/2026-06-02-gemma3-quality-gap-review.md)
 
 ## Completed Work
 
+- [Operating Model Latency Experiment Plan](./exec-plans/completed/2026-06-02-operating-model-latency-experiment.md)
 - [LLM Latency Triage Plan](./exec-plans/completed/2026-06-02-llm-latency-triage.md)
 - [Trace Runtime Verification Plan](./exec-plans/completed/2026-06-02-trace-runtime-verification.md)
 - [Local Observability Trace Schema Plan](./exec-plans/completed/2026-06-02-local-observability-trace-schema.md)

@@ -299,6 +299,12 @@
 
 - `2026-06-02-operating-model-latency-experiment.md`
   - 목표: 운영 기본 모델을 `gemma3:12b`로 전환할지 판단하기 위해 latency와 품질을 함께 검증한다.
+  - 상태: Completed
+
+### Gemma3 Quality Gap Review
+
+- `2026-06-02-gemma3-quality-gap-review.md`
+  - 목표: `gemma3:12b` 전환 실험에서 하락한 `tc-07`, `tc-11` 품질 gap을 분석하고 기준선 회복 가능성을 판단한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -317,10 +323,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-02-operating-model-latency-experiment.md`
+- `exec-plans/active/2026-06-02-gemma3-quality-gap-review.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-02-operating-model-latency-experiment.md`
 - `exec-plans/completed/2026-06-02-llm-latency-triage.md`
 - `exec-plans/completed/2026-06-02-trace-runtime-verification.md`
 - `exec-plans/completed/2026-06-02-local-observability-trace-schema.md`

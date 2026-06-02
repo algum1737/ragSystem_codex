@@ -240,6 +240,15 @@ class RAGEngine:
             reranker_model or "None"
         )
 
+    @property
+    def llm(self) -> OllamaLLM:
+        return self._llm
+
+    @llm.setter
+    def llm(self, llm: OllamaLLM) -> None:
+        logger.info("RAGEngine LLM 변경: %s → %s", self._llm.model, llm.model)
+        self._llm = llm
+
     def query(
         self,
         question: str,
