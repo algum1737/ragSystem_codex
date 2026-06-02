@@ -46,8 +46,37 @@
 
 ## Skipped/Not Run
 
-- 아직 분석 전이다.
+- full eval은 실행하지 않았다. `top_k=3` 후보가 정해졌으므로 별도 plan에서 수행한다.
 
 ## Open Work
 
-- `tc-07`, `tc-11` 품질 gap 분석.
+- 없음. 다음 작업은 `gemma3:12b + top_k=3` full eval이다.
+
+## Progress
+
+- `eval/results/eval_20260602_131307.json`에서 `tc-07`, `tc-11` 답변과 지표 확인.
+- `eval/test_cases.json`의 expected keywords와 relevant sources 확인.
+- 서버에서 같은 RAG retrieval 경로로 `tc-07`, `tc-11` retrieved chunks 확인.
+- 프롬프트 후보 3종을 2케이스 대상으로 임시 monkeypatch 검증.
+- `top_k=3` 후보를 2케이스 대상으로 검증.
+- 결과 문서 작성: `docs/references/2026-06-02-gemma3-quality-gap-review.md`
+
+## Validation Result
+
+- 통과: `tc-07` gap 분류
+  - 실제 답변은 근거 충실
+  - 하락은 `면책` fixed keyword 표현 불일치
+- 통과: `tc-11` gap 분류
+  - 실제 answer grounding 문제
+  - 불필요한 미확인 섹션과 source 혼합 확인
+- 실패/보류: 전역 프롬프트 후보
+  - 일부 후보가 `tc-11`을 회복했지만 `tc-07` faithfulness 회귀 발생
+- 통과: `top_k=3` 후보 2케이스 smoke
+  - `tc-07`: accuracy `1.0`, faithfulness `1.0`
+  - `tc-11`: accuracy `1.0`, faithfulness `1.0`
+
+## Completion
+
+- `gemma3:12b` 품질 gap 원인을 분류했다.
+- 즉시 프롬프트 변경은 보류했다.
+- 다음 실험 후보를 `gemma3:12b + top_k=3` full eval로 정했다.

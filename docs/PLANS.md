@@ -305,6 +305,12 @@
 
 - `2026-06-02-gemma3-quality-gap-review.md`
   - 목표: `gemma3:12b` 전환 실험에서 하락한 `tc-07`, `tc-11` 품질 gap을 분석하고 기준선 회복 가능성을 판단한다.
+  - 상태: Completed
+
+### Gemma3 Top-K 3 Full Eval
+
+- `2026-06-02-gemma3-topk3-full-eval.md`
+  - 목표: `gemma3:12b + top_k=3` 조합이 latency 개선과 품질 기준선을 동시에 만족하는지 full eval로 검증한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -323,10 +329,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-02-gemma3-quality-gap-review.md`
+- `exec-plans/active/2026-06-02-gemma3-topk3-full-eval.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-02-gemma3-quality-gap-review.md`
 - `exec-plans/completed/2026-06-02-operating-model-latency-experiment.md`
 - `exec-plans/completed/2026-06-02-llm-latency-triage.md`
 - `exec-plans/completed/2026-06-02-trace-runtime-verification.md`

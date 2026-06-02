@@ -65,13 +65,15 @@
 - [2026-06-02 Trace Runtime Verification Result](./references/2026-06-02-trace-runtime-verification-result.md)
 - [2026-06-02 LLM Latency Triage Result](./references/2026-06-02-llm-latency-triage-result.md)
 - [2026-06-02 Operating Model Latency Experiment Result](./references/2026-06-02-operating-model-latency-experiment-result.md)
+- [2026-06-02 Gemma3 Quality Gap Review](./references/2026-06-02-gemma3-quality-gap-review.md)
 
 ## Active Work
 
-- [Gemma3 Quality Gap Review Plan](./exec-plans/active/2026-06-02-gemma3-quality-gap-review.md)
+- [Gemma3 Top-K 3 Full Eval Plan](./exec-plans/active/2026-06-02-gemma3-topk3-full-eval.md)
 
 ## Completed Work
 
+- [Gemma3 Quality Gap Review Plan](./exec-plans/completed/2026-06-02-gemma3-quality-gap-review.md)
 - [Operating Model Latency Experiment Plan](./exec-plans/completed/2026-06-02-operating-model-latency-experiment.md)
 - [LLM Latency Triage Plan](./exec-plans/completed/2026-06-02-llm-latency-triage.md)
 - [Trace Runtime Verification Plan](./exec-plans/completed/2026-06-02-trace-runtime-verification.md)
