@@ -84,12 +84,16 @@
 - full prompt, full answer, chunk text는 기본 저장하지 않는다.
 - 구현 결과: `docs/references/2026-06-02-local-observability-trace-result.md`
 - 완료 plan: `docs/exec-plans/completed/2026-06-02-local-observability-trace-schema.md`
-- 현재 active plan: `docs/exec-plans/active/2026-06-02-llm-latency-triage.md`
+- 현재 active plan: `docs/exec-plans/active/2026-06-02-operating-model-latency-experiment.md`
 - Ubuntu 서버 `10.10.220.5`에는 최신 trace 코드가 배포됐고 서버 venv compile, 임시 API trace smoke, eval trace smoke가 통과했다.
 - 서버에는 `/home/ragadmin/apply-ragsystem-trace.sh`가 업로드되어 있다.
 - `sudo bash /home/ragadmin/apply-ragsystem-trace.sh` 실행 후 운영 8000 서비스에서 `/opt/ragSystem_codex/logs/rag_traces.jsonl` 생성을 확인했다.
 - 최신 운영 query trace는 `api.query`, model `gemma4:26b`, total 약 218초, LLM 약 208초로 기록됐다.
-- 다음 작업은 `gemma4:26b` LLM 생성 지연 분석과 튜닝 후보 정리다.
+- LLM latency triage 결과, retrieval은 약 10초이고 `gemma4:26b` LLM 구간이 208~351초 병목이다.
+- `gemma4:26b`는 Ollama 기준 `15%/85% CPU/GPU`로 일부 CPU offload가 발생한다.
+- 같은 RAG CLI 경로에서 `gemma3:12b`는 total 약 26.3초, LLM 약 16.5초였다.
+- `gemma4` 계열은 LangChain 경로에서 `max_tokens` 적용 시 빈 응답 리스크가 있어 단순 token cap 패치는 보류한다.
+- 다음 작업은 `gemma3:12b` 운영 API 임시 전환 smoke와 full eval 재검증이다.
 
 ## Working Rules
 

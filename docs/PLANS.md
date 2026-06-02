@@ -293,6 +293,12 @@
 
 - `2026-06-02-llm-latency-triage.md`
   - 목표: 운영 trace에서 확인된 `gemma4:26b` LLM 생성 지연을 분류하고 성능 튜닝 후보를 정한다.
+  - 상태: Completed
+
+### Operating Model Latency Experiment
+
+- `2026-06-02-operating-model-latency-experiment.md`
+  - 목표: 운영 기본 모델을 `gemma3:12b`로 전환할지 판단하기 위해 latency와 품질을 함께 검증한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -311,10 +317,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-02-llm-latency-triage.md`
+- `exec-plans/active/2026-06-02-operating-model-latency-experiment.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-02-llm-latency-triage.md`
 - `exec-plans/completed/2026-06-02-trace-runtime-verification.md`
 - `exec-plans/completed/2026-06-02-local-observability-trace-schema.md`
 - `exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`

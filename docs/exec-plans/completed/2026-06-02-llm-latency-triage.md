@@ -49,9 +49,37 @@
 
 ## Skipped/Not Run
 
-- 아직 분석 전이다.
+- 대규모 full eval은 실행하지 않았다. 모델 전환 후보가 정해진 뒤 별도 plan에서 수행한다.
 
 ## Open Work
 
-- LLM latency sample 분석.
-- 모델/프롬프트/context 튜닝 후보 정리.
+- 없음. 다음 작업은 운영 모델 전환 실험과 품질 재검증이다.
+
+## Progress
+
+- 운영 `rag_traces.jsonl` latency sample 확인.
+- `ollama ps`, `nvidia-smi`, `ollama list` 확인.
+- Ollama 단독 generate smoke 실행.
+- RAG 유사 긴 context generate smoke 실행.
+- 앱과 같은 LangChain `OllamaLLM.predict()` 경로에서 `max_tokens` 유무 비교.
+- 서버 CLI RAG 경로에서 `gemma3:12b` trace smoke 실행.
+- 분석 결과 기록: `docs/references/2026-06-02-llm-latency-triage-result.md`
+
+## Validation Result
+
+- 통과: 운영 trace sample 확인
+  - `gemma4:26b` API trace total 약 217.8초, LLM 약 207.9초
+- 통과: GPU/Ollama 상태 확인
+  - `gemma4:26b`는 `15%/85% CPU/GPU`로 일부 CPU offload 발생
+- 통과: Ollama 단독 generate smoke
+  - 짧은 prompt와 긴 context에서 모델별 timing 확인
+- 통과: LangChain 경로 max token 비교
+  - `gemma4:26b`는 `max_tokens` 적용 시 빈 응답 리스크 확인
+  - `gemma3:12b`는 `max_tokens` 적용 정상
+- 통과: `gemma3:12b` CLI RAG trace smoke
+  - total 약 26.3초, LLM 약 16.5초
+
+## Completion
+
+- LLM 지연의 주 병목이 retrieval이 아니라 `gemma4:26b` LLM 생성 구간임을 확인했다.
+- 1차 개선 후보를 `gemma3:12b` 운영 모델 전환 실험으로 정했다.

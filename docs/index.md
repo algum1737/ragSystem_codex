@@ -63,13 +63,15 @@
 - [2026-06-02 Observability And Langfuse Review](./references/2026-06-02-observability-langfuse-review.md)
 - [2026-06-02 Local Observability Trace Result](./references/2026-06-02-local-observability-trace-result.md)
 - [2026-06-02 Trace Runtime Verification Result](./references/2026-06-02-trace-runtime-verification-result.md)
+- [2026-06-02 LLM Latency Triage Result](./references/2026-06-02-llm-latency-triage-result.md)
 
 ## Active Work
 
-- [LLM Latency Triage Plan](./exec-plans/active/2026-06-02-llm-latency-triage.md)
+- [Operating Model Latency Experiment Plan](./exec-plans/active/2026-06-02-operating-model-latency-experiment.md)
 
 ## Completed Work
 
+- [LLM Latency Triage Plan](./exec-plans/completed/2026-06-02-llm-latency-triage.md)
 - [Trace Runtime Verification Plan](./exec-plans/completed/2026-06-02-trace-runtime-verification.md)
 - [Local Observability Trace Schema Plan](./exec-plans/completed/2026-06-02-local-observability-trace-schema.md)
 - [Source Drift CI Promotion Plan](./exec-plans/completed/2026-05-28-source-drift-ci-promotion.md)
