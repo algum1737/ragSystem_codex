@@ -60,10 +60,11 @@
 - [2026-05-29 Performance Tuning Baseline Result](./references/2026-05-29-performance-tuning-baseline-result.md)
 - [2026-06-01 Residual Tuning Case Review](./references/2026-06-01-residual-tuning-case-review.md)
 - [2026-06-01 TC04 Faithfulness And TC17 Source Scope Result](./references/2026-06-01-tc04-faithfulness-tc17-source-scope-result.md)
+- [2026-06-02 Observability And Langfuse Review](./references/2026-06-02-observability-langfuse-review.md)
 
 ## Active Work
 
-- [Observability And Langfuse Review Plan](./exec-plans/active/2026-06-01-observability-langfuse-review.md)
+- [Local Observability Trace Schema Plan](./exec-plans/active/2026-06-02-local-observability-trace-schema.md)
 
 ## Completed Work
 
@@ -77,6 +78,7 @@
 - [Performance Tuning Baseline Plan](./exec-plans/completed/2026-05-29-performance-tuning-baseline.md)
 - [Residual Tuning Case Review Plan](./exec-plans/completed/2026-05-29-residual-tuning-case-review.md)
 - [TC04 Faithfulness And TC17 Source Scope Plan](./exec-plans/completed/2026-06-01-tc04-faithfulness-tc17-source-scope.md)
+- [Observability And Langfuse Review Plan](./exec-plans/completed/2026-06-01-observability-langfuse-review.md)
 
 - [Bootstrap And Migration Plan](./exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md)
 - [Runtime Validation Plan](./exec-plans/completed/2026-05-12-runtime-validation.md)

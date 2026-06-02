@@ -380,6 +380,15 @@
   - 완료된 계획: `docs/exec-plans/completed/2026-06-01-tc04-faithfulness-tc17-source-scope.md`
   - 다음 active plan: `docs/exec-plans/active/2026-06-01-observability-langfuse-review.md`
 
+- Langfuse/observability 도입 검토를 완료했다.
+  - 현재 프로젝트에는 Langfuse가 연동되어 있지 않고, eval JSON/source drift report/FastAPI 및 systemd 로그 중심으로 관측한다.
+  - Langfuse는 Python SDK와 OpenTelemetry endpoint, self-hosted 옵션이 있어 후보로 적합하다.
+  - 다만 약관 문서, 사용자 질의, 답변, 출처가 trace payload에 포함될 수 있어 외부 SaaS 즉시 연동은 보류한다.
+  - 먼저 privacy-safe local JSONL trace sink를 구현하고, self-hosted Langfuse는 이후 optional exporter로 검토한다.
+  - 결과 문서: `docs/references/2026-06-02-observability-langfuse-review.md`
+  - 완료된 계획: `docs/exec-plans/completed/2026-06-01-observability-langfuse-review.md`
+  - 다음 active plan: `docs/exec-plans/active/2026-06-02-local-observability-trace-schema.md`
+
 ## Current Gaps
 
 - `/stats`는 최신 인제스천 후 현재 `count=318`을 반환한다.
@@ -389,7 +398,7 @@
 - 최신 생성 지표는 `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_rate=0.0435`, `not_found_success_rate=1.0`이다.
 - 최신 정규화 검색 지표는 `rag_normalized_source_precision@k_mean=0.9891`, `rag_chunk_precision@k_mean=0.8609`, `source_recall@k_mean=0.9891`이다.
 - 현재 평가셋 기준 source drift guard critical/watch case는 없다.
-- 현재 active plan은 `docs/exec-plans/active/2026-06-01-observability-langfuse-review.md`다.
+- 현재 active plan은 `docs/exec-plans/active/2026-06-02-local-observability-trace-schema.md`다.
 - 이전 Cross-Encoder 캐시 반영 리포트는 `eval/results/eval_20260513_100727.json`에 저장되어 있다.
 - 검색/인제스천/평가 경로에 필요한 임베딩 모델 캐시는 준비됐다.
 - Cross-Encoder reranking 캐시도 준비됐다.
@@ -397,8 +406,8 @@
 
 ## Suggested Next Work
 
-1. active plan `docs/exec-plans/active/2026-06-01-observability-langfuse-review.md`에 따라 Langfuse 같은 observability 도구 도입 여부를 검토한다.
-2. 외부 전송 없이 self-hosted 또는 로컬 추적 방식으로 시작할 수 있는지 판단한다.
+1. active plan `docs/exec-plans/active/2026-06-02-local-observability-trace-schema.md`에 따라 privacy-safe local JSONL trace sink를 구현한다.
+2. trace disabled 기본 동작과 trace enabled JSONL smoke test를 검증한다.
 
 ## Handoff Prompt
 

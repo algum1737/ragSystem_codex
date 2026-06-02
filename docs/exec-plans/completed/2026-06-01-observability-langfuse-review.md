@@ -49,6 +49,22 @@
 
 - 아직 Langfuse 연동 구현은 수행하지 않는다.
 
+## Completion
+
+- 현재 관측 수단을 eval JSON, source drift report, FastAPI/systemd logs로 정리했다.
+- Langfuse 공식 문서 기준 Python SDK, OpenTelemetry endpoint, self-hosted 옵션을 검토했다.
+- 외부 SaaS 즉시 연동은 보류하고, privacy-safe local trace sink를 먼저 구현하는 것으로 결정했다.
+- 추적 대상 스키마와 민감 데이터 기본 비저장 정책을 정의했다.
+- 결과 문서 `docs/references/2026-06-02-observability-langfuse-review.md`를 추가했다.
+- 다음 active plan `docs/exec-plans/active/2026-06-02-local-observability-trace-schema.md`를 생성했다.
+
+## Validation Result
+
+- 통과: 현재 logging/eval/report 구조 확인
+- 통과: API query path와 RAGEngine query path 확인
+- 통과: Langfuse 공식 문서 기반 도입 옵션 검토
+- 통과: `bash scripts/validate-docs.sh`
+
 ## Open Work
 
-- Langfuse 또는 유사 observability 도구 도입 여부 검토.
+- 없음.

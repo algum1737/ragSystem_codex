@@ -275,6 +275,12 @@
 
 - `2026-06-01-observability-langfuse-review.md`
   - 목표: Langfuse 같은 LLM observability 도구 도입 필요성과 최소 범위를 검토한다.
+  - 상태: Completed
+
+### Local Observability Trace Schema
+
+- `2026-06-02-local-observability-trace-schema.md`
+  - 목표: Langfuse 도입 전 privacy-safe local trace sink를 구현한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -293,7 +299,7 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-01-observability-langfuse-review.md`
+- `exec-plans/active/2026-06-02-local-observability-trace-schema.md`
 
 ## Completed Plans
 
@@ -337,3 +343,4 @@
 - `exec-plans/completed/2026-05-29-performance-tuning-baseline.md`
 - `exec-plans/completed/2026-05-29-residual-tuning-case-review.md`
 - `exec-plans/completed/2026-06-01-tc04-faithfulness-tc17-source-scope.md`
+- `exec-plans/completed/2026-06-01-observability-langfuse-review.md`
