@@ -86,7 +86,8 @@
 - 완료 plan: `docs/exec-plans/completed/2026-06-02-local-observability-trace-schema.md`
 - 현재 active plan: `docs/exec-plans/active/2026-06-02-trace-runtime-verification.md`
 - Ubuntu 서버 `10.10.220.5`에는 최신 trace 코드가 배포됐고 서버 venv compile, 임시 API trace smoke, eval trace smoke가 통과했다.
-- 남은 작업은 `sudo systemctl edit ragsystem-api.service`로 trace 환경변수를 적용하고 운영 8000 서비스에서 `/opt/ragSystem_codex/logs/rag_traces.jsonl` 생성을 확인하는 것이다.
+- 서버에는 `/home/ragadmin/apply-ragsystem-trace.sh`가 업로드되어 있다.
+- 남은 작업은 `sudo bash /home/ragadmin/apply-ragsystem-trace.sh`로 trace 환경변수를 적용하고 운영 8000 서비스에서 `/opt/ragSystem_codex/logs/rag_traces.jsonl` 생성을 확인하는 것이다.
 
 ## Working Rules
 

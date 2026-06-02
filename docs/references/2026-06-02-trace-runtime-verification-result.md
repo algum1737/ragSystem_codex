@@ -52,7 +52,18 @@
 
 systemd service에 `RAG_TRACE_ENABLED`와 `RAG_TRACE_PATH`를 적용하는 작업은 `sudo` 비밀번호가 필요해 완료하지 못했다. 운영 API 서비스 자체는 active 상태로 유지했다.
 
+서버에는 적용 스크립트를 업로드했다.
+
+- local script: `scripts/apply-trace-systemd.sh`
+- server script: `/home/ragadmin/apply-ragsystem-trace.sh`
+
 사용자가 서버에서 아래를 실행해야 systemd API 서비스 trace가 켜진다.
+
+```bash
+sudo bash /home/ragadmin/apply-ragsystem-trace.sh
+```
+
+수동으로 적용하려면 아래 절차를 사용한다.
 
 ```bash
 sudo systemctl edit ragsystem-api.service

@@ -279,6 +279,14 @@ trace는 기본 off다. 운영 query와 eval 실행을 로컬 JSONL로 남기려
 
 FastAPI systemd 서비스에 trace를 적용한다.
 
+저장소의 스크립트를 서버에 올려 둔 경우 아래 한 줄로 적용할 수 있다.
+
+```bash
+sudo bash /home/ragadmin/apply-ragsystem-trace.sh
+```
+
+수동 적용은 아래 절차를 사용한다.
+
 ```bash
 sudo systemctl edit ragsystem-api.service
 ```
