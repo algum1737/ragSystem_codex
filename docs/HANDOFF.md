@@ -84,10 +84,12 @@
 - full prompt, full answer, chunk text는 기본 저장하지 않는다.
 - 구현 결과: `docs/references/2026-06-02-local-observability-trace-result.md`
 - 완료 plan: `docs/exec-plans/completed/2026-06-02-local-observability-trace-schema.md`
-- 현재 active plan: `docs/exec-plans/active/2026-06-02-trace-runtime-verification.md`
+- 현재 active plan: `docs/exec-plans/active/2026-06-02-llm-latency-triage.md`
 - Ubuntu 서버 `10.10.220.5`에는 최신 trace 코드가 배포됐고 서버 venv compile, 임시 API trace smoke, eval trace smoke가 통과했다.
 - 서버에는 `/home/ragadmin/apply-ragsystem-trace.sh`가 업로드되어 있다.
-- 남은 작업은 `sudo bash /home/ragadmin/apply-ragsystem-trace.sh`로 trace 환경변수를 적용하고 운영 8000 서비스에서 `/opt/ragSystem_codex/logs/rag_traces.jsonl` 생성을 확인하는 것이다.
+- `sudo bash /home/ragadmin/apply-ragsystem-trace.sh` 실행 후 운영 8000 서비스에서 `/opt/ragSystem_codex/logs/rag_traces.jsonl` 생성을 확인했다.
+- 최신 운영 query trace는 `api.query`, model `gemma4:26b`, total 약 218초, LLM 약 208초로 기록됐다.
+- 다음 작업은 `gemma4:26b` LLM 생성 지연 분석과 튜닝 후보 정리다.
 
 ## Working Rules
 

@@ -287,6 +287,12 @@
 
 - `2026-06-02-trace-runtime-verification.md`
   - 목표: Ubuntu 서버에서 local trace sink가 systemd API 서비스와 eval 실행에서 의도대로 동작하는지 검증한다.
+  - 상태: Completed
+
+### LLM Latency Triage
+
+- `2026-06-02-llm-latency-triage.md`
+  - 목표: 운영 trace에서 확인된 `gemma4:26b` LLM 생성 지연을 분류하고 성능 튜닝 후보를 정한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -305,10 +311,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-02-trace-runtime-verification.md`
+- `exec-plans/active/2026-06-02-llm-latency-triage.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-02-trace-runtime-verification.md`
 - `exec-plans/completed/2026-06-02-local-observability-trace-schema.md`
 - `exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
 - `exec-plans/completed/2026-05-12-runtime-validation.md`

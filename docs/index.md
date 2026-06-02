@@ -66,10 +66,11 @@
 
 ## Active Work
 
-- [Trace Runtime Verification Plan](./exec-plans/active/2026-06-02-trace-runtime-verification.md)
+- [LLM Latency Triage Plan](./exec-plans/active/2026-06-02-llm-latency-triage.md)
 
 ## Completed Work
 
+- [Trace Runtime Verification Plan](./exec-plans/completed/2026-06-02-trace-runtime-verification.md)
 - [Local Observability Trace Schema Plan](./exec-plans/completed/2026-06-02-local-observability-trace-schema.md)
 - [Source Drift CI Promotion Plan](./exec-plans/completed/2026-05-28-source-drift-ci-promotion.md)
 - [Ubuntu Deployment Runtime Hardening Plan](./exec-plans/completed/2026-05-29-ubuntu-deployment-runtime-hardening.md)

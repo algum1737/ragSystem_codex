@@ -50,7 +50,7 @@
 
 ## Pending
 
-systemd service에 `RAG_TRACE_ENABLED`와 `RAG_TRACE_PATH`를 적용하는 작업은 `sudo` 비밀번호가 필요해 완료하지 못했다. 운영 API 서비스 자체는 active 상태로 유지했다.
+systemd service에 `RAG_TRACE_ENABLED`와 `RAG_TRACE_PATH`를 적용하는 작업은 사용자가 `sudo bash /home/ragadmin/apply-ragsystem-trace.sh`로 완료했다. 운영 API 서비스는 active 상태를 유지했다.
 
 서버에는 적용 스크립트를 업로드했다.
 
@@ -91,3 +91,41 @@ query 후 확인한다.
 ```bash
 tail -n 5 /opt/ragSystem_codex/logs/rag_traces.jsonl
 ```
+
+## Systemd Trace Verification
+
+운영 API service 환경에 trace 변수가 적용됐다.
+
+```text
+Environment=PATH=/opt/ragSystem_codex/.venv/bin RAG_TRACE_ENABLED=true RAG_TRACE_PATH=/opt/ragSystem_codex/logs/rag_traces.jsonl
+```
+
+운영 API query 후 trace file 생성을 확인했다.
+
+- trace path: `/opt/ragSystem_codex/logs/rag_traces.jsonl`
+- route: `api.query`
+- model: `gemma4:26b`
+- top_k: `5`
+- answer_length: `133`
+- 기본 미포함 확인: full answer, question preview, chunk text
+
+운영 query latency:
+
+- `embedding`: 8509.01 ms
+- `vector_search`: 8.38 ms
+- `bm25_search`: 51.78 ms
+- `rerank`: 1337.01 ms
+- `retrieval_total`: 9906.41 ms
+- `llm`: 207861.13 ms
+- `total`: 217767.80 ms
+
+운영 API 로그:
+
+```text
+RAG 쿼리 완료: 소스 5개, 답변 길이 133
+POST /query HTTP/1.1 200 OK
+```
+
+## Next Work
+
+운영 trace가 정상 동작하므로 다음 병목은 `gemma4:26b` LLM 생성 지연이다. trace 기준으로 검색/임베딩/rerank는 약 10초, LLM 생성은 약 208초로 측정됐다.
