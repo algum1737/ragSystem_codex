@@ -74,6 +74,18 @@
 - 현재 상태: `ragSystem` 소스 복사, 하네스 문서 전환, 런타임 검증, 임베딩/Cross-Encoder 오프라인 캐시 검증 완료
 - 주요 목표: `.paul` 기반 운영 지식을 `docs/` 체계로 옮기고 이후 개선 작업을 Codex 방식으로 이어간다
 
+## Latest Update
+
+- Langfuse 도입 전 단계로 privacy-safe local JSONL trace sink를 구현했다.
+- trace는 기본 off이며 `RAG_TRACE_ENABLED=true`일 때만 기록된다.
+- 기본 경로는 `./logs/rag_traces.jsonl`이고 `RAG_TRACE_PATH`로 변경할 수 있다.
+- API `/query`, CLI query, `RAGEngine.query()`는 route, trace id, model, top_k, source path, latency, answer length를 기록한다.
+- eval pipeline은 `eval.case` event로 `case_id`, model, top_k, retrieved sources, query latency, score를 기록한다.
+- full prompt, full answer, chunk text는 기본 저장하지 않는다.
+- 구현 결과: `docs/references/2026-06-02-local-observability-trace-result.md`
+- 완료 plan: `docs/exec-plans/completed/2026-06-02-local-observability-trace-schema.md`
+- 현재 active plan: `docs/exec-plans/active/2026-06-02-trace-runtime-verification.md`
+
 ## Working Rules
 
 - 큰 작업은 구현 전에 `docs/exec-plans/active/`에 실행 계획을 작성한다.

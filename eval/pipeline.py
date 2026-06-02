@@ -3,12 +3,15 @@ import logging
 import os
 import re
 import sys
+import time
 import unicodedata
 from datetime import datetime
 from pathlib import Path
 
 # 프로젝트 루트(eval/../)를 sys.path에 추가 — 서브디렉토리 실행 시 ingestion/retriever 임포트 가능
 sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from observability.trace import trace_event
 
 logger = logging.getLogger(__name__)
 
@@ -283,6 +286,9 @@ class RAGEvaluator:
         results = []
         for i, case in enumerate(cases, 1):
             print(f"  케이스 {i}/{len(cases)}: {case['question'][:40]}...")
+            answer = None
+            query_sources: list[str] = []
+            query_latency_ms: float | None = None
             case_result: dict = {
                 "id": case["id"],
                 "question": case["question"],
@@ -352,7 +358,13 @@ class RAGEvaluator:
 
             if need_llm:
                 try:
-                    rag_result = self._get_engine().query(case["question"], doc_type=case.get("doc_type"))
+                    query_start = time.perf_counter()
+                    rag_result = self._get_engine().query(
+                        case["question"],
+                        doc_type=case.get("doc_type"),
+                        trace_enabled=False,
+                    )
+                    query_latency_ms = (time.perf_counter() - query_start) * 1000
                     answer = rag_result.get("answer", "")
                     context_texts = [s["text"] for s in rag_result.get("sources", [])]
                     query_sources = [s.get("source_path", "") for s in rag_result.get("sources", [])]
@@ -392,6 +404,27 @@ class RAGEvaluator:
                         context_texts,
                         context_sources=query_sources if need_llm else rag_sources,
                     )
+
+            trace_event(
+                route="eval.case",
+                question=case["question"],
+                doc_type=case.get("doc_type"),
+                model=self._llm_model,
+                top_k=self._top_k,
+                retrieved_sources=case_result.get("rag_retrieved_sources") or query_sources or rag_sources,
+                latency_ms={"query_total": query_latency_ms} if query_latency_ms is not None else None,
+                answer_length=len(answer) if answer is not None else None,
+                eval_case_id=case["id"],
+                eval_scores={
+                    "precision_at_k": case_result.get("precision_at_k"),
+                    "rag_precision_at_k": case_result.get("rag_precision_at_k"),
+                    "rag_normalized_source_precision_at_k": case_result.get("rag_normalized_source_precision_at_k"),
+                    "source_recall_at_k": case_result.get("source_recall_at_k"),
+                    "answer_accuracy": case_result.get("answer_accuracy"),
+                    "faithfulness": case_result.get("faithfulness"),
+                    "not_found_success": case_result.get("not_found_success"),
+                },
+            )
 
             results.append(case_result)
 

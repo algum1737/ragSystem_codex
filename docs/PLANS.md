@@ -281,6 +281,12 @@
 
 - `2026-06-02-local-observability-trace-schema.md`
   - 목표: Langfuse 도입 전 privacy-safe local trace sink를 구현한다.
+  - 상태: Completed
+
+### Trace Runtime Verification
+
+- `2026-06-02-trace-runtime-verification.md`
+  - 목표: Ubuntu 서버에서 local trace sink가 systemd API 서비스와 eval 실행에서 의도대로 동작하는지 검증한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -299,10 +305,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-02-local-observability-trace-schema.md`
+- `exec-plans/active/2026-06-02-trace-runtime-verification.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-02-local-observability-trace-schema.md`
 - `exec-plans/completed/2026-05-12-bootstrap-ragsystem-codex.md`
 - `exec-plans/completed/2026-05-12-runtime-validation.md`
 - `exec-plans/completed/2026-05-13-cross-encoder-offline.md`

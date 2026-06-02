@@ -61,13 +61,15 @@
 - [2026-06-01 Residual Tuning Case Review](./references/2026-06-01-residual-tuning-case-review.md)
 - [2026-06-01 TC04 Faithfulness And TC17 Source Scope Result](./references/2026-06-01-tc04-faithfulness-tc17-source-scope-result.md)
 - [2026-06-02 Observability And Langfuse Review](./references/2026-06-02-observability-langfuse-review.md)
+- [2026-06-02 Local Observability Trace Result](./references/2026-06-02-local-observability-trace-result.md)
 
 ## Active Work
 
-- [Local Observability Trace Schema Plan](./exec-plans/active/2026-06-02-local-observability-trace-schema.md)
+- [Trace Runtime Verification Plan](./exec-plans/active/2026-06-02-trace-runtime-verification.md)
 
 ## Completed Work
 
+- [Local Observability Trace Schema Plan](./exec-plans/completed/2026-06-02-local-observability-trace-schema.md)
 - [Source Drift CI Promotion Plan](./exec-plans/completed/2026-05-28-source-drift-ci-promotion.md)
 - [Ubuntu Deployment Runtime Hardening Plan](./exec-plans/completed/2026-05-29-ubuntu-deployment-runtime-hardening.md)
 - [PR 28 Merge Follow-Up Plan](./exec-plans/completed/2026-05-29-pr-28-merge-followup.md)

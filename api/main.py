@@ -204,7 +204,11 @@ async def stats(request: Request):
 @app.post("/query", response_model=QueryResponse)
 async def query(body: QueryRequest, request: Request):
     try:
-        result = request.app.state.rag_engine.query(body.question, doc_type=body.doc_type)
+        result = request.app.state.rag_engine.query(
+            body.question,
+            doc_type=body.doc_type,
+            trace_route="api.query",
+        )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except RuntimeError as e:

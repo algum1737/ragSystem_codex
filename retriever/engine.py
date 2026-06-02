@@ -1,9 +1,11 @@
 import logging
 import re
 import threading
+import time
 
 from ingestion.embedder import EmbeddingEngine
 from ingestion.vector_store import VectorStore
+from observability.trace import is_trace_enabled, new_trace_id, trace_event
 from .llm import OllamaLLM
 
 logger = logging.getLogger(__name__)
@@ -30,6 +32,10 @@ PROMPT_TEMPLATE = """당신은 주어진 참고 문서를 바탕으로 질문에
 [답변]"""
 
 NO_RESULTS_ANSWER = "인제스천된 문서가 없습니다. 먼저 인제스천 탭에서 문서를 업로드하세요."
+
+
+def _elapsed_ms(start: float) -> float:
+    return (time.perf_counter() - start) * 1000
 
 
 def _tokenize(text: str) -> list[str]:
@@ -234,63 +240,141 @@ class RAGEngine:
             reranker_model or "None"
         )
 
-    def query(self, question: str, doc_type: str | None = None) -> dict:
+    def query(
+        self,
+        question: str,
+        doc_type: str | None = None,
+        *,
+        trace_route: str = "rag.query",
+        trace_metadata: dict | None = None,
+        trace_enabled: bool = True,
+    ) -> dict:
         if not question.strip():
             raise ValueError("question이 비어 있습니다")
 
         logger.info("RAG 쿼리: %s (doc_type=%s)", question, doc_type)
 
-        final_chunks = self.retrieve(question, doc_type=doc_type)
+        should_trace = trace_enabled and is_trace_enabled()
+        trace_id = new_trace_id() if should_trace else None
+        total_start = time.perf_counter()
+        timings_ms: dict[str, float] = {}
 
-        if not final_chunks:
-            logger.warning("최종 청크 없음")
-            return {"answer": NO_RESULTS_ANSWER, "sources": [], "query": question}
+        try:
+            retrieval_start = time.perf_counter()
+            final_chunks = self.retrieve(question, doc_type=doc_type, timings_ms=timings_ms)
+            timings_ms["retrieval_total"] = _elapsed_ms(retrieval_start)
 
-        # max_context_chars 제한으로 LLM 컨텍스트 창 초과 방지
-        context_parts = []
-        total_chars = 0
-        for i, r in enumerate(final_chunks, 1):
-            source = r.get("source_path", "출처 미상")
-            part = f"[{i}] 출처: {source}\n{r['text']}"
-            if total_chars + len(part) > self._max_context_chars:
-                logger.warning("컨텍스트 길이 제한 초과 — %d개 중 %d개 청크만 사용", len(final_chunks), i - 1)
-                break
-            context_parts.append(part)
-            total_chars += len(part)
-        if not context_parts:
-            r0 = final_chunks[0]
-            context_parts.append(f"[1] 출처: {r0.get('source_path', '출처 미상')}\n{r0['text'][:self._max_context_chars]}")
+            if not final_chunks:
+                logger.warning("최종 청크 없음")
+                answer = NO_RESULTS_ANSWER
+                timings_ms["total"] = _elapsed_ms(total_start)
+                if should_trace:
+                    trace_event(
+                        route=trace_route,
+                        trace_id=trace_id,
+                        question=question,
+                        doc_type=doc_type,
+                        model=self._llm.model,
+                        top_k=self._top_k,
+                        retrieved_sources=[],
+                        latency_ms=timings_ms,
+                        answer_length=len(answer),
+                        metadata=trace_metadata,
+                    )
+                return {"answer": answer, "sources": [], "query": question}
 
-        context = "\n\n".join(context_parts)
-        prompt = PROMPT_TEMPLATE.format(context=context, question=question)
-        answer = self._llm.predict(prompt)
-        logger.info("RAG 쿼리 완료: 소스 %d개, 답변 길이 %d", len(final_chunks), len(answer))
+            # max_context_chars 제한으로 LLM 컨텍스트 창 초과 방지
+            context_parts = []
+            total_chars = 0
+            for i, r in enumerate(final_chunks, 1):
+                source = r.get("source_path", "출처 미상")
+                part = f"[{i}] 출처: {source}\n{r['text']}"
+                if total_chars + len(part) > self._max_context_chars:
+                    logger.warning("컨텍스트 길이 제한 초과 — %d개 중 %d개 청크만 사용", len(final_chunks), i - 1)
+                    break
+                context_parts.append(part)
+                total_chars += len(part)
+            if not context_parts:
+                r0 = final_chunks[0]
+                context_parts.append(f"[1] 출처: {r0.get('source_path', '출처 미상')}\n{r0['text'][:self._max_context_chars]}")
 
-        sources = [
-            {
-                "source_path": r.get("source_path", ""),
-                "text": r["text"],
-                "distance": r.get("distance", 0.0),
-            }
-            for r in final_chunks
-        ]
+            context = "\n\n".join(context_parts)
+            prompt = PROMPT_TEMPLATE.format(context=context, question=question)
+            llm_start = time.perf_counter()
+            answer = self._llm.predict(prompt)
+            timings_ms["llm"] = _elapsed_ms(llm_start)
+            logger.info("RAG 쿼리 완료: 소스 %d개, 답변 길이 %d", len(final_chunks), len(answer))
 
-        return {"answer": answer, "sources": sources, "query": question}
+            sources = [
+                {
+                    "source_path": r.get("source_path", ""),
+                    "text": r["text"],
+                    "distance": r.get("distance", 0.0),
+                }
+                for r in final_chunks
+            ]
 
-    def retrieve(self, question: str, doc_type: str | None = None) -> list[dict]:
+            timings_ms["total"] = _elapsed_ms(total_start)
+            if should_trace:
+                trace_event(
+                    route=trace_route,
+                    trace_id=trace_id,
+                    question=question,
+                    doc_type=doc_type,
+                    model=self._llm.model,
+                    top_k=self._top_k,
+                    retrieved_sources=sources,
+                    latency_ms=timings_ms,
+                    answer_length=len(answer),
+                    metadata=trace_metadata,
+                )
+
+            return {"answer": answer, "sources": sources, "query": question}
+        except Exception as e:
+            if should_trace:
+                timings_ms["total"] = _elapsed_ms(total_start)
+                trace_event(
+                    route=trace_route,
+                    trace_id=trace_id,
+                    question=question,
+                    doc_type=doc_type,
+                    model=self._llm.model,
+                    top_k=self._top_k,
+                    latency_ms=timings_ms,
+                    error_type=type(e).__name__,
+                    metadata=trace_metadata,
+                )
+            raise
+
+    def retrieve(
+        self,
+        question: str,
+        doc_type: str | None = None,
+        *,
+        timings_ms: dict[str, float] | None = None,
+    ) -> list[dict]:
         if not question.strip():
             raise ValueError("question이 비어 있습니다")
 
         where = _doc_type_where(doc_type)
+        embed_start = time.perf_counter()
         query_embedding = self._embedder.embed_query(question)
+        if timings_ms is not None:
+            timings_ms["embedding"] = _elapsed_ms(embed_start)
+        vector_start = time.perf_counter()
         vec_results = self._store.similarity_search(query_embedding, k=self._top_k * 3, where=where)
+        if timings_ms is not None:
+            timings_ms["vector_search"] = _elapsed_ms(vector_start)
 
         if not vec_results:
             logger.warning("검색 결과 없음 — 컬렉션이 비어 있습니다")
             return []
 
         try:
+            bm25_start = time.perf_counter()
             bm25_results = _bm25_cache.search(self._store, question, n=self._top_k * 3, where=where)
+            if timings_ms is not None:
+                timings_ms["bm25_search"] = _elapsed_ms(bm25_start)
         except Exception as e:
             logger.warning("BM25 검색 예외 (폴백): %s", e)
             bm25_results = []
@@ -298,7 +382,10 @@ class RAGEngine:
         if bm25_results:
             merged_texts = _rrf_merge(vec_results, bm25_results, top_n=self._top_k * 4)
             if self._reranker:
+                rerank_start = time.perf_counter()
                 merged_texts = self._reranker.rerank(question, merged_texts, len(merged_texts))
+                if timings_ms is not None:
+                    timings_ms["rerank"] = _elapsed_ms(rerank_start)
             vec_dict = {r["text"]: r for r in vec_results}
             ranked_chunks: list[dict] = []
             for text in merged_texts:

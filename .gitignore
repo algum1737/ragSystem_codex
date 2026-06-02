@@ -6,6 +6,7 @@ __pycache__/
 *.pyd
 
 chroma_db/
+logs/
 *.log
 
 .pytest_cache/

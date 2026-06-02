@@ -53,7 +53,7 @@ def main() -> int:
             top_k=args.top_k,
         )
 
-        result = engine.query(args.question)
+        result = engine.query(args.question, trace_route="cli.query")
 
         print(f"\n답변:\n{result['answer']}\n")
         if result["sources"]:
