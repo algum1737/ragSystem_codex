@@ -138,7 +138,9 @@
 - wrap-up plan은 completed로 이동했고 결과는 `docs/exec-plans/completed/2026-06-05-gemma3-transition-wrapup.md`에 기록했다.
 - 다음 active plan은 `docs/exec-plans/active/2026-06-05-gemma3-pr-followup.md`다.
 - 현재 브랜치 변경분은 `운영 기본 모델을 gemma3로 전환` 커밋으로 정리했다.
-- 다음 작업은 PR을 생성한 뒤 CI/리뷰 상태를 확인하는 것이다.
+- PR #29를 생성했다: https://github.com/algum1737/ragSystem_codex/pull/29
+- GitHub Actions `Static checks`는 코드 실행 전 차단됐다. run annotation은 계정 결제 실패 또는 spending limit 증가 필요를 표시했다.
+- 다음 작업은 GitHub Actions 과금/한도 문제 해결 후 PR CI를 재실행하고 리뷰 피드백을 확인하는 것이다.
 
 ## Working Rules
 

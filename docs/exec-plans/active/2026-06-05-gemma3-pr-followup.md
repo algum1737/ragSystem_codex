@@ -52,12 +52,15 @@
 
 ## Open Work
 
-- PR 생성
+- GitHub Actions 과금/한도 문제 해결 후 PR CI 재확인
+- 필요 시 리뷰 피드백 반영
 
 ## Completion
 
 - 운영 기본 모델 전환 변경분을 커밋했다.
 - 커밋 메시지: `운영 기본 모델을 gemma3로 전환`
+- PR을 생성했다.
+- PR: https://github.com/algum1737/ragSystem_codex/pull/29
 
 ## Validation Result
 
@@ -66,3 +69,6 @@
 - 통과: `.venv/bin/python -m py_compile retriever/llm.py query.py api/main.py app.py`
 - 통과: 서버 `/health`
   - `{"status":"ok","model":"gemma3:12b"}`
+- 차단: GitHub Actions `Static checks`
+  - PR #29 run `26988266735`
+  - 실패 사유: job이 시작되지 않았다. GitHub 계정 결제 실패 또는 spending limit 증가가 필요하다는 annotation이 표시됐다.
