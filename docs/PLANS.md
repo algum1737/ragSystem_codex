@@ -311,6 +311,42 @@
 
 - `2026-06-02-gemma3-topk3-full-eval.md`
   - 목표: `gemma3:12b + top_k=3` 조합이 latency 개선과 품질 기준선을 동시에 만족하는지 full eval로 검증한다.
+  - 상태: Completed
+
+### Speed Improvement Follow-Up
+
+- `2026-06-04-speed-improvement-followup.md`
+  - 목표: `gemma3:12b + top_k=3` 회귀 이후 답변 속도 개선을 위한 다음 운영 후보를 결정한다.
+  - 상태: Completed
+
+### Gemma3 Operating Transition
+
+- `2026-06-04-gemma3-operating-transition.md`
+  - 목표: 운영 응답 기본 모델을 `gemma3:12b + top_k=5`로 전환할지 승인받고, 승인 시 코드/운영 설정/문서를 일관되게 반영한다.
+  - 상태: Completed
+
+### Post Transition Monitoring
+
+- `2026-06-04-post-transition-monitoring.md`
+  - 목표: `gemma3:12b + top_k=5` 운영 전환 후 실제 응답 속도와 안정성을 관찰하고 추가 튜닝 필요 여부를 결정한다.
+  - 상태: Completed
+
+### Gemma3 Token Cap Experiment
+
+- `2026-06-04-gemma3-token-cap-experiment.md`
+  - 목표: `gemma3:12b + top_k=5` 운영 조합에서 답변 길이 제한이 latency를 줄이면서 품질을 유지하는지 검증한다.
+  - 상태: Completed
+
+### Gemma3 Transition Wrap-Up
+
+- `2026-06-05-gemma3-transition-wrapup.md`
+  - 목표: `feature/gemma3-operating-transition` 브랜치의 운영 전환 변경분을 검토하고 커밋/PR 진행 여부를 결정한다.
+  - 상태: Completed
+
+### Gemma3 PR Follow-Up
+
+- `2026-06-05-gemma3-pr-followup.md`
+  - 목표: `feature/gemma3-operating-transition` 브랜치의 운영 전환 변경분을 커밋하고 PR을 생성한 뒤, PR 상태와 남은 후속 작업을 추적한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -329,10 +365,16 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-02-gemma3-topk3-full-eval.md`
+- `exec-plans/active/2026-06-05-gemma3-pr-followup.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-05-gemma3-transition-wrapup.md`
+- `exec-plans/completed/2026-06-04-gemma3-token-cap-experiment.md`
+- `exec-plans/completed/2026-06-04-post-transition-monitoring.md`
+- `exec-plans/completed/2026-06-04-gemma3-operating-transition.md`
+- `exec-plans/completed/2026-06-04-speed-improvement-followup.md`
+- `exec-plans/completed/2026-06-02-gemma3-topk3-full-eval.md`
 - `exec-plans/completed/2026-06-02-gemma3-quality-gap-review.md`
 - `exec-plans/completed/2026-06-02-operating-model-latency-experiment.md`
 - `exec-plans/completed/2026-06-02-llm-latency-triage.md`

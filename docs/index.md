@@ -66,13 +66,24 @@
 - [2026-06-02 LLM Latency Triage Result](./references/2026-06-02-llm-latency-triage-result.md)
 - [2026-06-02 Operating Model Latency Experiment Result](./references/2026-06-02-operating-model-latency-experiment-result.md)
 - [2026-06-02 Gemma3 Quality Gap Review](./references/2026-06-02-gemma3-quality-gap-review.md)
+- [2026-06-04 Gemma3 Top-K 3 Full Eval Result](./references/2026-06-04-gemma3-topk3-full-eval-result.md)
+- [2026-06-04 Speed Improvement Follow-Up Result](./references/2026-06-04-speed-improvement-followup-result.md)
+- [2026-06-04 Gemma3 Operating Transition Result](./references/2026-06-04-gemma3-operating-transition-result.md)
+- [2026-06-04 Post Transition Monitoring Result](./references/2026-06-04-post-transition-monitoring-result.md)
+- [2026-06-05 Gemma3 Token Cap Experiment Result](./references/2026-06-05-gemma3-token-cap-experiment-result.md)
 
 ## Active Work
 
-- [Gemma3 Top-K 3 Full Eval Plan](./exec-plans/active/2026-06-02-gemma3-topk3-full-eval.md)
+- [Gemma3 PR Follow-Up Plan](./exec-plans/active/2026-06-05-gemma3-pr-followup.md)
 
 ## Completed Work
 
+- [Gemma3 Transition Wrap-Up Plan](./exec-plans/completed/2026-06-05-gemma3-transition-wrapup.md)
+- [Gemma3 Token Cap Experiment Plan](./exec-plans/completed/2026-06-04-gemma3-token-cap-experiment.md)
+- [Post Transition Monitoring Plan](./exec-plans/completed/2026-06-04-post-transition-monitoring.md)
+- [Gemma3 Operating Transition Plan](./exec-plans/completed/2026-06-04-gemma3-operating-transition.md)
+- [Speed Improvement Follow-Up Plan](./exec-plans/completed/2026-06-04-speed-improvement-followup.md)
+- [Gemma3 Top-K 3 Full Eval Plan](./exec-plans/completed/2026-06-02-gemma3-topk3-full-eval.md)
 - [Gemma3 Quality Gap Review Plan](./exec-plans/completed/2026-06-02-gemma3-quality-gap-review.md)
 - [Operating Model Latency Experiment Plan](./exec-plans/completed/2026-06-02-operating-model-latency-experiment.md)
 - [LLM Latency Triage Plan](./exec-plans/completed/2026-06-02-llm-latency-triage.md)
