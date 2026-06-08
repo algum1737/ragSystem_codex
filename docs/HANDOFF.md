@@ -141,6 +141,24 @@
 - PR #29를 생성했다: https://github.com/algum1737/ragSystem_codex/pull/29
 - GitHub Actions `Static checks`는 코드 실행 전 차단됐다. run annotation은 계정 결제 실패 또는 spending limit 증가 필요를 표시했다.
 - 다음 작업은 GitHub Actions 과금/한도 문제 해결 후 PR CI를 재실행하고 리뷰 피드백을 확인하는 것이다.
+- 로컬 리소스 상태 패널을 구현했다.
+- FastAPI `/runtime/resources` endpoint는 CPU/RAM, `nvidia-smi` 기반 GPU 상태, `ollama ps` 기반 적재 모델 상태를 반환한다.
+- Streamlit 시스템 탭에는 `리소스 상태` 카테고리를 추가했다.
+- 로컬 smoke 결과: `/runtime/resources` JSON 반환, `/health model=gemma3:12b`, Streamlit `_stcore/health=ok`.
+- 완료 plan: `docs/exec-plans/completed/2026-06-08-local-resource-status-panel.md`
+- GPU 사용량 heatmap을 로컬 구현했다.
+- FastAPI `/runtime/resources/history` endpoint는 5초 주기 in-memory GPU 샘플을 반환한다.
+- Streamlit 시스템 탭에서는 `GPU 사용률`과 `VRAM 사용률` 중 하나를 선택해 GPU별 heatmap을 표시한다.
+- 로컬 Mac에는 `nvidia-smi`가 없어 실제 GPU heatmap 데이터는 비어 있으며, Ubuntu 서버 반영 후 GPU별 utilization/VRAM 샘플 표시를 확인해야 한다.
+- 완료 plan: `docs/exec-plans/completed/2026-06-08-gpu-usage-heatmap.md`
+- 리소스 상태 패널과 GPU heatmap을 Ubuntu 서버에 반영했다.
+- 서버 systemd 서비스 PATH가 venv로 제한되어 `nvidia-smi`/`ollama`를 찾지 못하는 문제는 앱 코드에서 표준 절대 경로 fallback으로 해결했다.
+- 서버 `/runtime/resources`는 GPU 0/1 `NVIDIA GeForce RTX 2080 Ti`, Ollama `gemma3:12b`, `100% GPU`, context `4096`을 반환한다.
+- 서버 `/runtime/resources/history`는 5초 주기 샘플을 반환하며, 대표 RAG 질의 중 GPU 1 utilization `87.0%`, GPU 0/1 VRAM `31.3%`/`81.3%` 샘플을 확인했다.
+- Streamlit 서버 health는 `ok`다.
+- 완료 plan: `docs/exec-plans/completed/2026-06-08-server-resource-panel-deploy.md`
+- 리소스 상태 패널/GPU heatmap/LLM latency HTML 문서는 `리소스 상태 패널과 GPU 히트맵 추가` 커밋으로 정리했다.
+- 로컬 Homebrew Ollama 서비스는 `brew services stop ollama`로 정지했고, `brew services list`에서 `ollama none` 상태를 확인했다.
 
 ## Working Rules
 

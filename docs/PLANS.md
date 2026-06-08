@@ -349,6 +349,24 @@
   - 목표: `feature/gemma3-operating-transition` 브랜치의 운영 전환 변경분을 커밋하고 PR을 생성한 뒤, PR 상태와 남은 후속 작업을 추적한다.
   - 상태: Active
 
+### Local Resource Status Panel
+
+- `2026-06-08-local-resource-status-panel.md`
+  - 목표: 로컬 FastAPI와 Streamlit UI에 CPU/GPU/Ollama 적재 상태를 확인할 수 있는 리소스 상태 카테고리를 추가한다.
+  - 상태: Completed
+
+### GPU Usage Heatmap
+
+- `2026-06-08-gpu-usage-heatmap.md`
+  - 목표: Streamlit 시스템 탭에서 GitHub contributions 그래프처럼 GPU별 사용량 히스토리를 heatmap으로 확인할 수 있게 한다.
+  - 상태: Completed
+
+### Server Resource Panel Deploy
+
+- `2026-06-08-server-resource-panel-deploy.md`
+  - 목표: 로컬에서 구현한 CPU/GPU/Ollama 리소스 상태 패널과 GPU 사용량 heatmap을 Ubuntu 서버에 반영하고 런타임에서 동작을 확인한다.
+  - 상태: Completed
+
 ### Eval Model Tuning Policy
 
 - `2026-05-29-eval-model-tuning-policy.md`
@@ -369,6 +387,9 @@
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-08-server-resource-panel-deploy.md`
+- `exec-plans/completed/2026-06-08-gpu-usage-heatmap.md`
+- `exec-plans/completed/2026-06-08-local-resource-status-panel.md`
 - `exec-plans/completed/2026-06-05-gemma3-transition-wrapup.md`
 - `exec-plans/completed/2026-06-04-gemma3-token-cap-experiment.md`
 - `exec-plans/completed/2026-06-04-post-transition-monitoring.md`

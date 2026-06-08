@@ -10,12 +10,13 @@
 - 변경분 커밋
 - `gh pr create`로 PR 생성
 - PR 생성 결과와 남은 작업 기록
+- 후속 리소스 상태 패널/GPU heatmap 변경분 push
+- PR CI 상태 재확인
 
 ## Out Of Scope
 
 - 추가 모델 튜닝
 - token cap 재실험
-- 운영 서버 추가 설정 변경
 - PR merge
 
 ## Assumptions
@@ -52,7 +53,8 @@
 
 ## Open Work
 
-- GitHub Actions 과금/한도 문제 해결 후 PR CI 재확인
+- 리소스 상태 패널/GPU heatmap 변경분을 PR #29 브랜치에 push
+- push 후 PR CI 재확인
 - 필요 시 리뷰 피드백 반영
 
 ## Completion
@@ -61,6 +63,8 @@
 - 커밋 메시지: `운영 기본 모델을 gemma3로 전환`
 - PR을 생성했다.
 - PR: https://github.com/algum1737/ragSystem_codex/pull/29
+- GitHub Actions를 다시 활성화했고 PR #29 `Static checks` 재실행이 통과했다.
+- 리소스 상태 패널과 GPU heatmap을 로컬 및 서버에 반영했다.
 
 ## Validation Result
 
@@ -69,6 +73,8 @@
 - 통과: `.venv/bin/python -m py_compile retriever/llm.py query.py api/main.py app.py`
 - 통과: 서버 `/health`
   - `{"status":"ok","model":"gemma3:12b"}`
-- 차단: GitHub Actions `Static checks`
-  - PR #29 run `26988266735`
-  - 실패 사유: job이 시작되지 않았다. GitHub 계정 결제 실패 또는 spending limit 증가가 필요하다는 annotation이 표시됐다.
+- 통과: GitHub Actions `Static checks`
+  - PR #29 run `26988337943` 재실행 통과
+- 통과: 서버 리소스 패널 endpoint
+  - `/runtime/resources`, `/runtime/resources/history` 응답 확인
+  - RAG 질의 중 GPU 1 utilization `87.0%`, GPU 0/1 VRAM `31.3%`/`81.3%` 샘플 확인

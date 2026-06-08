@@ -78,6 +78,9 @@
 
 ## Completed Work
 
+- [Server Resource Panel Deploy Plan](./exec-plans/completed/2026-06-08-server-resource-panel-deploy.md)
+- [GPU Usage Heatmap Plan](./exec-plans/completed/2026-06-08-gpu-usage-heatmap.md)
+- [Local Resource Status Panel Plan](./exec-plans/completed/2026-06-08-local-resource-status-panel.md)
 - [Gemma3 Transition Wrap-Up Plan](./exec-plans/completed/2026-06-05-gemma3-transition-wrapup.md)
 - [Gemma3 Token Cap Experiment Plan](./exec-plans/completed/2026-06-04-gemma3-token-cap-experiment.md)
 - [Post Transition Monitoring Plan](./exec-plans/completed/2026-06-04-post-transition-monitoring.md)

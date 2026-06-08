@@ -1,10 +1,17 @@
 import asyncio
+import os
+import platform
+import re
 import logging
+import shutil
+import subprocess
 import tempfile
+from collections import deque
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(name)s:%(message)s")
 import uuid
-from contextlib import asynccontextmanager
+from contextlib import asynccontextmanager, suppress
+from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
@@ -23,6 +30,8 @@ from generator.section_generator import SectionGenerator, DEFAULT_SECTIONS
 from generator.pptx_writer import PptxWriter
 from .models import (
     HealthResponse,
+    RuntimeResourcesHistoryResponse,
+    RuntimeResourcesResponse,
     StatsResponse,
     QueryRequest,
     QueryResponse,
@@ -47,12 +56,272 @@ logger = logging.getLogger(__name__)
 _DB_PATH = "./chroma_db"
 _COLLECTION = "ragSystem"
 MAX_UPLOAD_BYTES = 50 * 1024 * 1024  # audit-added: 50MB 상한 — 무제한 read()로 OOM 방지
+RESOURCE_SAMPLE_INTERVAL_SECONDS = 5
+RESOURCE_HISTORY_MAX_SAMPLES = 720
 
 # in-memory task store: task_id → {status, progress, current_section, output_path, error}
 _task_store: dict[str, dict] = {}
 
 # in-memory pull store: pull_id → {model, status, progress, current_status, error}
 _pull_store: dict[str, dict] = {}
+
+# in-memory runtime resource samples. API 프로세스 재시작 시 초기화된다.
+_resource_history: deque[dict] = deque(maxlen=RESOURCE_HISTORY_MAX_SAMPLES)
+
+
+def _run_command(args: list[str], timeout: int = 5) -> tuple[int, str, str]:
+    try:
+        result = subprocess.run(
+            args,
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+        )
+    except FileNotFoundError as e:
+        return 127, "", str(e)
+    except subprocess.TimeoutExpired as e:
+        return 124, e.stdout or "", e.stderr or "command timed out"
+    return result.returncode, result.stdout.strip(), result.stderr.strip()
+
+
+def _find_command(name: str, candidates: list[str]) -> str | None:
+    found = shutil.which(name)
+    if found:
+        return found
+    for candidate in candidates:
+        path = Path(candidate)
+        if path.exists() and os.access(path, os.X_OK):
+            return str(path)
+    return None
+
+
+def _bytes_to_gb(value: float | int | None) -> float | None:
+    if value is None:
+        return None
+    return round(float(value) / 1024 / 1024 / 1024, 2)
+
+
+def _collect_cpu_memory() -> tuple[dict, dict]:
+    cpu: dict = {
+        "available": True,
+        "source": "stdlib",
+        "logical_cpus": os.cpu_count(),
+        "platform": platform.system(),
+    }
+    memory: dict = {"available": False, "source": "unavailable"}
+
+    try:
+        import psutil  # type: ignore
+
+        vm = psutil.virtual_memory()
+        cpu.update(
+            {
+                "source": "psutil",
+                "usage_percent": psutil.cpu_percent(interval=0.1),
+                "load_average_1m": os.getloadavg()[0] if hasattr(os, "getloadavg") else None,
+            }
+        )
+        memory = {
+            "available": True,
+            "source": "psutil",
+            "total_gb": _bytes_to_gb(vm.total),
+            "used_gb": _bytes_to_gb(vm.used),
+            "available_gb": _bytes_to_gb(vm.available),
+            "usage_percent": vm.percent,
+        }
+        return cpu, memory
+    except Exception as e:
+        cpu["psutil_error"] = str(e)
+
+    if hasattr(os, "getloadavg"):
+        load1, load5, load15 = os.getloadavg()
+        logical_cpus = os.cpu_count() or 1
+        cpu.update(
+            {
+                "load_average_1m": round(load1, 2),
+                "load_average_5m": round(load5, 2),
+                "load_average_15m": round(load15, 2),
+                "load_percent_1m": round((load1 / logical_cpus) * 100, 1),
+            }
+        )
+
+    if platform.system() == "Linux":
+        meminfo_path = Path("/proc/meminfo")
+        if meminfo_path.exists():
+            values: dict[str, int] = {}
+            for line in meminfo_path.read_text(encoding="utf-8").splitlines():
+                key, _, rest = line.partition(":")
+                parts = rest.strip().split()
+                if parts and parts[0].isdigit():
+                    values[key] = int(parts[0]) * 1024
+            total = values.get("MemTotal")
+            available = values.get("MemAvailable")
+            if total and available is not None:
+                used = total - available
+                memory = {
+                    "available": True,
+                    "source": "/proc/meminfo",
+                    "total_gb": _bytes_to_gb(total),
+                    "used_gb": _bytes_to_gb(used),
+                    "available_gb": _bytes_to_gb(available),
+                    "usage_percent": round((used / total) * 100, 1),
+                }
+    elif platform.system() == "Darwin":
+        total_code, total_out, total_err = _run_command(["sysctl", "-n", "hw.memsize"], timeout=3)
+        vm_code, vm_out, vm_err = _run_command(["vm_stat"], timeout=3)
+        if total_code == 0 and vm_code == 0 and total_out.strip().isdigit():
+            total = int(total_out.strip())
+            page_size_match = re.search(r"page size of (\d+) bytes", vm_out)
+            page_size = int(page_size_match.group(1)) if page_size_match else 4096
+            pages: dict[str, int] = {}
+            for line in vm_out.splitlines():
+                key, _, rest = line.partition(":")
+                number = re.sub(r"[^0-9]", "", rest)
+                if number:
+                    pages[key.strip()] = int(number)
+            free_pages = (
+                pages.get("Pages free", 0)
+                + pages.get("Pages inactive", 0)
+                + pages.get("Pages speculative", 0)
+            )
+            available = free_pages * page_size
+            used = max(total - available, 0)
+            memory = {
+                "available": True,
+                "source": "vm_stat",
+                "total_gb": _bytes_to_gb(total),
+                "used_gb": _bytes_to_gb(used),
+                "available_gb": _bytes_to_gb(available),
+                "usage_percent": round((used / total) * 100, 1),
+            }
+        else:
+            memory = {
+                "available": False,
+                "source": "vm_stat",
+                "error": total_err or vm_err or "memory command failed",
+            }
+
+    return cpu, memory
+
+
+def _collect_gpus() -> tuple[bool, list[dict], str]:
+    nvidia_smi = _find_command("nvidia-smi", ["/usr/bin/nvidia-smi", "/bin/nvidia-smi", "/usr/local/bin/nvidia-smi"])
+    if not nvidia_smi:
+        return False, [], "nvidia-smi not found"
+
+    query = "index,name,utilization.gpu,memory.used,memory.total,temperature.gpu"
+    code, out, err = _run_command(
+        [nvidia_smi, f"--query-gpu={query}", "--format=csv,noheader,nounits"],
+        timeout=5,
+    )
+    if code != 0:
+        return False, [], err or out or f"nvidia-smi exited with {code}"
+
+    gpus: list[dict] = []
+    for line in out.splitlines():
+        parts = [part.strip() for part in line.split(",")]
+        if len(parts) != 6:
+            continue
+        index, name, util, mem_used, mem_total, temp = parts
+        try:
+            used = float(mem_used)
+            total = float(mem_total)
+            memory_percent = round((used / total) * 100, 1) if total else None
+        except ValueError:
+            memory_percent = None
+        gpus.append(
+            {
+                "index": index,
+                "name": name,
+                "utilization_percent": float(util) if util.replace(".", "", 1).isdigit() else None,
+                "memory_used_mib": float(mem_used) if mem_used.replace(".", "", 1).isdigit() else None,
+                "memory_total_mib": float(mem_total) if mem_total.replace(".", "", 1).isdigit() else None,
+                "memory_percent": memory_percent,
+                "temperature_c": float(temp) if temp.replace(".", "", 1).isdigit() else None,
+            }
+        )
+    return True, gpus, ""
+
+
+def _collect_ollama_ps() -> dict:
+    ollama = _find_command("ollama", ["/usr/local/bin/ollama", "/usr/bin/ollama", "/bin/ollama"])
+    if not ollama:
+        return {"available": False, "loaded": False, "models": [], "error": "ollama command not found"}
+
+    code, out, err = _run_command([ollama, "ps"], timeout=5)
+    if code != 0:
+        return {"available": False, "loaded": False, "models": [], "error": err or out}
+
+    lines = [line for line in out.splitlines() if line.strip()]
+    models: list[dict] = []
+    for line in lines[1:]:
+        parts = re.split(r"\s{2,}", line.strip())
+        models.append(
+            {
+                "name": parts[0] if len(parts) > 0 else "",
+                "id": parts[1] if len(parts) > 1 else "",
+                "size": parts[2] if len(parts) > 2 else "",
+                "processor": parts[3] if len(parts) > 3 else "",
+                "context": parts[4] if len(parts) > 4 else "",
+                "until": parts[5] if len(parts) > 5 else "",
+            }
+        )
+    return {
+        "available": True,
+        "loaded": bool(models),
+        "models": models,
+        "raw": out,
+    }
+
+
+def _collect_runtime_resources() -> dict:
+    cpu, memory = _collect_cpu_memory()
+    gpu_available, gpus, gpu_error = _collect_gpus()
+    ollama = _collect_ollama_ps()
+    if gpu_error:
+        gpu_status = {"available": gpu_available, "error": gpu_error}
+    else:
+        gpu_status = {"available": gpu_available}
+    return {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "cpu": cpu,
+        "memory": memory,
+        "gpu_status": gpu_status,
+        "gpu_available": gpu_available,
+        "gpus": gpus,
+        "ollama": ollama,
+    }
+
+
+def _append_resource_sample(resources: dict) -> None:
+    sample = {
+        "timestamp": resources["generated_at"],
+        "gpu_available": resources.get("gpu_available", False),
+        "gpus": [
+            {
+                "index": gpu.get("index"),
+                "name": gpu.get("name"),
+                "utilization_percent": gpu.get("utilization_percent"),
+                "memory_percent": gpu.get("memory_percent"),
+                "memory_used_mib": gpu.get("memory_used_mib"),
+                "memory_total_mib": gpu.get("memory_total_mib"),
+                "temperature_c": gpu.get("temperature_c"),
+            }
+            for gpu in resources.get("gpus", [])
+        ],
+    }
+    _resource_history.append(sample)
+
+
+async def _resource_sampler() -> None:
+    while True:
+        try:
+            resources = await asyncio.to_thread(_collect_runtime_resources)
+            _append_resource_sample(resources)
+        except Exception as e:
+            logger.debug("리소스 샘플 수집 실패: %s", e)
+        await asyncio.sleep(RESOURCE_SAMPLE_INTERVAL_SECONDS)
 
 
 @asynccontextmanager
@@ -81,9 +350,15 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.critical("서버 시작 실패 — 서비스 초기화 오류: %s", e, exc_info=True)
         raise
+    app.state.resource_sampler = asyncio.create_task(_resource_sampler())
     logger.info("서버 시작 완료")
-    yield
-    logger.info("서버 종료")
+    try:
+        yield
+    finally:
+        app.state.resource_sampler.cancel()
+        with suppress(asyncio.CancelledError):
+            await app.state.resource_sampler
+        logger.info("서버 종료")
 
 
 app = FastAPI(title="ragSystem API", version="0.1.0", lifespan=lifespan)
@@ -199,6 +474,26 @@ async def reset_db(request: Request):
 async def stats(request: Request):
     s = request.app.state.vector_store.get_stats()
     return StatsResponse(**s)
+
+
+@app.get("/runtime/resources", response_model=RuntimeResourcesResponse)
+async def runtime_resources():
+    resources = _collect_runtime_resources()
+    _append_resource_sample(resources)
+    return RuntimeResourcesResponse(**resources)
+
+
+@app.get("/runtime/resources/history", response_model=RuntimeResourcesHistoryResponse)
+async def runtime_resources_history():
+    if not _resource_history:
+        resources = _collect_runtime_resources()
+        _append_resource_sample(resources)
+    return RuntimeResourcesHistoryResponse(
+        generated_at=datetime.now(timezone.utc).isoformat(),
+        interval_seconds=RESOURCE_SAMPLE_INTERVAL_SECONDS,
+        max_samples=RESOURCE_HISTORY_MAX_SAMPLES,
+        samples=list(_resource_history),
+    )
 
 
 @app.post("/query", response_model=QueryResponse)
