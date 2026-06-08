@@ -4,7 +4,7 @@ from langchain_community.llms import Ollama
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_MODEL = "gemma4:26b"
+DEFAULT_MODEL = "gemma3:12b"
 DEFAULT_BASE_URL = "http://localhost:11434"
 
 

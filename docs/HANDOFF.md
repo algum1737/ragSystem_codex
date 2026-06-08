@@ -84,7 +84,7 @@
 - full prompt, full answer, chunk text는 기본 저장하지 않는다.
 - 구현 결과: `docs/references/2026-06-02-local-observability-trace-result.md`
 - 완료 plan: `docs/exec-plans/completed/2026-06-02-local-observability-trace-schema.md`
-- 현재 active plan: `docs/exec-plans/active/2026-06-02-gemma3-topk3-full-eval.md`
+- 현재 active plan: `docs/exec-plans/active/2026-06-05-gemma3-pr-followup.md`
 - Ubuntu 서버 `10.10.220.5`에는 최신 trace 코드가 배포됐고 서버 venv compile, 임시 API trace smoke, eval trace smoke가 통과했다.
 - 서버에는 `/home/ragadmin/apply-ragsystem-trace.sh`가 업로드되어 있다.
 - `sudo bash /home/ragadmin/apply-ragsystem-trace.sh` 실행 후 운영 8000 서비스에서 `/opt/ragSystem_codex/logs/rag_traces.jsonl` 생성을 확인했다.
@@ -101,7 +101,64 @@
 - `tc-11` gap은 실제 answer grounding 문제로, source 혼합과 불필요한 미확인 섹션이 확인됐다.
 - 프롬프트 후보 3종은 일부 회복했지만 `tc-07` faithfulness 회귀가 있어 보류했다.
 - `gemma3:12b + top_k=3`은 `tc-07`, `tc-11` 2케이스 smoke에서 모두 `accuracy=1.0`, `faithfulness=1.0`을 기록했다.
-- 다음 작업은 `gemma3:12b + top_k=3` full eval이다.
+- `gemma3:12b + top_k=3` full eval을 실행했다.
+- 리포트는 `eval/results/eval_20260604_171559.json`이고 결과 문서는 `docs/references/2026-06-04-gemma3-topk3-full-eval-result.md`다.
+- 결과는 `accuracy_mean=0.942`, `faithfulness_mean=0.9565`, `source_recall@k_mean=0.8449`, `not_found_success_rate=1.0`이다.
+- trace `eval.case` 23건 기준 query_total은 mean 약 8.7초, median 약 8.5초, max 약 20.1초였다.
+- `top_k=3`은 빠르지만 `gemma3:12b + top_k=5` 기준선 대비 source recall과 accuracy가 회귀해 운영 전환 후보로 채택하지 않는다.
+- 서버 API `/health`는 작업 시점에 `model=gemma4:e4b`였다. 이번 eval은 CLI `--model gemma3:12b --top-k 3` 경로로 실행했고 운영 API 모델은 변경하지 않았다.
+- 속도 개선 후속 비교를 완료했고 결과 문서는 `docs/references/2026-06-04-speed-improvement-followup-result.md`다.
+- 현재 서버 API `/health`는 `model=gemma4:e4b`, `ollama ps`는 상주 모델 없음, GPU 0은 약 3.5GB 사용 상태였다.
+- API trace 평균은 `gemma3:12b + top_k=5` 약 23.8초, `gemma4:e4b + top_k=5` 약 26.1초, `gemma4:26b + top_k=5` 약 221.4초였다.
+- 다음 실행 후보는 `gemma3:12b + top_k=5` 운영 전환으로 좁혔다.
+- `gemma3:12b + top_k=5` 운영 전환을 완료했다.
+- 코드 기본 모델, CLI 기본 모델, Streamlit 추천 모델, 아키텍처 문서, 배포/기동 가이드를 `gemma3:12b` 기준으로 갱신했다.
+- 서버 배포본에도 변경 파일을 반영했고 서버 compile이 통과했다.
+- 서버 API는 `/model` endpoint로 `gemma4:e4b`에서 `gemma3:12b`로 전환했다.
+- 대표 API query smoke는 status 200, elapsed 약 22.05초, answer length 998, source 5개였다.
+- trace는 `api.query`, `model=gemma3:12b`, `top_k=5`, total 약 22.0초, LLM 약 21.9초, retrieval 약 0.14초로 기록됐다.
+- `ollama ps`는 `gemma3:12b`, `100% GPU`, context 4096을 표시했다.
+- API 프로세스 재시작 후 `/health`는 `model=gemma3:12b`, `/stats`는 `count=318`을 반환했다.
+- Streamlit 재시작 후 HTTP 200을 확인했다.
+- 결과 문서는 `docs/references/2026-06-04-gemma3-operating-transition-result.md`다.
+- 전환 후 모니터링을 완료했고 결과 문서는 `docs/references/2026-06-04-post-transition-monitoring-result.md`다.
+- 서버 상태는 `/health model=gemma3:12b`, `/stats count=318`, Streamlit HTTP 200이었다.
+- 추가 대표 query 2건은 약 24.78초와 7.72초였고 둘 다 source 5개를 반환했다.
+- 최신 trace 기준 전환 후 주요 3건은 total 약 22.0초, 24.8초, 7.7초였다.
+- LLM 구간이 여전히 주 병목이며, 위치기반서비스 추가 query는 embedding/rerank cold load로 retrieval 약 9.6초가 걸렸다.
+- 추가 query 후 `ollama ps`는 `gemma3:12b`, `100% GPU`, context 4096을 표시했다.
+- 후속 후보로 `gemma3:12b` 전용 `max_tokens`/`num_predict` 제한 실험을 진행했다.
+- API embedding/reranker CPU 모드와 `top_k=4`는 보조 후보로 보류한다.
+- `gemma3:12b` token cap 실험을 완료했고 결과 문서는 `docs/references/2026-06-05-gemma3-token-cap-experiment-result.md`다.
+- 128은 accuracy 회귀, 256/384/512/768은 답변 절단 리스크, 1024는 latency 개선 부족으로 제외했다.
+- 기본 `num_predict`/`max_tokens` cap은 채택하지 않는다.
+- 실험 중 임시 반영했던 token cap 구현은 로컬과 서버에서 되돌렸다.
+- 서버 API는 `DEFAULT_MODEL=gemma3:12b`, 기본 token cap 없음, `/health model=gemma3:12b` 상태다.
+- Gemma3 transition wrap-up에서 변경 범위, 로컬 검증, 서버 `/health`를 재확인했다.
+- wrap-up plan은 completed로 이동했고 결과는 `docs/exec-plans/completed/2026-06-05-gemma3-transition-wrapup.md`에 기록했다.
+- 다음 active plan은 `docs/exec-plans/active/2026-06-05-gemma3-pr-followup.md`다.
+- 현재 브랜치 변경분은 `운영 기본 모델을 gemma3로 전환` 커밋으로 정리했다.
+- PR #29를 생성했다: https://github.com/algum1737/ragSystem_codex/pull/29
+- GitHub Actions `Static checks`는 코드 실행 전 차단됐다. run annotation은 계정 결제 실패 또는 spending limit 증가 필요를 표시했다.
+- 다음 작업은 GitHub Actions 과금/한도 문제 해결 후 PR CI를 재실행하고 리뷰 피드백을 확인하는 것이다.
+- 로컬 리소스 상태 패널을 구현했다.
+- FastAPI `/runtime/resources` endpoint는 CPU/RAM, `nvidia-smi` 기반 GPU 상태, `ollama ps` 기반 적재 모델 상태를 반환한다.
+- Streamlit 시스템 탭에는 `리소스 상태` 카테고리를 추가했다.
+- 로컬 smoke 결과: `/runtime/resources` JSON 반환, `/health model=gemma3:12b`, Streamlit `_stcore/health=ok`.
+- 완료 plan: `docs/exec-plans/completed/2026-06-08-local-resource-status-panel.md`
+- GPU 사용량 heatmap을 로컬 구현했다.
+- FastAPI `/runtime/resources/history` endpoint는 5초 주기 in-memory GPU 샘플을 반환한다.
+- Streamlit 시스템 탭에서는 `GPU 사용률`과 `VRAM 사용률` 중 하나를 선택해 GPU별 heatmap을 표시한다.
+- 로컬 Mac에는 `nvidia-smi`가 없어 실제 GPU heatmap 데이터는 비어 있으며, Ubuntu 서버 반영 후 GPU별 utilization/VRAM 샘플 표시를 확인해야 한다.
+- 완료 plan: `docs/exec-plans/completed/2026-06-08-gpu-usage-heatmap.md`
+- 리소스 상태 패널과 GPU heatmap을 Ubuntu 서버에 반영했다.
+- 서버 systemd 서비스 PATH가 venv로 제한되어 `nvidia-smi`/`ollama`를 찾지 못하는 문제는 앱 코드에서 표준 절대 경로 fallback으로 해결했다.
+- 서버 `/runtime/resources`는 GPU 0/1 `NVIDIA GeForce RTX 2080 Ti`, Ollama `gemma3:12b`, `100% GPU`, context `4096`을 반환한다.
+- 서버 `/runtime/resources/history`는 5초 주기 샘플을 반환하며, 대표 RAG 질의 중 GPU 1 utilization `87.0%`, GPU 0/1 VRAM `31.3%`/`81.3%` 샘플을 확인했다.
+- Streamlit 서버 health는 `ok`다.
+- 완료 plan: `docs/exec-plans/completed/2026-06-08-server-resource-panel-deploy.md`
+- 리소스 상태 패널/GPU heatmap/LLM latency HTML 문서는 `리소스 상태 패널과 GPU 히트맵 추가` 커밋으로 정리했다.
+- 로컬 Homebrew Ollama 서비스는 `brew services stop ollama`로 정지했고, `brew services list`에서 `ollama none` 상태를 확인했다.
 
 ## Working Rules
 

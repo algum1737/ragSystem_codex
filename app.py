@@ -1,3 +1,4 @@
+import html
 import time
 
 import requests
@@ -11,6 +12,138 @@ def _detail(resp) -> str:
         return resp.json().get("detail", resp.text)
     except Exception:
         return resp.text or f"HTTP {resp.status_code}"
+
+
+def _fmt_percent(value) -> str:
+    if isinstance(value, (int, float)):
+        return f"{value:.1f}%"
+    return "-"
+
+
+def _fmt_gb(value) -> str:
+    if isinstance(value, (int, float)):
+        return f"{value:.2f} GB"
+    return "-"
+
+
+def _fmt_mib(value) -> str:
+    if isinstance(value, (int, float)):
+        return f"{value:.0f} MiB"
+    return "-"
+
+
+def _heat_color(value) -> str:
+    if not isinstance(value, (int, float)):
+        return "#ebedf0"
+    if value <= 0:
+        return "#ebedf0"
+    if value < 20:
+        return "#9be9a8"
+    if value < 40:
+        return "#40c463"
+    if value < 60:
+        return "#30a14e"
+    if value < 80:
+        return "#216e39"
+    return "#0e4429"
+
+
+def _gpu_heatmap_html(samples: list[dict], metric_key: str, max_samples: int) -> str | None:
+    latest = samples[-max_samples:]
+    gpu_keys: list[str] = []
+    for sample in latest:
+        for gpu in sample.get("gpus", []):
+            index = str(gpu.get("index", "-"))
+            if index not in gpu_keys:
+                gpu_keys.append(index)
+    if not gpu_keys:
+        return None
+
+    rows = []
+    for gpu_key in gpu_keys:
+        cells = []
+        for sample in latest:
+            timestamp = sample.get("timestamp", "")
+            gpu_data = None
+            for gpu in sample.get("gpus", []):
+                if str(gpu.get("index", "-")) == gpu_key:
+                    gpu_data = gpu
+                    break
+            value = gpu_data.get(metric_key) if gpu_data else None
+            label = f"{value:.1f}%" if isinstance(value, (int, float)) else "-"
+            title = html.escape(f"GPU {gpu_key} | {timestamp} | {label}")
+            cells.append(
+                f'<span class="gpu-cell" title="{title}" '
+                f'style="background:{_heat_color(value)}"></span>'
+            )
+        rows.append(
+            '<div class="gpu-row">'
+            f'<div class="gpu-label">GPU {html.escape(gpu_key)}</div>'
+            f'<div class="gpu-cells">{"".join(cells)}</div>'
+            '</div>'
+        )
+
+    return f"""
+    <style>
+      .gpu-heatmap {{
+        border: 1px solid #d0d7de;
+        border-radius: 8px;
+        padding: 14px;
+        overflow-x: auto;
+        background: #ffffff;
+      }}
+      .gpu-row {{
+        display: grid;
+        grid-template-columns: 64px max-content;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+      }}
+      .gpu-row:last-child {{
+        margin-bottom: 0;
+      }}
+      .gpu-label {{
+        color: #57606a;
+        font-size: 13px;
+        white-space: nowrap;
+      }}
+      .gpu-cells {{
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 12px;
+        gap: 4px;
+      }}
+      .gpu-cell {{
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+        display: inline-block;
+      }}
+      .gpu-legend {{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 5px;
+        margin-top: 12px;
+        color: #57606a;
+        font-size: 12px;
+      }}
+    </style>
+    <div class="gpu-heatmap">
+      {"".join(rows)}
+      <div class="gpu-legend">
+        <span>Less</span>
+        <span class="gpu-cell" style="background:#ebedf0"></span>
+        <span class="gpu-cell" style="background:#9be9a8"></span>
+        <span class="gpu-cell" style="background:#40c463"></span>
+        <span class="gpu-cell" style="background:#30a14e"></span>
+        <span class="gpu-cell" style="background:#216e39"></span>
+        <span class="gpu-cell" style="background:#0e4429"></span>
+        <span>More</span>
+      </div>
+    </div>
+    """
+
 
 st.set_page_config(page_title="ragSystem", layout="wide")
 st.title("ragSystem — 문서 조회")
@@ -214,12 +347,119 @@ with tab_system:
 
     st.divider()
 
+    st.subheader("리소스 상태")
+    try:
+        resp = requests.get(f"{API_BASE}/runtime/resources", timeout=8)
+        if resp.status_code == 200:
+            data = resp.json()
+            cpu = data.get("cpu", {})
+            memory = data.get("memory", {})
+            gpu_status = data.get("gpu_status", {})
+            gpus = data.get("gpus", [])
+            ollama = data.get("ollama", {})
+
+            metric_cols = st.columns(4)
+            cpu_value = cpu.get("usage_percent")
+            cpu_label = "CPU 사용률"
+            if cpu_value is None:
+                cpu_value = cpu.get("load_percent_1m")
+                cpu_label = "CPU Load(1m)"
+            metric_cols[0].metric(cpu_label, _fmt_percent(cpu_value))
+            metric_cols[1].metric("논리 CPU", cpu.get("logical_cpus", "-"))
+            metric_cols[2].metric("RAM 사용률", _fmt_percent(memory.get("usage_percent")))
+            metric_cols[3].metric(
+                "RAM 사용량",
+                f"{_fmt_gb(memory.get('used_gb'))} / {_fmt_gb(memory.get('total_gb'))}",
+            )
+
+            if gpus:
+                gpu_rows = []
+                for gpu in gpus:
+                    gpu_rows.append(
+                        {
+                            "GPU": gpu.get("index", "-"),
+                            "Name": gpu.get("name", "-"),
+                            "Util": _fmt_percent(gpu.get("utilization_percent")),
+                            "VRAM": f"{_fmt_mib(gpu.get('memory_used_mib'))} / {_fmt_mib(gpu.get('memory_total_mib'))}",
+                            "VRAM %": _fmt_percent(gpu.get("memory_percent")),
+                            "Temp": f"{gpu.get('temperature_c'):.0f}℃" if isinstance(gpu.get("temperature_c"), (int, float)) else "-",
+                        }
+                    )
+                st.markdown("#### GPU")
+                st.table(gpu_rows)
+            else:
+                reason = gpu_status.get("error") or "GPU 정보를 찾을 수 없습니다."
+                st.caption(f"GPU: 사용 불가 ({reason})")
+
+            st.markdown("#### GPU 사용 히트맵")
+            heatmap_cols = st.columns([1, 1, 3])
+            metric_label = heatmap_cols[0].selectbox(
+                "표시 기준",
+                ["GPU 사용률", "VRAM 사용률"],
+                key="gpu_heatmap_metric",
+            )
+            max_samples = heatmap_cols[1].selectbox(
+                "표시 샘플",
+                [24, 48, 72, 120, 180],
+                index=2,
+                key="gpu_heatmap_samples",
+            )
+            metric_key = "utilization_percent" if metric_label == "GPU 사용률" else "memory_percent"
+            try:
+                history_resp = requests.get(f"{API_BASE}/runtime/resources/history", timeout=8)
+                if history_resp.status_code == 200:
+                    history_data = history_resp.json()
+                    heatmap = _gpu_heatmap_html(
+                        history_data.get("samples", []),
+                        metric_key,
+                        max_samples=max_samples,
+                    )
+                    if heatmap:
+                        st.markdown(heatmap, unsafe_allow_html=True)
+                        interval = history_data.get("interval_seconds", "-")
+                        st.caption(f"최근 {max_samples}개 샘플 표시 · 샘플링 주기 {interval}초 · API 프로세스 메모리 기준")
+                    else:
+                        st.caption("GPU 히스토리 데이터가 없습니다. nvidia-smi가 있는 서버에서 샘플이 쌓이면 표시됩니다.")
+                else:
+                    st.caption(f"GPU 히스토리를 불러올 수 없습니다 ({history_resp.status_code}).")
+            except requests.exceptions.ConnectionError:
+                st.caption("GPU 히스토리를 불러올 수 없습니다. API 서버 연결을 확인하세요.")
+            except Exception as e:
+                st.caption(f"GPU 히스토리 표시 실패: {e}")
+
+            st.markdown("#### Ollama 적재 모델")
+            if ollama.get("available") and ollama.get("models"):
+                st.table(
+                    [
+                        {
+                            "Model": model.get("name", "-"),
+                            "Size": model.get("size", "-"),
+                            "Processor": model.get("processor", "-"),
+                            "Context": model.get("context", "-"),
+                            "Until": model.get("until", "-"),
+                        }
+                        for model in ollama.get("models", [])
+                    ]
+                )
+            elif ollama.get("available"):
+                st.caption("현재 Ollama에 상주 중인 모델이 없습니다.")
+            else:
+                st.caption(f"Ollama 상태를 확인할 수 없습니다: {ollama.get('error', '-')}")
+        else:
+            st.error(f"리소스 상태 조회 실패 ({resp.status_code}): {_detail(resp)}")
+    except requests.exceptions.ConnectionError:
+        st.error("API 서버에 연결할 수 없습니다 (localhost:8000)")
+    except Exception as e:
+        st.error(str(e))
+
+    st.divider()
+
     # ── 모델 관리 다이얼로그 ────────────────────────────────────────────────────
     RECOMMENDED_MODELS = [
         {"name": "gemma3:1b",    "size": "815 MB", "desc": "Gemma 3 초경량"},
         {"name": "gemma3:4b",    "size": "3.3 GB",  "desc": "Gemma 3 경량 (빠름)"},
-        {"name": "gemma4:26b",   "size": "17 GB",   "desc": "Gemma 4 운영 기본값"},
-        {"name": "gemma3:12b",   "size": "8.1 GB",  "desc": "Gemma 3 표준"},
+        {"name": "gemma3:12b",   "size": "8.1 GB",  "desc": "Gemma 3 운영 기본값"},
+        {"name": "gemma4:26b",   "size": "17 GB",   "desc": "Gemma 4 품질 우선"},
         {"name": "gemma3:27b",   "size": "17 GB",   "desc": "Gemma 3 고성능"},
         {"name": "llama3.2:1b",  "size": "1.3 GB",  "desc": "Meta Llama 3.2 초경량"},
         {"name": "llama3.2:3b",  "size": "2.0 GB",  "desc": "Meta Llama 3.2 경량"},

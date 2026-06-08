@@ -1,3 +1,5 @@
+from typing import Any
+
 from pydantic import BaseModel, field_validator
 
 
@@ -9,6 +11,23 @@ class HealthResponse(BaseModel):
 class StatsResponse(BaseModel):
     collection_name: str
     count: int
+
+
+class RuntimeResourcesResponse(BaseModel):
+    generated_at: str
+    cpu: dict[str, Any]
+    memory: dict[str, Any]
+    gpu_status: dict[str, Any]
+    gpu_available: bool
+    gpus: list[dict[str, Any]]
+    ollama: dict[str, Any]
+
+
+class RuntimeResourcesHistoryResponse(BaseModel):
+    generated_at: str
+    interval_seconds: int
+    max_samples: int
+    samples: list[dict[str, Any]]
 
 
 VALID_DOC_TYPES = {None, "일반", "유료서비스", "위치기반서비스", "운영정책"}
