@@ -84,7 +84,7 @@
 - full prompt, full answer, chunk text는 기본 저장하지 않는다.
 - 구현 결과: `docs/references/2026-06-02-local-observability-trace-result.md`
 - 완료 plan: `docs/exec-plans/completed/2026-06-02-local-observability-trace-schema.md`
-- 현재 active plan: `docs/exec-plans/active/2026-06-05-gemma3-pr-followup.md`
+- 현재 active plan: `docs/exec-plans/active/2026-06-08-concise-answer-prompt-experiment.md`
 - Ubuntu 서버 `10.10.220.5`에는 최신 trace 코드가 배포됐고 서버 venv compile, 임시 API trace smoke, eval trace smoke가 통과했다.
 - 서버에는 `/home/ragadmin/apply-ragsystem-trace.sh`가 업로드되어 있다.
 - `sudo bash /home/ragadmin/apply-ragsystem-trace.sh` 실행 후 운영 8000 서비스에서 `/opt/ragSystem_codex/logs/rag_traces.jsonl` 생성을 확인했다.
@@ -159,6 +159,11 @@
 - 완료 plan: `docs/exec-plans/completed/2026-06-08-server-resource-panel-deploy.md`
 - 리소스 상태 패널/GPU heatmap/LLM latency HTML 문서는 `리소스 상태 패널과 GPU 히트맵 추가` 커밋으로 정리했다.
 - 로컬 Homebrew Ollama 서비스는 `brew services stop ollama`로 정지했고, `brew services list`에서 `ollama none` 상태를 확인했다.
+- PR #29를 main에 머지했고 로컬 main도 `origin/main`과 동기화했다.
+- PR #29 merge commit은 `gh pr view 29 --json mergeCommit` 또는 `git log`로 확인한다.
+- PR follow-up plan은 completed로 이동했다.
+- 다음 active plan은 `docs/exec-plans/active/2026-06-08-concise-answer-prompt-experiment.md`다.
+- 다음 업무는 `gemma3:12b + top_k=5`에서 답변 길이를 줄이는 concise-answer prompt 후보를 검증하는 것이다.
 
 ## Working Rules
 

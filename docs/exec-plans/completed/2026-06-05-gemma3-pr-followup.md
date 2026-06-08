@@ -53,9 +53,7 @@
 
 ## Open Work
 
-- 리소스 상태 패널/GPU heatmap 변경분을 PR #29 브랜치에 push
-- push 후 PR CI 재확인
-- 필요 시 리뷰 피드백 반영
+- 없음.
 
 ## Completion
 
@@ -65,6 +63,9 @@
 - PR: https://github.com/algum1737/ragSystem_codex/pull/29
 - GitHub Actions를 다시 활성화했고 PR #29 `Static checks` 재실행이 통과했다.
 - 리소스 상태 패널과 GPU heatmap을 로컬 및 서버에 반영했다.
+- PR #29를 main에 머지했다.
+- 로컬 main을 origin/main과 fast-forward 동기화했다.
+- 다음 active plan은 `docs/exec-plans/active/2026-06-08-concise-answer-prompt-experiment.md`다.
 
 ## Validation Result
 
@@ -78,3 +79,6 @@
 - 통과: 서버 리소스 패널 endpoint
   - `/runtime/resources`, `/runtime/resources/history` 응답 확인
   - RAG 질의 중 GPU 1 utilization `87.0%`, GPU 0/1 VRAM `31.3%`/`81.3%` 샘플 확인
+- 통과: PR merge
+  - PR #29 상태: `MERGED`
+  - merge commit: `760c768638129b6f4e93e6316c18b538a1b1c558`

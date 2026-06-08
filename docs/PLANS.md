@@ -347,7 +347,7 @@
 
 - `2026-06-05-gemma3-pr-followup.md`
   - 목표: `feature/gemma3-operating-transition` 브랜치의 운영 전환 변경분을 커밋하고 PR을 생성한 뒤, PR 상태와 남은 후속 작업을 추적한다.
-  - 상태: Active
+  - 상태: Completed
 
 ### Local Resource Status Panel
 
@@ -367,6 +367,12 @@
   - 목표: 로컬에서 구현한 CPU/GPU/Ollama 리소스 상태 패널과 GPU 사용량 heatmap을 Ubuntu 서버에 반영하고 런타임에서 동작을 확인한다.
   - 상태: Completed
 
+### Concise Answer Prompt Experiment
+
+- `2026-06-08-concise-answer-prompt-experiment.md`
+  - 목표: `gemma3:12b + top_k=5` 운영 조합에서 답변 길이를 줄여 LLM 생성 시간을 낮출 수 있는 concise-answer prompt 후보를 검증한다.
+  - 상태: Active
+
 ### Eval Model Tuning Policy
 
 - `2026-05-29-eval-model-tuning-policy.md`
@@ -383,10 +389,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-05-gemma3-pr-followup.md`
+- `exec-plans/active/2026-06-08-concise-answer-prompt-experiment.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-05-gemma3-pr-followup.md`
 - `exec-plans/completed/2026-06-08-server-resource-panel-deploy.md`
 - `exec-plans/completed/2026-06-08-gpu-usage-heatmap.md`
 - `exec-plans/completed/2026-06-08-local-resource-status-panel.md`
