@@ -84,7 +84,7 @@
 - full prompt, full answer, chunk text는 기본 저장하지 않는다.
 - 구현 결과: `docs/references/2026-06-02-local-observability-trace-result.md`
 - 완료 plan: `docs/exec-plans/completed/2026-06-02-local-observability-trace-schema.md`
-- 현재 active plan: `docs/exec-plans/active/2026-06-08-concise-answer-prompt-experiment.md`
+- 현재 active plan: `docs/exec-plans/active/2026-06-08-refined-concise-bullet-prompt.md`
 - Ubuntu 서버 `10.10.220.5`에는 최신 trace 코드가 배포됐고 서버 venv compile, 임시 API trace smoke, eval trace smoke가 통과했다.
 - 서버에는 `/home/ragadmin/apply-ragsystem-trace.sh`가 업로드되어 있다.
 - `sudo bash /home/ragadmin/apply-ragsystem-trace.sh` 실행 후 운영 8000 서비스에서 `/opt/ragSystem_codex/logs/rag_traces.jsonl` 생성을 확인했다.
@@ -162,8 +162,14 @@
 - PR #29를 main에 머지했고 로컬 main도 `origin/main`과 동기화했다.
 - PR #29 merge commit은 `gh pr view 29 --json mergeCommit` 또는 `git log`로 확인한다.
 - PR follow-up plan은 completed로 이동했다.
-- 다음 active plan은 `docs/exec-plans/active/2026-06-08-concise-answer-prompt-experiment.md`다.
-- 다음 업무는 `gemma3:12b + top_k=5`에서 답변 길이를 줄이는 concise-answer prompt 후보를 검증하는 것이다.
+- concise-answer prompt 후보 검증을 완료했다.
+- 결과 문서는 `docs/references/2026-06-08-concise-answer-prompt-experiment-result.md`다.
+- 완료 plan은 `docs/exec-plans/completed/2026-06-08-concise-answer-prompt-experiment.md`다.
+- 서버 final trace는 `/opt/ragSystem_codex/logs/concise_prompt_experiment_final_20260608.jsonl`이다.
+- warmed benchmark 기준 baseline 평균 total은 약 11.2초, `concise_bullet`은 약 6.1초, `concise_summary`는 약 4.9초였다.
+- `concise_summary`가 가장 빠르지만 관련성이 낮은 문장과 불필요한 미확인 문장 리스크가 있어 그대로 채택하지 않는다.
+- 다음 active plan은 `docs/exec-plans/active/2026-06-08-refined-concise-bullet-prompt.md`다.
+- 다음 업무는 `concise_bullet` 계열에서 forced no-answer bullet을 제거/완화한 운영 프롬프트 후보를 smoke 비교하고, 채택 가능하면 사용자 승인 후 코드/서버 반영을 진행하는 것이다.
 
 ## Working Rules
 

@@ -371,6 +371,12 @@
 
 - `2026-06-08-concise-answer-prompt-experiment.md`
   - 목표: `gemma3:12b + top_k=5` 운영 조합에서 답변 길이를 줄여 LLM 생성 시간을 낮출 수 있는 concise-answer prompt 후보를 검증한다.
+  - 상태: Completed
+
+### Refined Concise Bullet Prompt
+
+- `2026-06-08-refined-concise-bullet-prompt.md`
+  - 목표: `concise_bullet` 실험 결과를 바탕으로 불필요한 no-answer 문장을 줄인 운영 프롬프트 후보를 검증한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -389,10 +395,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-08-concise-answer-prompt-experiment.md`
+- `exec-plans/active/2026-06-08-refined-concise-bullet-prompt.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-08-concise-answer-prompt-experiment.md`
 - `exec-plans/completed/2026-06-05-gemma3-pr-followup.md`
 - `exec-plans/completed/2026-06-08-server-resource-panel-deploy.md`
 - `exec-plans/completed/2026-06-08-gpu-usage-heatmap.md`
