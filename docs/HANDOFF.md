@@ -194,8 +194,14 @@
 - 로컬 `main`의 ahead 커밋 3개를 `origin/main`에 push했다.
 - GitHub Actions `CI`는 run `27179668103`에서 `completed/success`를 확인했다.
 - 완료 plan은 `docs/exec-plans/completed/2026-06-09-push-and-ci-verification.md`다.
-- 다음 active plan은 `docs/exec-plans/active/2026-06-09-post-deploy-monitoring.md`다.
-- 다음 업무는 배포 후 서버 API/Web health와 선택형 concise mode 동작을 짧게 모니터링하고 다음 개선 후보를 정하는 것이다.
+- 배포 후 모니터링을 완료했다.
+- GitHub Actions 최신 `CI`는 run `27179833410`에서 `completed/success`를 확인했다.
+- 서버 API `/health`는 `status=ok`, `model=gemma3:12b`를 반환했다.
+- Streamlit `_stcore/health`는 `ok`를 반환했다.
+- 운영 API `/query` smoke에서 `standard`/`concise` 모두 status 200, source 5개를 반환했다.
+- 완료 plan은 `docs/exec-plans/completed/2026-06-09-post-deploy-monitoring.md`다.
+- 다음 active plan은 `docs/exec-plans/active/2026-06-09-concise-mode-trace-review.md`다.
+- 다음 업무는 concise mode 사용 로그/trace를 더 모은 뒤, 필요 시 concise 전용 경량 평가셋을 추가할지 결정하는 것이다.
 
 ## Working Rules
 

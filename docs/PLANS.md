@@ -401,6 +401,12 @@
 
 - `2026-06-09-post-deploy-monitoring.md`
   - 목표: 선택형 concise answer mode가 원격 반영된 뒤 운영 API/Web 상태와 사용자-facing 동작을 짧게 모니터링하고 다음 개선 후보를 정한다.
+  - 상태: Completed
+
+### Concise Mode Trace Review
+
+- `2026-06-09-concise-mode-trace-review.md`
+  - 목표: 선택형 `concise` answer mode의 실제 사용 trace를 모아 빠른 요약 모드가 별도 경량 평가셋이나 추가 UX 보강이 필요한지 판단한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -419,10 +425,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-09-post-deploy-monitoring.md`
+- `exec-plans/active/2026-06-09-concise-mode-trace-review.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-09-post-deploy-monitoring.md`
 - `exec-plans/completed/2026-06-09-push-and-ci-verification.md`
 - `exec-plans/completed/2026-06-09-selective-concise-mode-followup.md`
 - `exec-plans/completed/2026-06-09-selective-concise-answer-mode.md`

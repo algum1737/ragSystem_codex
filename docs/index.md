@@ -78,10 +78,11 @@
 
 ## Active Work
 
-- [Post Deploy Monitoring Plan](./exec-plans/active/2026-06-09-post-deploy-monitoring.md)
+- [Concise Mode Trace Review Plan](./exec-plans/active/2026-06-09-concise-mode-trace-review.md)
 
 ## Completed Work
 
+- [Post Deploy Monitoring Plan](./exec-plans/completed/2026-06-09-post-deploy-monitoring.md)
 - [Push And CI Verification Plan](./exec-plans/completed/2026-06-09-push-and-ci-verification.md)
 - [Selective Concise Mode Follow-Up Plan](./exec-plans/completed/2026-06-09-selective-concise-mode-followup.md)
 - [Selective Concise Answer Mode Plan](./exec-plans/completed/2026-06-09-selective-concise-answer-mode.md)
