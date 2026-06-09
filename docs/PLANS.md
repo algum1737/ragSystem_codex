@@ -407,6 +407,12 @@
 
 - `2026-06-09-concise-mode-trace-review.md`
   - 목표: 선택형 `concise` answer mode의 실제 사용 trace를 모아 빠른 요약 모드가 별도 경량 평가셋이나 추가 UX 보강이 필요한지 판단한다.
+  - 상태: Completed
+
+### Concise Lightweight Eval Set
+
+- `2026-06-09-concise-lightweight-eval-set.md`
+  - 목표: 선택형 `concise` answer mode가 짧은 답변을 만들면서 필수 근거와 예외사항을 누락하지 않는지 확인할 수 있는 경량 평가셋과 판정 기준을 정의한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -425,10 +431,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-09-concise-mode-trace-review.md`
+- `exec-plans/active/2026-06-09-concise-lightweight-eval-set.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-09-concise-mode-trace-review.md`
 - `exec-plans/completed/2026-06-09-post-deploy-monitoring.md`
 - `exec-plans/completed/2026-06-09-push-and-ci-verification.md`
 - `exec-plans/completed/2026-06-09-selective-concise-mode-followup.md`

@@ -75,13 +75,15 @@
 - [2026-06-09 Refined Concise Bullet Prompt Result](./references/2026-06-09-refined-concise-bullet-prompt-result.md)
 - [2026-06-09 Selective Concise Answer Mode Design](./references/2026-06-09-selective-concise-answer-mode-design.md)
 - [2026-06-09 Selective Concise Answer Mode Result](./references/2026-06-09-selective-concise-answer-mode-result.md)
+- [2026-06-09 Concise Mode Trace Review](./references/2026-06-09-concise-mode-trace-review.md)
 
 ## Active Work
 
-- [Concise Mode Trace Review Plan](./exec-plans/active/2026-06-09-concise-mode-trace-review.md)
+- [Concise Lightweight Eval Set Plan](./exec-plans/active/2026-06-09-concise-lightweight-eval-set.md)
 
 ## Completed Work
 
+- [Concise Mode Trace Review Plan](./exec-plans/completed/2026-06-09-concise-mode-trace-review.md)
 - [Post Deploy Monitoring Plan](./exec-plans/completed/2026-06-09-post-deploy-monitoring.md)
 - [Push And CI Verification Plan](./exec-plans/completed/2026-06-09-push-and-ci-verification.md)
 - [Selective Concise Mode Follow-Up Plan](./exec-plans/completed/2026-06-09-selective-concise-mode-followup.md)

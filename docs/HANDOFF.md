@@ -200,8 +200,14 @@
 - Streamlit `_stcore/health`는 `ok`를 반환했다.
 - 운영 API `/query` smoke에서 `standard`/`concise` 모두 status 200, source 5개를 반환했다.
 - 완료 plan은 `docs/exec-plans/completed/2026-06-09-post-deploy-monitoring.md`다.
-- 다음 active plan은 `docs/exec-plans/active/2026-06-09-concise-mode-trace-review.md`다.
-- 다음 업무는 concise mode 사용 로그/trace를 더 모은 뒤, 필요 시 concise 전용 경량 평가셋을 추가할지 결정하는 것이다.
+- concise mode trace review를 완료했다.
+- 운영 trace `api.query` 성공 이벤트 29건 중 `answer_mode`가 기록된 표본은 `standard` 3건, `concise` 4건이었다.
+- 같은 질문 해시 기준 paired sample 3쌍에서 `concise`는 평균 total 5650.12ms, LLM 5536.59ms, answer length 307.33자, source 5개였다.
+- 같은 paired sample에서 `standard`는 평균 total 16088.69ms, LLM 12737.12ms, answer length 496.33자, source 5개였다.
+- 결과 문서는 `docs/references/2026-06-09-concise-mode-trace-review.md`다.
+- 완료 plan은 `docs/exec-plans/completed/2026-06-09-concise-mode-trace-review.md`다.
+- 다음 active plan은 `docs/exec-plans/active/2026-06-09-concise-lightweight-eval-set.md`다.
+- 다음 업무는 concise mode 전용 경량 평가셋과 판정 기준을 문서로 먼저 고정하는 것이다.
 
 ## Working Rules
 

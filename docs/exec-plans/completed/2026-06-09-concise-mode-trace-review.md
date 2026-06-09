@@ -51,5 +51,28 @@
 
 ## Open Work
 
-- 운영 trace 표본 확인
-- concise 전용 경량 평가셋 필요 여부 결정
+- 없음
+
+## Completion
+
+- 운영 API `/health`에서 `status=ok`, `model=gemma3:12b`를 확인했다.
+- 운영 trace `/opt/ragSystem_codex/logs/rag_traces.jsonl`에서 `api.query` 성공 이벤트 29건을 집계했다.
+- `answer_mode`가 기록된 표본은 `standard` 3건, `concise` 4건이었다.
+- 같은 `question_hash` 기준 `standard`/`concise` paired sample 3쌍을 확인했다.
+- paired sample 기준 `concise` 평균은 total 5650.12ms, LLM 5536.59ms, answer length 307.33자, source count 5개였다.
+- paired sample 기준 `standard` 평균은 total 16088.69ms, LLM 12737.12ms, answer length 496.33자, source count 5개였다.
+- 결과 문서는 `docs/references/2026-06-09-concise-mode-trace-review.md`에 기록했다.
+- 다음 active plan은 `docs/exec-plans/active/2026-06-09-concise-lightweight-eval-set.md`다.
+
+## Validation Result
+
+- Pre-flight checks: 통과
+  - `git status --short --branch`: `## main...origin/main`
+  - active plan 존재 확인
+  - `curl -fsS http://10.10.220.5:8000/health`: `{"status":"ok","model":"gemma3:12b"}`
+- Automated tests: 통과
+  - `bash scripts/validate-docs.sh`: `template docs validation passed`
+- Manual/Runtime QA: 통과
+  - 운영 trace 집계 완료
+  - 같은 질문 해시 기준 paired sample 3쌍 확인
+- Skipped/Not Run: 추가 `/query` smoke는 실행하지 않았다. 최근 post deploy smoke와 운영 trace 표본이 있어 추가 질의를 만들지 않았다.
