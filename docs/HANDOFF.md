@@ -192,10 +192,10 @@
 - 선택형 concise mode 구현 변경분은 follow-up plan에서 커밋 대상으로 정리했다.
 - 완료 plan은 `docs/exec-plans/completed/2026-06-09-selective-concise-mode-followup.md`다.
 - 로컬 `main`의 ahead 커밋 3개를 `origin/main`에 push했다.
-- GitHub Actions `CI`는 run `27179668103`에서 `completed/success`를 확인했다.
+- GitHub Actions `CI`는 push 직후 `completed/success`를 확인했다. 최신 run은 `gh run list --branch main --limit 1`로 확인한다.
 - 완료 plan은 `docs/exec-plans/completed/2026-06-09-push-and-ci-verification.md`다.
 - 배포 후 모니터링을 완료했다.
-- GitHub Actions 최신 `CI`는 run `27179833410`에서 `completed/success`를 확인했다.
+- 배포 후 모니터링 결과 정리 커밋을 `origin/main`에 push했고, GitHub Actions `CI`는 push 직후 `completed/success`를 확인했다.
 - 서버 API `/health`는 `status=ok`, `model=gemma3:12b`를 반환했다.
 - Streamlit `_stcore/health`는 `ok`를 반환했다.
 - 운영 API `/query` smoke에서 `standard`/`concise` 모두 status 200, source 5개를 반환했다.
