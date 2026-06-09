@@ -53,5 +53,20 @@
 
 ## Open Work
 
-- push
-- CI 확인
+- 없음.
+
+## Completion
+
+- 로컬 `main`의 ahead 커밋 3개를 `origin/main`에 push했다.
+- GitHub Actions `CI` run을 확인했고 성공했다.
+- 최신 run id는 `27179668103`이다.
+
+## Validation Result
+
+- 통과: `git status --short --branch`
+- 통과: `git log --oneline origin/main..HEAD`로 push 전 ahead 3개 커밋 확인
+- 통과: `git push`
+- 통과: `gh run list --branch main --limit 5`
+  - latest run: `27179668103`
+  - status: `completed`
+  - conclusion: `success`

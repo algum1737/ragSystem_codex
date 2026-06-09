@@ -191,8 +191,11 @@
 - standard full eval은 `/opt/ragSystem_codex/eval/results/eval_20260609_110223.json`이며 `accuracy_mean=0.9891`, `faithfulness_mean=0.9565`, `not_found_success_rate=1.0`이다.
 - 선택형 concise mode 구현 변경분은 follow-up plan에서 커밋 대상으로 정리했다.
 - 완료 plan은 `docs/exec-plans/completed/2026-06-09-selective-concise-mode-followup.md`다.
-- 다음 active plan은 `docs/exec-plans/active/2026-06-09-push-and-ci-verification.md`다.
-- 다음 업무는 로컬 `main`의 ahead 커밋을 원격에 push하고 GitHub Actions 상태를 확인하는 것이다.
+- 로컬 `main`의 ahead 커밋 3개를 `origin/main`에 push했다.
+- GitHub Actions `CI`는 run `27179668103`에서 `completed/success`를 확인했다.
+- 완료 plan은 `docs/exec-plans/completed/2026-06-09-push-and-ci-verification.md`다.
+- 다음 active plan은 `docs/exec-plans/active/2026-06-09-post-deploy-monitoring.md`다.
+- 다음 업무는 배포 후 서버 API/Web health와 선택형 concise mode 동작을 짧게 모니터링하고 다음 개선 후보를 정하는 것이다.
 
 ## Working Rules
 

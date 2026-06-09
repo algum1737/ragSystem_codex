@@ -395,6 +395,12 @@
 
 - `2026-06-09-push-and-ci-verification.md`
   - 목표: 로컬 `main`에 누적된 커밋을 원격에 push하고 GitHub Actions 상태를 확인한다.
+  - 상태: Completed
+
+### Post Deploy Monitoring
+
+- `2026-06-09-post-deploy-monitoring.md`
+  - 목표: 선택형 concise answer mode가 원격 반영된 뒤 운영 API/Web 상태와 사용자-facing 동작을 짧게 모니터링하고 다음 개선 후보를 정한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -413,10 +419,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-09-push-and-ci-verification.md`
+- `exec-plans/active/2026-06-09-post-deploy-monitoring.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-09-push-and-ci-verification.md`
 - `exec-plans/completed/2026-06-09-selective-concise-mode-followup.md`
 - `exec-plans/completed/2026-06-09-selective-concise-answer-mode.md`
 - `exec-plans/completed/2026-06-08-refined-concise-bullet-prompt.md`
