@@ -60,5 +60,38 @@
 
 ## Open Work
 
-- refined concise bullet prompt 설계
-- smoke 비교
+- 없음. v4는 full eval 회귀로 운영 기본 프롬프트 채택을 보류하고 기존 기본 프롬프트로 원복했다.
+
+## Progress
+
+- `scripts/concise_prompt_experiment.py`에 `refined_concise_bullet` 후보를 추가했다.
+- 기존 `concise_bullet`의 forced no-answer 규칙은 제거했다.
+- 출처 표기는 `출처:` 뒤 실제 문서명을 쓰도록 보강했다.
+- 답변은 3~4개 bullet, 유사 조건 병합, 근거 최대 3개로 압축했다.
+- 서버 smoke는 v1-v4까지 반복했고 최종 후보는 v4로 정했다.
+- 결과 문서는 `docs/references/2026-06-09-refined-concise-bullet-prompt-result.md`에 기록했다.
+- v4를 `retriever/engine.py` 기본 프롬프트에 임시 반영하고 서버 API smoke를 실행했다.
+- 임시 반영 후 full eval에서 `accuracy_mean=0.8804`, `not_found_success_rate=0.0` 회귀를 확인했다.
+- full eval 실패 후 로컬과 서버의 기본 프롬프트를 기존 버전으로 원복했다.
+
+## Interim Validation Result
+
+- 통과: `.venv/bin/python -m py_compile scripts/concise_prompt_experiment.py`
+- 통과: 서버 v3 full comparison smoke
+- 통과: 서버 v4 refined-only smoke
+- 통과: v4 평균 total 5116.24ms, LLM 5008.91ms, answer length 298.0
+- 통과: 운영 기본 프롬프트 임시 반영 후 API smoke
+  - 위치기반서비스 warmed API smoke: total 5895.78ms, LLM 5770.59ms, answer length 331
+  - 운영정책 warmed API smoke: total 4545.44ms, LLM 4432.80ms, answer length 251
+- 실패: 운영 기본 프롬프트 임시 반영 후 full eval
+  - 리포트: `/opt/ragSystem_codex/eval/results/eval_20260609_095553.json`
+  - `accuracy_mean=0.8804`
+  - `faithfulness_mean=1.0`
+  - `not_found_success_rate=0.0`
+- 통과: full eval 실패 후 로컬/서버 기본 프롬프트 원복
+
+## Completion
+
+- refined concise bullet 후보는 속도 개선 효과를 보였지만 full eval 품질 기준을 만족하지 못했다.
+- 운영 기본 프롬프트로 채택하지 않는다.
+- 다음 작업은 기본 프롬프트 교체가 아니라 선택형 concise answer mode 또는 no-answer 안전 라우팅 설계로 진행한다.

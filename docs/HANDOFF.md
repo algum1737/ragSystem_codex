@@ -84,7 +84,7 @@
 - full prompt, full answer, chunk text는 기본 저장하지 않는다.
 - 구현 결과: `docs/references/2026-06-02-local-observability-trace-result.md`
 - 완료 plan: `docs/exec-plans/completed/2026-06-02-local-observability-trace-schema.md`
-- 현재 active plan: `docs/exec-plans/active/2026-06-08-refined-concise-bullet-prompt.md`
+- 현재 active plan: `docs/exec-plans/active/2026-06-09-selective-concise-answer-mode.md`
 - Ubuntu 서버 `10.10.220.5`에는 최신 trace 코드가 배포됐고 서버 venv compile, 임시 API trace smoke, eval trace smoke가 통과했다.
 - 서버에는 `/home/ragadmin/apply-ragsystem-trace.sh`가 업로드되어 있다.
 - `sudo bash /home/ragadmin/apply-ragsystem-trace.sh` 실행 후 운영 8000 서비스에서 `/opt/ragSystem_codex/logs/rag_traces.jsonl` 생성을 확인했다.
@@ -168,8 +168,16 @@
 - 서버 final trace는 `/opt/ragSystem_codex/logs/concise_prompt_experiment_final_20260608.jsonl`이다.
 - warmed benchmark 기준 baseline 평균 total은 약 11.2초, `concise_bullet`은 약 6.1초, `concise_summary`는 약 4.9초였다.
 - `concise_summary`가 가장 빠르지만 관련성이 낮은 문장과 불필요한 미확인 문장 리스크가 있어 그대로 채택하지 않는다.
-- 다음 active plan은 `docs/exec-plans/active/2026-06-08-refined-concise-bullet-prompt.md`다.
-- 다음 업무는 `concise_bullet` 계열에서 forced no-answer bullet을 제거/완화한 운영 프롬프트 후보를 smoke 비교하고, 채택 가능하면 사용자 승인 후 코드/서버 반영을 진행하는 것이다.
+- refined concise bullet 후보 검증을 완료했다.
+- 결과 문서는 `docs/references/2026-06-09-refined-concise-bullet-prompt-result.md`다.
+- 완료 plan은 `docs/exec-plans/completed/2026-06-08-refined-concise-bullet-prompt.md`다.
+- `refined_concise_bullet` v4는 smoke 기준 평균 total 약 5.1초, LLM 약 5.0초로 빨랐다.
+- 하지만 운영 기본 프롬프트 임시 반영 후 full eval에서 `accuracy_mean=0.8804`, `not_found_success_rate=0.0` 회귀가 발생했다.
+- 서버 full eval 리포트는 `/opt/ragSystem_codex/eval/results/eval_20260609_095553.json`이다.
+- 회귀 확인 후 로컬과 서버의 기본 `PROMPT_TEMPLATE`는 기존 버전으로 원복했다.
+- 서버 API는 `/health model=gemma3:12b` 정상 상태다.
+- 다음 active plan은 `docs/exec-plans/active/2026-06-09-selective-concise-answer-mode.md`다.
+- 다음 업무는 기본 프롬프트를 교체하지 않고 선택형 concise answer mode 또는 no-answer 안전 라우팅을 설계하는 것이다.
 
 ## Working Rules
 

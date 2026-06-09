@@ -377,6 +377,12 @@
 
 - `2026-06-08-refined-concise-bullet-prompt.md`
   - 목표: `concise_bullet` 실험 결과를 바탕으로 불필요한 no-answer 문장을 줄인 운영 프롬프트 후보를 검증한다.
+  - 상태: Completed
+
+### Selective Concise Answer Mode
+
+- `2026-06-09-selective-concise-answer-mode.md`
+  - 목표: 기본 프롬프트를 교체하지 않고 사용자가 빠른 요약 답변을 원할 때만 선택적으로 concise prompt를 적용하는 안전한 답변 모드를 설계한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -395,10 +401,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-08-refined-concise-bullet-prompt.md`
+- `exec-plans/active/2026-06-09-selective-concise-answer-mode.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-08-refined-concise-bullet-prompt.md`
 - `exec-plans/completed/2026-06-08-concise-answer-prompt-experiment.md`
 - `exec-plans/completed/2026-06-05-gemma3-pr-followup.md`
 - `exec-plans/completed/2026-06-08-server-resource-panel-deploy.md`
