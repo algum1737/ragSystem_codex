@@ -32,12 +32,15 @@ class RuntimeResourcesHistoryResponse(BaseModel):
 
 VALID_DOC_TYPES = {None, "일반", "유료서비스", "위치기반서비스", "운영정책"}
 VALID_DOC_TYPES_LABEL = "일반, 유료서비스, 위치기반서비스, 운영정책"
+VALID_ANSWER_MODES = {"standard", "concise"}
+VALID_ANSWER_MODES_LABEL = "standard, concise"
 
 
 class QueryRequest(BaseModel):
     question: str
     top_k: int = 5
     doc_type: str | None = None
+    answer_mode: str = "standard"
 
     @field_validator("question")
     @classmethod
@@ -61,6 +64,13 @@ class QueryRequest(BaseModel):
     def doc_type_valid(cls, v: str | None) -> str | None:
         if v not in VALID_DOC_TYPES:
             raise ValueError(f"유효하지 않은 doc_type: {v!r}. 허용 값: {VALID_DOC_TYPES_LABEL}")
+        return v
+
+    @field_validator("answer_mode")
+    @classmethod
+    def answer_mode_valid(cls, v: str) -> str:
+        if v not in VALID_ANSWER_MODES:
+            raise ValueError(f"유효하지 않은 answer_mode: {v!r}. 허용 값: {VALID_ANSWER_MODES_LABEL}")
         return v
 
 

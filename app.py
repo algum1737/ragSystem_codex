@@ -263,11 +263,19 @@ with tab_query:
         key="query_question",
     )
 
-    col1, col2 = st.columns([1, 5])
+    col1, col2, col3 = st.columns([1, 2, 4])
     with col1:
         top_k = st.slider("Top-K", min_value=1, max_value=10, value=5, key="query_topk")
     with col2:
+        answer_mode_label = st.radio(
+            "답변 모드",
+            ["표준", "빠른 요약"],
+            horizontal=True,
+            key="query_answer_mode",
+        )
+    with col3:
         search_btn = st.button("검색", key="query_btn")
+    answer_mode = "concise" if answer_mode_label == "빠른 요약" else "standard"
 
     if search_btn:
         if not question.strip():
@@ -278,7 +286,12 @@ with tab_query:
             try:
                 resp = requests.post(
                     f"{API_BASE}/query",
-                    json={"question": question, "top_k": top_k, "doc_type": _query_doc_type},
+                    json={
+                        "question": question,
+                        "top_k": top_k,
+                        "doc_type": _query_doc_type,
+                        "answer_mode": answer_mode,
+                    },
                     timeout=180,
                 )
                 if resp.status_code == 200:

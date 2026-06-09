@@ -176,8 +176,23 @@
 - 서버 full eval 리포트는 `/opt/ragSystem_codex/eval/results/eval_20260609_095553.json`이다.
 - 회귀 확인 후 로컬과 서버의 기본 `PROMPT_TEMPLATE`는 기존 버전으로 원복했다.
 - 서버 API는 `/health model=gemma3:12b` 정상 상태다.
-- 다음 active plan은 `docs/exec-plans/active/2026-06-09-selective-concise-answer-mode.md`다.
-- 다음 업무는 기본 프롬프트를 교체하지 않고 선택형 concise answer mode 또는 no-answer 안전 라우팅을 설계하는 것이다.
+- 선택형 concise answer mode 설계를 완료했다.
+- 설계 문서는 `docs/references/2026-06-09-selective-concise-answer-mode-design.md`다.
+- 결론: 자동 라우팅은 v1에서 배제하고, 사용자 명시 선택형 `answer_mode=standard|concise`로 간다.
+- 선택형 concise answer mode 구현과 서버 반영을 완료했다.
+- 결과 문서는 `docs/references/2026-06-09-selective-concise-answer-mode-result.md`다.
+- 완료 plan은 `docs/exec-plans/completed/2026-06-09-selective-concise-answer-mode.md`다.
+- 기본값은 `standard`이며 기존 `PROMPT_TEMPLATE`를 유지한다.
+- `concise`는 명시적 요청에서만 refined concise bullet prompt를 사용한다.
+- API `QueryRequest.answer_mode`, CLI `--answer-mode`, Streamlit query UI의 `표준`/`빠른 요약` 선택을 추가했다.
+- `RAGEngine.query(answer_mode=...)`는 per-call prompt를 선택하고, module-level `PROMPT_TEMPLATE`를 요청 중 변경하지 않는다.
+- trace metadata에는 `answer_mode`가 기록된다.
+- 서버 API/Web health는 정상이고, API smoke에서 `standard`/`concise` 모두 status 200을 확인했다.
+- standard full eval은 `/opt/ragSystem_codex/eval/results/eval_20260609_110223.json`이며 `accuracy_mean=0.9891`, `faithfulness_mean=0.9565`, `not_found_success_rate=1.0`이다.
+- 선택형 concise mode 구현 변경분은 follow-up plan에서 커밋 대상으로 정리했다.
+- 완료 plan은 `docs/exec-plans/completed/2026-06-09-selective-concise-mode-followup.md`다.
+- 다음 active plan은 `docs/exec-plans/active/2026-06-09-push-and-ci-verification.md`다.
+- 다음 업무는 로컬 `main`의 ahead 커밋을 원격에 push하고 GitHub Actions 상태를 확인하는 것이다.
 
 ## Working Rules
 

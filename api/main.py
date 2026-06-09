@@ -502,6 +502,7 @@ async def query(body: QueryRequest, request: Request):
         result = request.app.state.rag_engine.query(
             body.question,
             doc_type=body.doc_type,
+            answer_mode=body.answer_mode,
             trace_route="api.query",
         )
     except ValueError as e:

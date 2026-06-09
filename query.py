@@ -25,6 +25,12 @@ def main() -> int:
     parser.add_argument("--db-path", default="./chroma_db", help="Chroma DB 경로 (기본: ./chroma_db)")
     parser.add_argument("--collection", default="ragSystem", help="Chroma 컬렉션 이름")
     parser.add_argument("--top-k", type=int, default=5, help="검색할 청크 수 (기본: 5)")
+    parser.add_argument(
+        "--answer-mode",
+        choices=["standard", "concise"],
+        default="standard",
+        help="답변 모드 (기본: standard)",
+    )
     parser.add_argument("--verbose", action="store_true", help="상세 로그 출력")
     parser.add_argument(
         "--dry-run",
@@ -53,7 +59,7 @@ def main() -> int:
             top_k=args.top_k,
         )
 
-        result = engine.query(args.question, trace_route="cli.query")
+        result = engine.query(args.question, answer_mode=args.answer_mode, trace_route="cli.query")
 
         print(f"\n답변:\n{result['answer']}\n")
         if result["sources"]:

@@ -31,6 +31,33 @@ PROMPT_TEMPLATE = """당신은 주어진 참고 문서를 바탕으로 질문에
 
 [답변]"""
 
+CONCISE_PROMPT_TEMPLATE = """당신은 주어진 참고 문서만 근거로 답변하는 한국어 지식 어시스턴트입니다.
+
+답변 규칙:
+1. 반드시 한국어로 답변하세요.
+2. 참고 문서에 있는 내용만 사용하고 추측하지 마세요.
+3. 첫 줄부터 질문에 직접 답하는 핵심만 3~4개 bullet로 작성하세요.
+4. 각 bullet은 1문장으로 제한하세요.
+5. 같은 의미의 조건이나 서비스별 유사 처리는 하나의 bullet로 합치세요.
+6. 질문과 직접 관련 없는 비용, 광고, 일반 안내, 배경 설명은 참고 문서에 있어도 제외하세요.
+7. "문서에서 확인되지 않습니다", "확인되지 않은 항목" 같은 미확인 문장은 쓰지 마세요.
+8. 마지막 줄에 "근거: 문서명1, 문서명2" 형식으로 가장 중요한 출처명을 최대 3개만 적으세요.
+9. 근거에는 참고 문서의 "출처:" 뒤에 있는 실제 문서명만 그대로 쓰고, "문서1", "문서2", "[1]" 같은 번호 별칭은 쓰지 마세요.
+10. 원문을 길게 인용하거나 같은 내용을 반복하지 마세요.
+
+[참고 문서]
+{context}
+
+[질문]
+{question}
+
+[답변]"""
+
+ANSWER_MODE_PROMPTS = {
+    "standard": PROMPT_TEMPLATE,
+    "concise": CONCISE_PROMPT_TEMPLATE,
+}
+
 NO_RESULTS_ANSWER = "인제스천된 문서가 없습니다. 먼저 인제스천 탭에서 문서를 업로드하세요."
 
 
@@ -254,17 +281,22 @@ class RAGEngine:
         question: str,
         doc_type: str | None = None,
         *,
+        answer_mode: str = "standard",
         trace_route: str = "rag.query",
         trace_metadata: dict | None = None,
         trace_enabled: bool = True,
     ) -> dict:
         if not question.strip():
             raise ValueError("question이 비어 있습니다")
+        if answer_mode not in ANSWER_MODE_PROMPTS:
+            raise ValueError(f"지원하지 않는 answer_mode입니다: {answer_mode}")
 
-        logger.info("RAG 쿼리: %s (doc_type=%s)", question, doc_type)
+        logger.info("RAG 쿼리: %s (doc_type=%s, answer_mode=%s)", question, doc_type, answer_mode)
 
         should_trace = trace_enabled and is_trace_enabled()
         trace_id = new_trace_id() if should_trace else None
+        trace_metadata = dict(trace_metadata or {})
+        trace_metadata.setdefault("answer_mode", answer_mode)
         total_start = time.perf_counter()
         timings_ms: dict[str, float] = {}
 
@@ -308,7 +340,8 @@ class RAGEngine:
                 context_parts.append(f"[1] 출처: {r0.get('source_path', '출처 미상')}\n{r0['text'][:self._max_context_chars]}")
 
             context = "\n\n".join(context_parts)
-            prompt = PROMPT_TEMPLATE.format(context=context, question=question)
+            prompt_template = ANSWER_MODE_PROMPTS[answer_mode]
+            prompt = prompt_template.format(context=context, question=question)
             llm_start = time.perf_counter()
             answer = self._llm.predict(prompt)
             timings_ms["llm"] = _elapsed_ms(llm_start)

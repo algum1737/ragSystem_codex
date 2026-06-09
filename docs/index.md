@@ -73,13 +73,17 @@
 - [2026-06-05 Gemma3 Token Cap Experiment Result](./references/2026-06-05-gemma3-token-cap-experiment-result.md)
 - [2026-06-08 Concise Answer Prompt Experiment Result](./references/2026-06-08-concise-answer-prompt-experiment-result.md)
 - [2026-06-09 Refined Concise Bullet Prompt Result](./references/2026-06-09-refined-concise-bullet-prompt-result.md)
+- [2026-06-09 Selective Concise Answer Mode Design](./references/2026-06-09-selective-concise-answer-mode-design.md)
+- [2026-06-09 Selective Concise Answer Mode Result](./references/2026-06-09-selective-concise-answer-mode-result.md)
 
 ## Active Work
 
-- [Selective Concise Answer Mode Plan](./exec-plans/active/2026-06-09-selective-concise-answer-mode.md)
+- [Push And CI Verification Plan](./exec-plans/active/2026-06-09-push-and-ci-verification.md)
 
 ## Completed Work
 
+- [Selective Concise Mode Follow-Up Plan](./exec-plans/completed/2026-06-09-selective-concise-mode-followup.md)
+- [Selective Concise Answer Mode Plan](./exec-plans/completed/2026-06-09-selective-concise-answer-mode.md)
 - [Refined Concise Bullet Prompt Plan](./exec-plans/completed/2026-06-08-refined-concise-bullet-prompt.md)
 - [Concise Answer Prompt Experiment Plan](./exec-plans/completed/2026-06-08-concise-answer-prompt-experiment.md)
 - [Gemma3 PR Follow-Up Plan](./exec-plans/completed/2026-06-05-gemma3-pr-followup.md)
