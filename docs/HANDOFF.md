@@ -212,8 +212,15 @@
 - no-answer 케이스 `concise-05`는 문서 미확인 또는 직접 근거 부족을 명시해야 하고 결제 주기/금액 변경 조건을 임의 생성하면 실패다.
 - 결과 문서는 `docs/references/2026-06-10-concise-lightweight-eval-set.md`다.
 - 완료 plan은 `docs/exec-plans/completed/2026-06-09-concise-lightweight-eval-set.md`다.
-- 다음 active plan은 `docs/exec-plans/active/2026-06-10-concise-lightweight-eval-harness.md`다.
-- 다음 업무는 사용자 승인 후 concise lightweight eval harness를 구현하는 것이다.
+- concise lightweight eval harness를 구현했다.
+- `eval/concise_test_cases.json`을 추가했고 `eval/pipeline.py --concise-lightweight` 실행 경로를 추가했다.
+- 로컬 smoke는 `total_cases=6`, `passed_cases=6`, `pass_rate=1.0`, `required_points_score_mean=0.875`, `answer_length_mean=315.0`을 기록했다.
+- 로컬 smoke 리포트는 `eval/results/concise_eval_20260610_092710.json`이다.
+- trace route `eval.concise`와 `eval.concise.case`에 `answer_mode=concise` metadata가 기록됨을 확인했다.
+- 결과 문서는 `docs/references/2026-06-10-concise-lightweight-eval-harness-result.md`다.
+- 완료 plan은 `docs/exec-plans/completed/2026-06-10-concise-lightweight-eval-harness.md`다.
+- 다음 active plan은 `docs/exec-plans/active/2026-06-10-concise-eval-server-verification.md`다.
+- 다음 업무는 사용자 승인 후 서버에 concise eval harness 변경분을 반영하고 운영 GPU/Ollama 환경에서 smoke를 실행하는 것이다.
 
 ## Working Rules
 

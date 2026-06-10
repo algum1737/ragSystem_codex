@@ -90,6 +90,12 @@ class RAGEvaluator:
             data = json.load(f)
         return data["cases"]
 
+    def _load_concise_cases(self) -> list[dict]:
+        cases_path = Path(__file__).parent / "concise_test_cases.json"
+        with open(cases_path, encoding="utf-8") as f:
+            data = json.load(f)
+        return data["cases"]
+
     def precision_at_k(
         self,
         retrieved_sources: list[str],
@@ -183,6 +189,168 @@ class RAGEvaluator:
             elif str(keyword).lower().strip() in answer_lower:
                 matched += 1
         return matched / len(expected_keywords)
+
+    def _check_term_rule(self, answer: str, rule: dict) -> dict:
+        terms = [str(t) for t in rule.get("terms", [])]
+        min_matches = int(rule.get("min_matches", 1))
+        matched_terms = [
+            term
+            for term in terms
+            if str(term).lower().strip() in answer.lower().strip()
+        ]
+        passed = len(matched_terms) >= min_matches
+        return {
+            "id": rule.get("id"),
+            "description": rule.get("description", ""),
+            "passed": passed,
+            "matched_terms": matched_terms,
+            "min_matches": min_matches,
+        }
+
+    def run_concise_lightweight(self) -> dict:
+        stats = self._store.get_stats()
+        if stats.get("count", 0) == 0:
+            print("⚠️  Chroma DB가 비어 있습니다. 먼저 문서를 인제스천하세요.")
+            sys.exit(1)
+
+        cases = self._load_concise_cases()
+        print(f"concise lightweight 평가 시작: {len(cases)}개 케이스")
+
+        results = []
+        for i, case in enumerate(cases, 1):
+            print(f"  concise 케이스 {i}/{len(cases)}: {case['question'][:40]}...")
+            query_start = time.perf_counter()
+            rag_result = self._get_engine().query(
+                case["question"],
+                doc_type=case.get("doc_type"),
+                answer_mode="concise",
+                trace_route="eval.concise",
+                trace_metadata={
+                    "answer_mode": "concise",
+                    "case_id": case["id"],
+                    "source_case_id": case.get("source_case_id"),
+                },
+            )
+            query_latency_ms = round((time.perf_counter() - query_start) * 1000, 2)
+            answer = rag_result.get("answer", "")
+            sources = rag_result.get("sources", [])
+            source_paths = [s.get("source_path", "") for s in sources]
+
+            required_results = [
+                self._check_term_rule(answer, rule)
+                for rule in case.get("required_points", [])
+            ]
+            forbidden_results = [
+                self._check_term_rule(answer, rule)
+                for rule in case.get("forbidden_claims", [])
+            ]
+            required_passed = sum(1 for item in required_results if item["passed"])
+            required_total = len(required_results)
+            required_score = (
+                round(required_passed / required_total, 4)
+                if required_total
+                else None
+            )
+            forbidden_hits = [item for item in forbidden_results if item["passed"]]
+            answer_length = len(answer)
+            source_count = len(sources)
+
+            length_passed = answer_length <= int(case.get("max_answer_length", 700))
+            source_count_passed = source_count >= int(case.get("min_source_count", 3))
+            required_passed_flag = required_score is None or required_score >= 0.75
+            forbidden_passed_flag = not forbidden_hits
+            not_found_passed = None
+            if case.get("expected_not_found"):
+                not_found_passed = self._is_not_found_answer(answer) or any(
+                    term in answer
+                    for term in ["확인되지", "명시", "근거가 부족", "찾을 수 없습니다"]
+                )
+
+            passed = all(
+                [
+                    required_passed_flag,
+                    forbidden_passed_flag,
+                    length_passed,
+                    source_count_passed,
+                    True if not_found_passed is None else not_found_passed,
+                ]
+            )
+
+            result = {
+                "id": case["id"],
+                "source_case_id": case.get("source_case_id"),
+                "question": case["question"],
+                "doc_type": case.get("doc_type"),
+                "answer_mode": "concise",
+                "answer": answer,
+                "answer_length": answer_length,
+                "max_answer_length": case.get("max_answer_length", 700),
+                "source_count": source_count,
+                "min_source_count": case.get("min_source_count", 3),
+                "retrieved_sources": source_paths,
+                "latency_ms": {"query_total": query_latency_ms},
+                "required_points": required_results,
+                "required_points_score": required_score,
+                "forbidden_claims": forbidden_results,
+                "forbidden_claims_hit_count": len(forbidden_hits),
+                "expected_not_found": case.get("expected_not_found", False),
+                "not_found_success": not_found_passed,
+                "passed": passed,
+            }
+            results.append(result)
+
+            trace_event(
+                route="eval.concise.case",
+                question=case["question"],
+                doc_type=case.get("doc_type"),
+                model=self._llm_model,
+                top_k=self._top_k,
+                retrieved_sources=source_paths,
+                latency_ms={"query_total": query_latency_ms},
+                answer_length=answer_length,
+                eval_case_id=case["id"],
+                eval_scores={
+                    "required_points_score": required_score,
+                    "forbidden_claims_hit_count": len(forbidden_hits),
+                    "source_count": source_count,
+                    "answer_length": answer_length,
+                    "passed": passed,
+                    "not_found_success": not_found_passed,
+                },
+                metadata={
+                    "answer_mode": "concise",
+                    "source_case_id": case.get("source_case_id"),
+                },
+            )
+
+        passed_count = sum(1 for r in results if r["passed"])
+        summary = {
+            "total_cases": len(results),
+            "passed_cases": passed_count,
+            "pass_rate": round(passed_count / len(results), 4) if results else None,
+            "answer_mode": "concise",
+            "llm_model": self._llm_model,
+            "top_k": self._top_k,
+            "required_points_score_mean": self._mean_optional(
+                [r.get("required_points_score") for r in results]
+            ),
+            "answer_length_mean": self._mean_optional(
+                [r.get("answer_length") for r in results]
+            ),
+            "query_latency_ms_mean": self._mean_optional(
+                [r.get("latency_ms", {}).get("query_total") for r in results]
+            ),
+        }
+
+        print("\n=== concise lightweight 평가 요약 ===")
+        for k, v in summary.items():
+            print(f"  {k}: {v}")
+
+        return {"cases": results, "summary": summary}
+
+    def _mean_optional(self, values: list[float | int | None]) -> float | None:
+        nums = [float(v) for v in values if v is not None]
+        return round(sum(nums) / len(nums), 4) if nums else None
 
     def _select_faithfulness_contexts(
         self,
@@ -459,9 +627,9 @@ class RAGEvaluator:
 
         return {"cases": results, "summary": summary}
 
-    def save_report(self, results: dict, out_dir: str = "eval/results") -> str:
+    def save_report(self, results: dict, out_dir: str = "eval/results", prefix: str = "eval") -> str:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"eval_{timestamp}.json"
+        filename = f"{prefix}_{timestamp}.json"
 
         try:
             os.makedirs(out_dir, exist_ok=True)
@@ -497,13 +665,21 @@ if __name__ == "__main__":
         action="store_true",
         help="전체 지표 측정 + eval/results/에 리포트 저장",
     )
+    parser.add_argument(
+        "--concise-lightweight",
+        action="store_true",
+        help="concise answer mode 전용 경량 평가셋 실행 + eval/results/에 리포트 저장",
+    )
     parser.add_argument("--top-k", type=int, default=5, dest="top_k")
     parser.add_argument("--model", default="gemma3:12b")
     args = parser.parse_args()
 
     evaluator = RAGEvaluator(top_k=args.top_k, llm_model=args.model)
 
-    if args.all:
+    if args.concise_lightweight:
+        result = evaluator.run_concise_lightweight()
+        evaluator.save_report(result, prefix="concise_eval")
+    elif args.all:
         result = evaluator.run()
         evaluator.save_report(result)
     elif args.metric:
