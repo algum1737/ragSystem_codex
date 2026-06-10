@@ -52,5 +52,24 @@
 
 ## Open Work
 
-- concise mode 경량 평가셋 후보 정의
-- 구현 필요 여부 결정
+- 없음
+
+## Completion
+
+- 기존 `eval/test_cases.json`의 23개 케이스와 최근 concise trace review 결과를 확인했다.
+- concise 전용 경량 평가셋 후보 6개를 정의했다.
+- 각 케이스의 `required_points`, `forbidden_claims`, answer length, source count, latency 기준을 문서로 고정했다.
+- 결과 문서는 `docs/references/2026-06-10-concise-lightweight-eval-set.md`에 기록했다.
+- 구현은 필요하지만 사용자 승인 후 별도 계획에서 진행한다.
+- 다음 active plan은 `docs/exec-plans/active/2026-06-10-concise-lightweight-eval-harness.md`다.
+
+## Validation Result
+
+- Pre-flight checks: 통과
+  - `git status --short --branch`: `## main...origin/main`
+  - 관련 결과 문서 `docs/references/2026-06-09-concise-mode-trace-review.md` 확인
+  - active plan 존재 확인
+- Automated tests: 통과
+  - `bash scripts/validate-docs.sh`: `template docs validation passed`
+- Manual/Runtime QA: 추가 운영 query는 실행하지 않았다. 이번 작업은 문서 정의 범위이며 최근 trace review 결과를 근거로 사용했다.
+- Skipped/Not Run: 계획대로 full eval과 eval harness 구현은 실행하지 않았다.

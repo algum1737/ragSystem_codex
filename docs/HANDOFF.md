@@ -206,8 +206,14 @@
 - 같은 paired sample에서 `standard`는 평균 total 16088.69ms, LLM 12737.12ms, answer length 496.33자, source 5개였다.
 - 결과 문서는 `docs/references/2026-06-09-concise-mode-trace-review.md`다.
 - 완료 plan은 `docs/exec-plans/completed/2026-06-09-concise-mode-trace-review.md`다.
-- 다음 active plan은 `docs/exec-plans/active/2026-06-09-concise-lightweight-eval-set.md`다.
-- 다음 업무는 concise mode 전용 경량 평가셋과 판정 기준을 문서로 먼저 고정하는 것이다.
+- concise mode 전용 경량 평가셋과 판정 기준을 문서로 고정했다.
+- 경량셋은 `concise-01`부터 `concise-06`까지 6개 케이스로 시작한다.
+- 판정 기준은 `required_points` 충족률 0.75 이상, `forbidden_claims` 0건, source 3개 이상, 답변 700자 이하, warmed total latency 12000ms 이하 권장이다.
+- no-answer 케이스 `concise-05`는 문서 미확인 또는 직접 근거 부족을 명시해야 하고 결제 주기/금액 변경 조건을 임의 생성하면 실패다.
+- 결과 문서는 `docs/references/2026-06-10-concise-lightweight-eval-set.md`다.
+- 완료 plan은 `docs/exec-plans/completed/2026-06-09-concise-lightweight-eval-set.md`다.
+- 다음 active plan은 `docs/exec-plans/active/2026-06-10-concise-lightweight-eval-harness.md`다.
+- 다음 업무는 사용자 승인 후 concise lightweight eval harness를 구현하는 것이다.
 
 ## Working Rules
 

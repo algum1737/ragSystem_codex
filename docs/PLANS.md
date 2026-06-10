@@ -413,6 +413,12 @@
 
 - `2026-06-09-concise-lightweight-eval-set.md`
   - 목표: 선택형 `concise` answer mode가 짧은 답변을 만들면서 필수 근거와 예외사항을 누락하지 않는지 확인할 수 있는 경량 평가셋과 판정 기준을 정의한다.
+  - 상태: Completed
+
+### Concise Lightweight Eval Harness
+
+- `2026-06-10-concise-lightweight-eval-harness.md`
+  - 목표: 문서로 정의한 concise mode 경량 평가셋을 실행 가능한 eval harness로 반영한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -431,10 +437,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-09-concise-lightweight-eval-set.md`
+- `exec-plans/active/2026-06-10-concise-lightweight-eval-harness.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-09-concise-lightweight-eval-set.md`
 - `exec-plans/completed/2026-06-09-concise-mode-trace-review.md`
 - `exec-plans/completed/2026-06-09-post-deploy-monitoring.md`
 - `exec-plans/completed/2026-06-09-push-and-ci-verification.md`
