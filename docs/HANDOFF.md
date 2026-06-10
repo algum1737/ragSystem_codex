@@ -227,8 +227,15 @@
 - smoke 이후 서버 `/health`는 `{"status":"ok","model":"gemma3:12b"}`다.
 - 결과 문서는 `docs/references/2026-06-10-concise-eval-server-verification-result.md`다.
 - 완료 plan은 `docs/exec-plans/completed/2026-06-10-concise-eval-server-verification.md`다.
-- 다음 active plan은 `docs/exec-plans/active/2026-06-10-concise-eval-ci-promotion.md`다.
-- 다음 업무는 concise lightweight eval을 CI 또는 배포 후 수동 검증 루프에 승격할지 결정하는 것이다.
+- concise lightweight eval의 CI/운영 루프 승격 판단을 완료했다.
+- GitHub Actions에는 Ollama/Chroma가 필요한 runtime eval을 넣지 않고, `eval/concise_test_cases.json` schema 정적 검증만 추가했다.
+- 추가 스크립트는 `scripts/validate_concise_eval_cases.py`다.
+- CI workflow에는 `python scripts/validate_concise_eval_cases.py eval/concise_test_cases.json` step을 추가했다.
+- 서버 LLM/RAG smoke는 배포 후 수동 검증 루프로 유지한다.
+- 결과 문서는 `docs/references/2026-06-10-concise-eval-ci-promotion-result.md`다.
+- 완료 plan은 `docs/exec-plans/completed/2026-06-10-concise-eval-ci-promotion.md`다.
+- 다음 active plan은 `docs/exec-plans/active/2026-06-10-concise-eval-runbook-script.md`다.
+- 다음 업무는 서버 concise lightweight eval smoke를 반복 가능하게 실행할 runbook 또는 script를 정리하는 것이다.
 
 ## Working Rules
 

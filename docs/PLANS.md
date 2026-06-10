@@ -431,6 +431,12 @@
 
 - `2026-06-10-concise-eval-ci-promotion.md`
   - 목표: concise lightweight eval을 CI 또는 배포 후 수동 검증 루프에 승격할지 결정한다.
+  - 상태: Completed
+
+### Concise Eval Runbook Script
+
+- `2026-06-10-concise-eval-runbook-script.md`
+  - 목표: 서버 concise lightweight eval smoke를 반복 가능하게 실행할 수 있도록 runbook 또는 script를 정리한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -449,10 +455,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-10-concise-eval-ci-promotion.md`
+- `exec-plans/active/2026-06-10-concise-eval-runbook-script.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-10-concise-eval-ci-promotion.md`
 - `exec-plans/completed/2026-06-10-concise-eval-server-verification.md`
 - `exec-plans/completed/2026-06-10-concise-lightweight-eval-harness.md`
 - `exec-plans/completed/2026-06-09-concise-lightweight-eval-set.md`

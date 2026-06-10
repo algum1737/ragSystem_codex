@@ -79,13 +79,15 @@
 - [2026-06-10 Concise Lightweight Eval Set](./references/2026-06-10-concise-lightweight-eval-set.md)
 - [2026-06-10 Concise Lightweight Eval Harness Result](./references/2026-06-10-concise-lightweight-eval-harness-result.md)
 - [2026-06-10 Concise Eval Server Verification Result](./references/2026-06-10-concise-eval-server-verification-result.md)
+- [2026-06-10 Concise Eval CI Promotion Result](./references/2026-06-10-concise-eval-ci-promotion-result.md)
 
 ## Active Work
 
-- [Concise Eval CI Promotion Plan](./exec-plans/active/2026-06-10-concise-eval-ci-promotion.md)
+- [Concise Eval Runbook Script Plan](./exec-plans/active/2026-06-10-concise-eval-runbook-script.md)
 
 ## Completed Work
 
+- [Concise Eval CI Promotion Plan](./exec-plans/completed/2026-06-10-concise-eval-ci-promotion.md)
 - [Concise Eval Server Verification Plan](./exec-plans/completed/2026-06-10-concise-eval-server-verification.md)
 - [Concise Lightweight Eval Harness Plan](./exec-plans/completed/2026-06-10-concise-lightweight-eval-harness.md)
 - [Concise Lightweight Eval Set Plan](./exec-plans/completed/2026-06-09-concise-lightweight-eval-set.md)

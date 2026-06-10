@@ -26,5 +26,8 @@ jobs:
       - name: Compile Python entry points
         run: python -m py_compile eval/pipeline.py retriever/engine.py api/models.py api/main.py app.py
 
+      - name: Validate concise eval cases
+        run: python scripts/validate_concise_eval_cases.py eval/concise_test_cases.json
+
       - name: Check source drift guard
         run: python scripts/source_drift_report.py eval/results/eval_20260528_115250_location_dispute_added.json --fail-on-critical
