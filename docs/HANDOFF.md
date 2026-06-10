@@ -234,8 +234,17 @@
 - 서버 LLM/RAG smoke는 배포 후 수동 검증 루프로 유지한다.
 - 결과 문서는 `docs/references/2026-06-10-concise-eval-ci-promotion-result.md`다.
 - 완료 plan은 `docs/exec-plans/completed/2026-06-10-concise-eval-ci-promotion.md`다.
-- 다음 active plan은 `docs/exec-plans/active/2026-06-10-concise-eval-runbook-script.md`다.
-- 다음 업무는 서버 concise lightweight eval smoke를 반복 가능하게 실행할 runbook 또는 script를 정리하는 것이다.
+- 서버 concise lightweight eval smoke runbook/script를 정리했다.
+- `scripts/run-concise-eval-smoke.sh`를 추가했고, `docs/manual-deployment-guide.md`에 `Concise Eval Smoke` 섹션을 추가했다.
+- 서버 `/opt/ragSystem_codex/scripts/run-concise-eval-smoke.sh`에도 script를 반영했다.
+- 서버 runbook script는 report와 trace를 생성했고, `concise-06` 실패를 감지해 exit code 1로 종료했다.
+- 실패 report는 `/opt/ragSystem_codex/eval/results/concise_eval_20260610_114205.json`이다.
+- 실패 원인은 유료서비스 중단/변경 통지 답변에서 통지 수단과 사전/사후 예외 required point가 누락된 것이다.
+- 실패 후 서버 `/health`는 `{"status":"ok","model":"gemma3:12b"}`다.
+- 결과 문서는 `docs/references/2026-06-10-concise-eval-runbook-script-result.md`다.
+- 완료 plan은 `docs/exec-plans/completed/2026-06-10-concise-eval-runbook-script.md`다.
+- 다음 active plan은 `docs/exec-plans/active/2026-06-10-concise-06-failure-triage.md`다.
+- 다음 업무는 `concise-06` 실패가 prompt 문제인지 평가 기준 문제인지 triage하는 것이다.
 
 ## Working Rules
 

@@ -437,6 +437,12 @@
 
 - `2026-06-10-concise-eval-runbook-script.md`
   - 목표: 서버 concise lightweight eval smoke를 반복 가능하게 실행할 수 있도록 runbook 또는 script를 정리한다.
+  - 상태: Completed
+
+### Concise 06 Failure Triage
+
+- `2026-06-10-concise-06-failure-triage.md`
+  - 목표: runbook script가 감지한 `concise-06` 실패를 분석해 prompt 문제인지 평가 기준 문제인지 결정한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -455,10 +461,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-10-concise-eval-runbook-script.md`
+- `exec-plans/active/2026-06-10-concise-06-failure-triage.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-10-concise-eval-runbook-script.md`
 - `exec-plans/completed/2026-06-10-concise-eval-ci-promotion.md`
 - `exec-plans/completed/2026-06-10-concise-eval-server-verification.md`
 - `exec-plans/completed/2026-06-10-concise-lightweight-eval-harness.md`

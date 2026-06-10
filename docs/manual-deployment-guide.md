@@ -325,7 +325,41 @@ RAG_TRACE_PATH=/opt/ragSystem_codex/logs/rag_traces_eval.jsonl \
 
 trace payload는 기본적으로 full prompt, full answer, chunk text를 저장하지 않는다. 질문 원문도 기본 저장하지 않고 `question_hash`만 기록한다.
 
-## 10. Update And Redeploy Without Git
+## 10. Concise Eval Smoke
+
+선택형 `concise` 답변 모드의 경량 평가 smoke는 운영 서버에서 실행한다. 이 검증은 Chroma DB, Ollama, `gemma3:12b` 모델, 임베딩/리랭커 캐시가 필요하므로 GitHub Actions에서는 실행하지 않는다.
+
+서버에 최신 코드와 `scripts/run-concise-eval-smoke.sh`가 반영되어 있으면 아래 명령을 사용한다.
+
+```bash
+cd /opt/ragSystem_codex
+bash scripts/run-concise-eval-smoke.sh
+```
+
+필요하면 환경변수로 모델, top_k, trace 경로를 바꾼다.
+
+```bash
+cd /opt/ragSystem_codex
+MODEL=gemma3:12b \
+TOP_K=5 \
+TRACE_PATH=/opt/ragSystem_codex/logs/concise_lightweight_eval_manual.jsonl \
+bash scripts/run-concise-eval-smoke.sh
+```
+
+성공 기준:
+
+- `total_cases`와 `passed_cases`가 같다.
+- `pass_rate=1.0`이다.
+- report가 `eval/results/concise_eval_*.json`에 생성된다.
+- trace file에 `eval.concise`와 `eval.concise.case` route가 기록된다.
+- smoke 이후 API health가 정상이다.
+
+```bash
+curl http://localhost:8000/health
+tail -n 2 /opt/ragSystem_codex/logs/concise_lightweight_eval_manual.jsonl
+```
+
+## 11. Update And Redeploy Without Git
 
 수정 사항을 반영할 때는 로컬에서 다시 압축해 서버에 올리고, 서버에서 기존 디렉터리를 백업한 뒤 교체한다.
 
@@ -400,7 +434,7 @@ curl http://localhost:8000/stats
 
 브라우저에서 `http://SERVER_IP:8501` 접속을 확인한다.
 
-## 11. Firewall And Exposure
+## 12. Firewall And Exposure
 
 직접 포트 접속을 허용해야 한다면 최소한 Streamlit 포트만 제한적으로 연다.
 
@@ -410,7 +444,7 @@ sudo ufw allow from TRUSTED_IP to any port 8501 proto tcp
 
 FastAPI `8000`과 Ollama `11434`는 외부에 직접 공개하지 않는 것을 원칙으로 한다. 외부 공개가 필요하면 Nginx reverse proxy, VPN, 사내망 접근 제한, 인증 계층을 먼저 둔다.
 
-## 12. Rollback
+## 13. Rollback
 
 배포 후 문제가 생기면 백업 디렉터리로 되돌린다.
 

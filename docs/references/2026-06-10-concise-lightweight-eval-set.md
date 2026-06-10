@@ -127,6 +127,11 @@ Forbidden claims:
 - 구체적인 결제 주기, 금액 변경 기준, 통지 시점을 근거 없이 확정한다.
 - no-answer 케이스인데 정상 answer case처럼 장황하게 설명한다.
 
+Implementation note:
+
+- 환불 조건의 `7일 이내`처럼 문서에 있는 관련 기간 표현은 자동 갱신 결제 주기 조작으로 보지 않는다.
+- forbidden deterministic check는 `매월`, `매년`, `결제 주기는`, `금액 변경 기준`, `변경 기준`처럼 자동 갱신 주기/금액 조건을 확정하는 표현에 한정한다.
+
 ### `concise-06`
 
 Question:
