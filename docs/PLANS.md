@@ -425,6 +425,12 @@
 
 - `2026-06-10-concise-eval-server-verification.md`
   - 목표: 로컬에서 구현한 concise lightweight eval harness를 Ubuntu 서버에 반영하고 운영 GPU/Ollama 환경에서 smoke 결과를 확인한다.
+  - 상태: Completed
+
+### Concise Eval CI Promotion
+
+- `2026-06-10-concise-eval-ci-promotion.md`
+  - 목표: concise lightweight eval을 CI 또는 배포 후 수동 검증 루프에 승격할지 결정한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -443,10 +449,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-10-concise-eval-server-verification.md`
+- `exec-plans/active/2026-06-10-concise-eval-ci-promotion.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-10-concise-eval-server-verification.md`
 - `exec-plans/completed/2026-06-10-concise-lightweight-eval-harness.md`
 - `exec-plans/completed/2026-06-09-concise-lightweight-eval-set.md`
 - `exec-plans/completed/2026-06-09-concise-mode-trace-review.md`

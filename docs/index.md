@@ -78,13 +78,15 @@
 - [2026-06-09 Concise Mode Trace Review](./references/2026-06-09-concise-mode-trace-review.md)
 - [2026-06-10 Concise Lightweight Eval Set](./references/2026-06-10-concise-lightweight-eval-set.md)
 - [2026-06-10 Concise Lightweight Eval Harness Result](./references/2026-06-10-concise-lightweight-eval-harness-result.md)
+- [2026-06-10 Concise Eval Server Verification Result](./references/2026-06-10-concise-eval-server-verification-result.md)
 
 ## Active Work
 
-- [Concise Eval Server Verification Plan](./exec-plans/active/2026-06-10-concise-eval-server-verification.md)
+- [Concise Eval CI Promotion Plan](./exec-plans/active/2026-06-10-concise-eval-ci-promotion.md)
 
 ## Completed Work
 
+- [Concise Eval Server Verification Plan](./exec-plans/completed/2026-06-10-concise-eval-server-verification.md)
 - [Concise Lightweight Eval Harness Plan](./exec-plans/completed/2026-06-10-concise-lightweight-eval-harness.md)
 - [Concise Lightweight Eval Set Plan](./exec-plans/completed/2026-06-09-concise-lightweight-eval-set.md)
 - [Concise Mode Trace Review Plan](./exec-plans/completed/2026-06-09-concise-mode-trace-review.md)

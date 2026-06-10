@@ -219,8 +219,16 @@
 - trace route `eval.concise`와 `eval.concise.case`에 `answer_mode=concise` metadata가 기록됨을 확인했다.
 - 결과 문서는 `docs/references/2026-06-10-concise-lightweight-eval-harness-result.md`다.
 - 완료 plan은 `docs/exec-plans/completed/2026-06-10-concise-lightweight-eval-harness.md`다.
-- 다음 active plan은 `docs/exec-plans/active/2026-06-10-concise-eval-server-verification.md`다.
-- 다음 업무는 사용자 승인 후 서버에 concise eval harness 변경분을 반영하고 운영 GPU/Ollama 환경에서 smoke를 실행하는 것이다.
+- concise eval harness를 Ubuntu 서버에 반영하고 운영 GPU/Ollama 환경에서 smoke를 실행했다.
+- 서버 반영 파일은 `eval/pipeline.py`, `eval/concise_test_cases.json`이다.
+- 서버 smoke report는 `/opt/ragSystem_codex/eval/results/concise_eval_20260610_105027.json`이다.
+- 서버 smoke summary는 `total_cases=6`, `passed_cases=6`, `pass_rate=1.0`, `required_points_score_mean=0.875`, `answer_length_mean=315.3333`, `query_latency_ms_mean=8483.0783`이다.
+- 서버 trace path는 `/opt/ragSystem_codex/logs/concise_lightweight_eval_20260610.jsonl`이고 route `eval.concise`, `eval.concise.case`, metadata `answer_mode=concise`를 확인했다.
+- smoke 이후 서버 `/health`는 `{"status":"ok","model":"gemma3:12b"}`다.
+- 결과 문서는 `docs/references/2026-06-10-concise-eval-server-verification-result.md`다.
+- 완료 plan은 `docs/exec-plans/completed/2026-06-10-concise-eval-server-verification.md`다.
+- 다음 active plan은 `docs/exec-plans/active/2026-06-10-concise-eval-ci-promotion.md`다.
+- 다음 업무는 concise lightweight eval을 CI 또는 배포 후 수동 검증 루프에 승격할지 결정하는 것이다.
 
 ## Working Rules
 
