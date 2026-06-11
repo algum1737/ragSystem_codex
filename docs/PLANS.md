@@ -443,6 +443,12 @@
 
 - `2026-06-10-concise-06-failure-triage.md`
   - 목표: runbook script가 감지한 `concise-06` 실패를 분석해 prompt 문제인지 평가 기준 문제인지 결정한다.
+  - 상태: Completed
+
+### Concise 06 Stability Fix
+
+- `2026-06-11-concise-06-stability-fix.md`
+  - 목표: `concise-06`가 통지 방법과 사전/사후 예외를 안정적으로 보존하도록 평가 rule과 concise prompt 보강 후보를 좁게 적용하고 검증한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -461,10 +467,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-10-concise-06-failure-triage.md`
+- `exec-plans/active/2026-06-11-concise-06-stability-fix.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-10-concise-06-failure-triage.md`
 - `exec-plans/completed/2026-06-10-concise-eval-runbook-script.md`
 - `exec-plans/completed/2026-06-10-concise-eval-ci-promotion.md`
 - `exec-plans/completed/2026-06-10-concise-eval-server-verification.md`

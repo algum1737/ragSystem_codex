@@ -51,5 +51,25 @@ runbook script가 감지한 `concise-06` 실패를 분석해 prompt 문제인지
 
 ## Open Work
 
-- `concise-06` 실패 원인 분류
-- 후속 조치 결정
+- 완료됨. 상세 결과는 `docs/references/2026-06-11-concise-06-failure-triage-result.md`에 기록했다.
+
+## Completion
+
+- 서버 failure report `/opt/ragSystem_codex/eval/results/concise_eval_20260610_114205.json`을 확인했다.
+- 서버 trace `/opt/ragSystem_codex/logs/concise_lightweight_eval_20260610_runbook_test2.jsonl`을 확인했다.
+- 동일 질문 top-5 검색 청크를 확인해 사전/사후 통지 예외 근거가 검색 결과에 포함됨을 확인했다.
+- 통지 방법 관련 별도 검색으로 카카오 제6조 청크의 전자우편, 카카오톡, 게시판, 팝업 근거가 벡터스토어에 있음을 확인했다.
+- 같은 질문의 `standard`/`concise` 답변을 비교했다.
+- `concise` 3회 반복 실행으로 답변 안정성 문제와 deterministic rule 표현 허용 범위 문제를 확인했다.
+- 다음 active plan을 `docs/exec-plans/active/2026-06-11-concise-06-stability-fix.md`로 둔다.
+
+## Validation Result
+
+- 통과: `git status --short --branch`
+- 통과: `docs/references/2026-06-10-concise-eval-runbook-script-result.md` 확인
+- 통과: 서버 failure report 확인
+- 통과: 서버 trace 확인
+- 통과: 서버 동일 질문 retrieve/top-5 청크 확인
+- 통과: 서버 `standard`/`concise` 단일 질의 비교
+- 통과: 서버 `concise-06` 3회 반복 smoke
+- 통과: `bash scripts/validate-docs.sh`

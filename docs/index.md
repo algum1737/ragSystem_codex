@@ -81,13 +81,15 @@
 - [2026-06-10 Concise Eval Server Verification Result](./references/2026-06-10-concise-eval-server-verification-result.md)
 - [2026-06-10 Concise Eval CI Promotion Result](./references/2026-06-10-concise-eval-ci-promotion-result.md)
 - [2026-06-10 Concise Eval Runbook Script Result](./references/2026-06-10-concise-eval-runbook-script-result.md)
+- [2026-06-11 Concise 06 Failure Triage Result](./references/2026-06-11-concise-06-failure-triage-result.md)
 
 ## Active Work
 
-- [Concise 06 Failure Triage Plan](./exec-plans/active/2026-06-10-concise-06-failure-triage.md)
+- [Concise 06 Stability Fix Plan](./exec-plans/active/2026-06-11-concise-06-stability-fix.md)
 
 ## Completed Work
 
+- [Concise 06 Failure Triage Plan](./exec-plans/completed/2026-06-10-concise-06-failure-triage.md)
 - [Concise Eval Runbook Script Plan](./exec-plans/completed/2026-06-10-concise-eval-runbook-script.md)
 - [Concise Eval CI Promotion Plan](./exec-plans/completed/2026-06-10-concise-eval-ci-promotion.md)
 - [Concise Eval Server Verification Plan](./exec-plans/completed/2026-06-10-concise-eval-server-verification.md)
