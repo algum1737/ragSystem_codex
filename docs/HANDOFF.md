@@ -267,6 +267,9 @@
 - post-fix 이후 실제 사용자 표본은 아직 부족하고 대부분 작업 smoke 표본이다.
 - 표본 부족 보완으로 `concise-06` 운영 API smoke를 1회 실행했고 `answer_length=376`, `source_count=5`, 사전/사후 예외 포함, `사용기간`/`청약철회`/`환불` 무관 bullet 미재발을 확인했다.
 - 다음 active plan은 `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`다.
+- real usage trace review 1차 확인 결과 서버 health는 정상이지만 post-fix 이후 실제 사용자 `concise` 표본은 아직 없다.
+- 최신 집계는 `total_records=55`, `api.query=32`, `api.answer_mode.concise=7`, `post_fix_concise_count=1`, `post_fix_smoke_like_count=1`, `post_fix_non_smoke_count=0`이다.
+- active plan은 완료하지 않고 유지한다.
 
 ## Working Rules
 
