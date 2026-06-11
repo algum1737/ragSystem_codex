@@ -61,4 +61,32 @@
 
 ## Open Work
 
-- 사용자 승인 후 구현 변경 진행
+- 완료됨. 상세 결과는 `docs/references/2026-06-11-concise-06-stability-fix-result.md`에 기록했다.
+
+## Completion
+
+- `concise-06` deterministic rule에 좁은 동의 표현을 추가했다.
+- `CONCISE_PROMPT_TEMPLATE`에 조건/예외/통지 시점 보존 규칙을 추가했다.
+- 사전/사후 통지 예외는 별도 bullet로 쓰도록 보강했다.
+- 질문과 직접 관련 없는 사용기간, 청약철회, 환불, 보상 세부사항을 제외하도록 prompt를 보강했다.
+- 서버에 변경 파일을 반영했다.
+- 서버 runbook smoke에서 concise lightweight eval 6/6 통과를 확인했다.
+- 운영 API/Web 프로세스를 재기동해 변경 적용을 확인했다.
+
+## Validation Result
+
+- 통과: `git status --short --branch`
+- 통과: `docs/references/2026-06-11-concise-06-failure-triage-result.md` 확인
+- 통과: `eval/concise_test_cases.json`의 `concise-06` rule 확인
+- 통과: `retriever/engine.py`의 `CONCISE_PROMPT_TEMPLATE` 확인
+- 통과: `.venv/bin/python -m py_compile retriever/engine.py eval/pipeline.py`
+- 통과: `.venv/bin/python scripts/validate_concise_eval_cases.py eval/concise_test_cases.json`
+- 통과: `bash scripts/validate-docs.sh`
+- 통과: 서버 `.venv/bin/python -m py_compile retriever/engine.py eval/pipeline.py`
+- 통과: 서버 `.venv/bin/python scripts/validate_concise_eval_cases.py eval/concise_test_cases.json`
+- 통과: 서버 `concise-06` 단일 질의 3회 반복
+- 통과: 서버 `bash scripts/run-concise-eval-smoke.sh`
+- 통과: 운영 API/Web health
+- 통과: 운영 API `/query` concise smoke
+- 미실행: full eval. 이 작업은 `concise` 전용 경량 회귀 보정이므로 범위 밖이다.
+- 대체 실행: 로컬 기본 `python` 명령은 없어 `.venv/bin/python`으로 py_compile을 실행했다.

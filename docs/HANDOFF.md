@@ -250,8 +250,16 @@
 - 서버 top-5 검색 청크에는 카카오 유료/결제서비스의 사전 통지와 부득이한 경우 사후 통지 근거가 포함됐다.
 - 별도 통지 방법 검색에서는 카카오 제6조의 전자우편, 카카오톡 메시지, 팝업, 게시판/공지 근거가 확인됐다.
 - 같은 질문의 `concise` 3회 반복 smoke에서 required score가 `0.5`, `0.75`, `0.75`로 흔들렸다.
-- 다음 active plan은 `docs/exec-plans/active/2026-06-11-concise-06-stability-fix.md`다.
-- 다음 업무는 사용자 승인 후 `concise-06` rule 동의 표현 보정과 concise prompt 예외 보존 규칙 후보를 좁게 검증하는 것이다.
+- `concise-06` 안정화 구현을 완료했다.
+- 결과 문서는 `docs/references/2026-06-11-concise-06-stability-fix-result.md`다.
+- 완료 plan은 `docs/exec-plans/completed/2026-06-11-concise-06-stability-fix.md`다.
+- `CONCISE_PROMPT_TEMPLATE`은 조건/제한/예외/통지 시점 질문에서 예외 조건을 생략하지 않고, 사전/사후 통지 예외가 있으면 별도 bullet로 쓰도록 보강했다.
+- `concise-06` deterministic rule은 `통보`, `명시된 방법`, `약관에 따른 방법`, `미리`, `사후 통보`, `예측 불가능`, `예측할 수 없`, `통제할 수 없`을 좁게 허용한다.
+- 서버 `concise-06` 3회 반복 smoke는 모두 통과했고 3회 모두 사전/사후 예외를 보존했다.
+- 최종 서버 runbook smoke는 `/opt/ragSystem_codex/eval/results/concise_eval_20260611_102139.json`이며 `total_cases=6`, `passed_cases=6`, `pass_rate=1.0`, `required_points_score_mean=0.9583`이다.
+- 운영 API/Web은 systemd `Restart=always` 확인 후 `ragadmin` 소유 프로세스에 `TERM`을 보내 자동 재기동했다. 재기동 후 API `/health`는 `status=ok`, `model=gemma3:12b`, Streamlit health는 `ok`였다.
+- 운영 API `/query` concise smoke에서 사전/사후 예외 보존과 무관한 `사용기간`, `청약철회`, `환불` bullet 제거를 확인했다.
+- 다음 active plan은 `docs/exec-plans/active/2026-06-11-concise-post-fix-monitoring.md`다.
 
 ## Working Rules
 
@@ -585,8 +593,8 @@
 
 ## Suggested Next Work
 
-1. active plan `docs/exec-plans/active/2026-06-11-concise-06-stability-fix.md`에 따라 `concise-06` 안정화 변경을 진행한다.
-2. 서버에서 `concise-06` 반복 smoke와 `bash scripts/run-concise-eval-smoke.sh`를 실행해 경량 평가셋 통과 여부를 확인한다.
+1. active plan `docs/exec-plans/active/2026-06-11-concise-post-fix-monitoring.md`에 따라 concise mode 운영 trace를 확인한다.
+2. 표본이 부족하면 `concise-06` 운영 API smoke 1회를 재확인하고 추가 경량 케이스 확장 필요 여부를 결정한다.
 
 ## Handoff Prompt
 

@@ -449,6 +449,12 @@
 
 - `2026-06-11-concise-06-stability-fix.md`
   - 목표: `concise-06`가 통지 방법과 사전/사후 예외를 안정적으로 보존하도록 평가 rule과 concise prompt 보강 후보를 좁게 적용하고 검증한다.
+  - 상태: Completed
+
+### Concise Post-Fix Monitoring
+
+- `2026-06-11-concise-post-fix-monitoring.md`
+  - 목표: `concise-06` 안정화 변경 이후 운영 trace와 짧은 smoke를 확인해 concise prompt 보강이 실제 운영 질문에서 불필요한 bullet을 줄이고 필수 예외를 유지하는지 점검한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -467,10 +473,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-11-concise-06-stability-fix.md`
+- `exec-plans/active/2026-06-11-concise-post-fix-monitoring.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-11-concise-06-stability-fix.md`
 - `exec-plans/completed/2026-06-10-concise-06-failure-triage.md`
 - `exec-plans/completed/2026-06-10-concise-eval-runbook-script.md`
 - `exec-plans/completed/2026-06-10-concise-eval-ci-promotion.md`
