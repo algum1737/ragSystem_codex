@@ -53,4 +53,23 @@
 
 ## Open Work
 
-- 운영 trace 표본 확인
+- 완료됨. 상세 결과는 `docs/references/2026-06-11-concise-post-fix-monitoring-result.md`에 기록했다.
+
+## Completion
+
+- 운영 API/Web health를 확인했다.
+- 최근 `rag_traces.jsonl`에서 `api.query`와 `answer_mode=concise` 표본을 집계했다.
+- post-fix 이후 실제 사용자 표본이 부족함을 확인했다.
+- 표본 부족 보완으로 `concise-06` 운영 API smoke를 1회 실행했다.
+- API smoke에서 사전/사후 예외 보존과 `사용기간`, `청약철회`, `환불` 무관 bullet 미재발을 확인했다.
+- 다음 active plan을 `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`로 둔다.
+
+## Validation Result
+
+- 통과: `git status --short --branch`
+- 통과: 서버 `/health`
+- 통과: Streamlit `_stcore/health`
+- 통과: 최근 trace 집계
+- 통과: 운영 API `concise-06` smoke
+- 통과: `bash scripts/validate-docs.sh`
+- 미실행: full eval. post-fix 운영 모니터링 범위 밖이다.

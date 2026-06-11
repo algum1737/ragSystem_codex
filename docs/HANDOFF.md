@@ -259,7 +259,14 @@
 - 최종 서버 runbook smoke는 `/opt/ragSystem_codex/eval/results/concise_eval_20260611_102139.json`이며 `total_cases=6`, `passed_cases=6`, `pass_rate=1.0`, `required_points_score_mean=0.9583`이다.
 - 운영 API/Web은 systemd `Restart=always` 확인 후 `ragadmin` 소유 프로세스에 `TERM`을 보내 자동 재기동했다. 재기동 후 API `/health`는 `status=ok`, `model=gemma3:12b`, Streamlit health는 `ok`였다.
 - 운영 API `/query` concise smoke에서 사전/사후 예외 보존과 무관한 `사용기간`, `청약철회`, `환불` bullet 제거를 확인했다.
-- 다음 active plan은 `docs/exec-plans/active/2026-06-11-concise-post-fix-monitoring.md`다.
+- post-fix monitoring을 완료했다.
+- 결과 문서는 `docs/references/2026-06-11-concise-post-fix-monitoring-result.md`다.
+- 완료 plan은 `docs/exec-plans/completed/2026-06-11-concise-post-fix-monitoring.md`다.
+- 서버 API/Web health는 정상이다.
+- 최근 `rag_traces.jsonl` 집계는 `api.query=31`, `eval.case=23`, `answer_mode=concise` API 표본 7건이다.
+- post-fix 이후 실제 사용자 표본은 아직 부족하고 대부분 작업 smoke 표본이다.
+- 표본 부족 보완으로 `concise-06` 운영 API smoke를 1회 실행했고 `answer_length=376`, `source_count=5`, 사전/사후 예외 포함, `사용기간`/`청약철회`/`환불` 무관 bullet 미재발을 확인했다.
+- 다음 active plan은 `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`다.
 
 ## Working Rules
 
@@ -593,8 +600,8 @@
 
 ## Suggested Next Work
 
-1. active plan `docs/exec-plans/active/2026-06-11-concise-post-fix-monitoring.md`에 따라 concise mode 운영 trace를 확인한다.
-2. 표본이 부족하면 `concise-06` 운영 API smoke 1회를 재확인하고 추가 경량 케이스 확장 필요 여부를 결정한다.
+1. active plan `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`에 따라 실제 사용자 concise trace 표본이 더 쌓인 뒤 재검토한다.
+2. 표본이 충분하지 않으면 active plan을 완료하지 말고 open work로 유지한다.
 
 ## Handoff Prompt
 

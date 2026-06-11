@@ -83,13 +83,15 @@
 - [2026-06-10 Concise Eval Runbook Script Result](./references/2026-06-10-concise-eval-runbook-script-result.md)
 - [2026-06-11 Concise 06 Failure Triage Result](./references/2026-06-11-concise-06-failure-triage-result.md)
 - [2026-06-11 Concise 06 Stability Fix Result](./references/2026-06-11-concise-06-stability-fix-result.md)
+- [2026-06-11 Concise Post-Fix Monitoring Result](./references/2026-06-11-concise-post-fix-monitoring-result.md)
 
 ## Active Work
 
-- [Concise Post-Fix Monitoring Plan](./exec-plans/active/2026-06-11-concise-post-fix-monitoring.md)
+- [Concise Real Usage Trace Review Plan](./exec-plans/active/2026-06-11-concise-real-usage-trace-review.md)
 
 ## Completed Work
 
+- [Concise Post-Fix Monitoring Plan](./exec-plans/completed/2026-06-11-concise-post-fix-monitoring.md)
 - [Concise 06 Stability Fix Plan](./exec-plans/completed/2026-06-11-concise-06-stability-fix.md)
 - [Concise 06 Failure Triage Plan](./exec-plans/completed/2026-06-10-concise-06-failure-triage.md)
 - [Concise Eval Runbook Script Plan](./exec-plans/completed/2026-06-10-concise-eval-runbook-script.md)

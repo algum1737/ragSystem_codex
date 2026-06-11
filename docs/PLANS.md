@@ -455,6 +455,12 @@
 
 - `2026-06-11-concise-post-fix-monitoring.md`
   - 목표: `concise-06` 안정화 변경 이후 운영 trace와 짧은 smoke를 확인해 concise prompt 보강이 실제 운영 질문에서 불필요한 bullet을 줄이고 필수 예외를 유지하는지 점검한다.
+  - 상태: Completed
+
+### Concise Real Usage Trace Review
+
+- `2026-06-11-concise-real-usage-trace-review.md`
+  - 목표: `concise` answer mode의 실제 사용자 표본이 더 쌓인 뒤 운영 trace를 다시 검토해 post-fix prompt가 불필요한 bullet을 줄이고 필수 예외를 유지하는지 확인한다.
   - 상태: Active
 
 ### Eval Model Tuning Policy
@@ -473,10 +479,11 @@
 
 ## Active Plans
 
-- `exec-plans/active/2026-06-11-concise-post-fix-monitoring.md`
+- `exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`
 
 ## Completed Plans
 
+- `exec-plans/completed/2026-06-11-concise-post-fix-monitoring.md`
 - `exec-plans/completed/2026-06-11-concise-06-stability-fix.md`
 - `exec-plans/completed/2026-06-10-concise-06-failure-triage.md`
 - `exec-plans/completed/2026-06-10-concise-eval-runbook-script.md`
