@@ -20,6 +20,7 @@
 - [QUALITY_SCORE.md](./QUALITY_SCORE.md)
 - [RELIABILITY.md](./RELIABILITY.md)
 - [SECURITY.md](./SECURITY.md)
+- [Superpowers Integration](./references/superpowers.md)
 
 ## Project References
 

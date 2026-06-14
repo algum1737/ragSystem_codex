@@ -15,6 +15,7 @@ required_files=(
   "docs/QUALITY_SCORE.md"
   "docs/RELIABILITY.md"
   "docs/SECURITY.md"
+  "docs/references/superpowers.md"
   "docs/design-docs/core-beliefs.md"
   "docs/product-specs/index.md"
   "docs/exec-plans/README.md"

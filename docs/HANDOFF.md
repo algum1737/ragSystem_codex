@@ -70,12 +70,15 @@
 
 - 현재 브랜치: `git branch --show-current`로 확인
 - 기준 커밋: `git rev-parse --short HEAD`로 확인
+- Superpowers가 설치된 환경에서는 요구사항 정리, 계획 작성, TDD/eval-first, 디버깅, 완료 검증에 관련 skill을 사용하되, 이 문서와 `AGENTS.md`의 승인/브랜치 규칙을 우선한다.
+- Superpowers 설치 여부: Codex 재시작 후 skill 목록 또는 `~/.agents/skills/superpowers-*` 경로로 확인
 - 제품/서비스: 로컬 RAG 기반 문서 초안 생성 시스템
 - 현재 상태: `ragSystem` 소스 복사, 하네스 문서 전환, 런타임 검증, 임베딩/Cross-Encoder 오프라인 캐시 검증 완료
 - 주요 목표: `.paul` 기반 운영 지식을 `docs/` 체계로 옮기고 이후 개선 작업을 Codex 방식으로 이어간다
 
 ## Latest Update
 
+- Superpowers 연동 프로파일을 ragSystem_codex 하네스 문서에 반영했다. `docs/references/superpowers.md`를 기준으로 Superpowers skill을 사용하되, 사용자 승인, 브랜치 생성, PR/merge 규칙은 `AGENTS.md`를 우선한다.
 - Langfuse 도입 전 단계로 privacy-safe local JSONL trace sink를 구현했다.
 - trace는 기본 off이며 `RAG_TRACE_ENABLED=true`일 때만 기록된다.
 - 기본 경로는 `./logs/rag_traces.jsonl`이고 `RAG_TRACE_PATH`로 변경할 수 있다.
@@ -678,9 +681,11 @@
 현재 기준:
 - branch: `git branch --show-current`
 - commit: `git rev-parse --short HEAD`
+- Superpowers: 설치된 경우 관련 skill을 먼저 검토
 
 작업 규칙:
 - 큰 작업은 active exec plan을 먼저 작성해라.
 - 작업 완료 시 완료 범위와 검증 결과를 기록하고 completed로 이동해라.
 - 커밋 후에는 docs/HANDOFF.md를 갱신하되, 커밋 해시는 git 명령으로 확인하게 유지해라.
+- Superpowers가 설치되어 있으면 brainstorming, writing-plans, test-driven-development, systematic-debugging, verification-before-completion을 이 리포지터리 문서 경로와 eval/trace 검증 루프에 맞춰 사용해라.
 ```

@@ -20,6 +20,19 @@
 - `Skipped/Not Run`: 실행하지 않을 검증 또는 실행하지 못할 가능성이 있는 검증을 미리 적고, 범위 밖/환경 없음/네트워크 제한/기기 없음 같은 이유를 명시한다.
 - `Validation Result`: 완료 시 실제 실행한 명령과 결과를 `통과`, `실패`, `미실행`으로 기록하고, 실패나 미실행은 후속 작업 또는 남은 리스크로 연결한다.
 
+## Superpowers-Compatible Detail
+
+Superpowers가 설치된 환경에서는 `writing-plans`의 실행 가능성 기준을 이 문서 체계 안에 반영한다.
+
+- 계획은 `docs/exec-plans/active/`에 저장한다. 별도 요청이 없으면 `docs/superpowers/plans/`를 만들지 않는다.
+- 각 작업은 checkbox 형태의 작은 단계로 나눈다.
+- 코드 변경 단계에는 정확한 파일 경로와 필요한 경우 코드 조각을 포함한다.
+- 테스트 단계에는 실행 명령, 기대 실패 또는 기대 성공 결과를 적는다.
+- 기능 또는 버그 수정은 가능한 한 RED-GREEN-REFACTOR 순서로 계획한다.
+- RAG/eval 변경은 관련 eval subset, trace, source drift 또는 latency 검증을 계획에 명시한다.
+- 구현 후에는 계획의 요구사항 충족 여부와 코드 품질을 분리해 검토한다.
+- 추정, 미확정, 실행하지 못한 검증은 빈칸으로 두지 않고 `Assumptions`, `Open Work`, `Skipped/Not Run`에 기록한다.
+
 ## Recommended Plan Sections
 
 - `Goal`
@@ -28,6 +41,7 @@
 - `Assumptions`
 - `Pre-flight checks`
 - `Steps`
+- `Task Breakdown`
 - `Automated tests`
 - `Manual/Runtime QA`
 - `Skipped/Not Run`

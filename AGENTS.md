@@ -20,12 +20,15 @@
 
 ## Operating Rules
 
+- 우선순위는 사용자 명시 지시, 이 `AGENTS.md`, `docs/` 하네스 문서, 설치된 Superpowers skill, 기본 에이전트 동작 순서다.
 - 리포지터리 밖에만 있는 지식은 없는 것으로 간주한다.
 - 요구사항이 불명확하면 추정하지 말고 `Assumptions` 또는 `Open Questions`에 기록한다.
 - 큰 작업은 구현 전에 `docs/exec-plans/active/`에 실행 계획을 먼저 남긴다.
 - 작업 완료 시 완료 범위와 검증 결과를 계획 문서에 기록한다.
 - 검증이 끝났고 남은 작업이 없으면 계획 문서를 `docs/exec-plans/completed/`로 이동한다.
 - exec plan에는 작업 시작 전에 검증 계약을 고정한다. 최소한 `Pre-flight checks`, `Automated tests`, `Manual/Runtime QA`, `Skipped/Not Run` 판단 기준을 명시하고 완료 시 `Validation Result`에서 실행/통과/실패/미실행과 이유를 대조한다.
+- Superpowers가 설치된 환경에서는 관련 workflow skill을 사용한다. 요구사항 정리는 `brainstorming`, 구현 계획은 `writing-plans`, 기능/버그 구현은 `test-driven-development`, 버그 분석은 `systematic-debugging`, 완료 전 확인은 `verification-before-completion`을 우선 검토한다.
+- Superpowers 기본 저장 경로보다 이 리포지터리의 경로를 우선한다. 스펙과 실행 계획은 가능한 한 `docs/product-specs/`, `docs/design-docs/`, `docs/exec-plans/active/`에 남긴다.
 - 커밋 후에는 `docs/HANDOFF.md`의 최근 반영 작업, 현재 상태, 다음 작업을 갱신한다.
 - 구현 변경은 사용자가 명시적으로 승인한 경우에만 수행한다.
 - 반복되는 규칙은 문서에 남기고 가능하면 스크립트나 테스트로 승격한다.
@@ -57,3 +60,4 @@
 - 품질 기준: `docs/QUALITY_SCORE.md`
 - 신뢰성 기준: `docs/RELIABILITY.md`
 - 보안 기준: `docs/SECURITY.md`
+- Superpowers 연동: `docs/references/superpowers.md`

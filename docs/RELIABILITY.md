@@ -16,3 +16,26 @@
 - 검색 품질 변경은 `eval/pipeline.py`로 수치 비교가 가능해야 한다.
 - Ollama와 Chroma는 로컬 런타임 경계이므로 기동 상태와 실패 원인을 빠르게 확인할 수 있어야 한다.
 - 생성 실패는 입력 파일, 섹션 진행 상태, 출력 경로를 추적할 수 있어야 한다.
+
+## Debugging Protocol
+
+버그, 테스트 실패, eval 회귀, latency 회귀, 빌드 실패, 예기치 않은 답변은 수정부터 하지 않고 원인 조사부터 시작한다.
+
+1. 오류 메시지, 스택 트레이스, 실패 명령, eval report를 끝까지 읽는다.
+2. 재현 절차, query, answer mode, model, top_k, trace id, 입력 문서를 기록한다.
+3. 최근 변경, prompt, retrieval, rerank, source scope, model, runtime 환경 차이를 확인한다.
+4. 정상 케이스와 실패 케이스의 source, trace, latency, answer를 비교한다.
+5. 하나의 가설을 세우고 가장 작은 실험으로 확인한다.
+6. 원인이 확인되면 실패를 재현하는 테스트, eval case, source drift guard, trace 검증 중 적절한 증거를 먼저 만든다.
+7. 한 번에 하나의 수정만 적용하고 같은 검증을 다시 실행한다.
+8. 같은 문제에 대해 여러 수정이 연속 실패하면 구조적 문제 가능성을 기록하고 사람에게 에스컬레이션한다.
+
+## Evidence To Keep
+
+- 실패 명령과 출력 요약
+- 재현 query와 입력 조건
+- trace id 또는 eval report 경로
+- 조사한 가설과 배제 근거
+- 최종 원인
+- 수정 범위
+- 재검증 명령과 결과

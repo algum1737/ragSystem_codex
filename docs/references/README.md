@@ -20,3 +20,4 @@
 - [2026-05-14 Eval Case Alignment](./2026-05-14-eval-case-alignment.md)
 - [2026-05-14 Search Quality Ceiling Analysis](./2026-05-14-search-quality-ceiling-analysis.md)
 - [2026-05-14 Retrieval Metric Normalization](./2026-05-14-retrieval-metric-normalization.md)
+- [Superpowers Integration](./superpowers.md)
