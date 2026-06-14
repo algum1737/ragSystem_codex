@@ -273,6 +273,9 @@
 - real usage trace review 1차 확인 결과 서버 health는 정상이지만 post-fix 이후 실제 사용자 `concise` 표본은 아직 없다.
 - 최신 집계는 `total_records=55`, `api.query=32`, `api.answer_mode.concise=7`, `post_fix_concise_count=1`, `post_fix_smoke_like_count=1`, `post_fix_non_smoke_count=0`이다.
 - active plan은 완료하지 않고 유지한다.
+- real usage trace review 2차 확인 결과 서버 health는 계속 정상이고 trace는 `total_records=61`, `api.query=38`로 증가했다.
+- 다만 `answer_mode=concise` API 표본은 여전히 7건이고, post-fix 이후 실제 사용자 `concise` 표본은 0건이다.
+- active plan은 계속 완료하지 않고 유지한다.
 
 ## Working Rules
 
