@@ -90,6 +90,7 @@
 - [2026-06-18 TC07 TC15 Focused Triage Result](./references/2026-06-18-tc07-tc15-focused-triage-result.md)
 - [2026-06-18 TC07 TC15 Eval Rule Calibration Result](./references/2026-06-18-tc07-tc15-eval-rule-calibration-result.md)
 - [2026-06-18 TC07 TC15 Eval Rule Calibration Source Drift Report](./references/2026-06-18-tc07-tc15-eval-rule-calibration-source-drift-report.md)
+- [2026-06-18 TC04 Faithfulness Triage Result](./references/2026-06-18-tc04-faithfulness-triage-result.md)
 
 ## Active Work
 
@@ -98,6 +99,7 @@
 
 ## Completed Work
 
+- [TC04 Faithfulness Triage Plan](./exec-plans/completed/2026-06-18-tc04-faithfulness-triage.md)
 - [TC07 TC15 Focused Triage Plan](./exec-plans/completed/2026-06-18-tc07-tc15-focused-triage.md)
 - [Gemma3 Quality Baseline Refresh Plan](./exec-plans/completed/2026-06-18-gemma3-quality-baseline-refresh.md)
 - [Concise Post-Fix Monitoring Plan](./exec-plans/completed/2026-06-11-concise-post-fix-monitoring.md)

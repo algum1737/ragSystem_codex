@@ -302,6 +302,14 @@
 - 새 지표는 `accuracy_mean=1.0`, `faithfulness_mean=0.9565`, `not_found_success_rate=1.0`, `source_recall@k_mean=1.0`, `rag_normalized_source_precision@k_mean=1.0`이다.
 - full eval 전체는 `tc-04 faithfulness=0.0` 때문에 아직 green이 아니다. `tc-04` 단일 재실행 `/opt/ragSystem_codex/eval/results/eval_tc04_check_20260618_132648.json`에서도 faithfulness failure가 재현됐다.
 - `tc-04`는 이번 rule calibration 대상이 아니며 source recall/RAG precision은 `1.0`이다. 다음 작업은 `tc-04` faithfulness failure triage다.
+- `tc-04` faithfulness triage를 완료했다.
+- 완료 plan은 `docs/exec-plans/completed/2026-06-18-tc04-faithfulness-triage.md`다.
+- 결과 문서는 `docs/references/2026-06-18-tc04-faithfulness-triage-result.md`다.
+- `tc-04` retrieved context에는 네이버 사용기간/소멸 근거와 카카오 무료체험/정기결제/고지/중단/해지 근거가 포함되어 source failure가 아니다.
+- judge variant test 결과 positive-only answer는 5/5 `faithfulness=1.0`, negative-only answer는 5/5 `faithfulness=0.0`이었다.
+- 실제 full eval answer와 단일 재실행 answer는 positive 근거와 `문서에서 확인되지 않는 내용` 문장이 섞여 반복 판정에서 `YES/NO`가 흔들렸다.
+- primary classification은 `answer wording`, secondary classification은 `faithfulness judge`다.
+- 다음 후보는 `tc-04` answer wording focused fix다. 명시적 하위 항목이 아닌 경우 `문서에서 확인되지 않는 내용` 섹션을 남발하지 않도록 standard prompt 또는 답변 형식을 좁게 검토한다.
 
 ## Working Rules
 
@@ -635,8 +643,8 @@
 
 ## Suggested Next Work
 
-1. `tc-04` faithfulness failure triage를 systematic-debugging 방식으로 진행한다.
-2. `tc-04` 최신 full eval answer, 단일 재실행 answer, retrieved context, faithfulness judge prompt를 비교해 `answer wording`, `faithfulness judge`, `eval rule`, `prompt` 중 원인을 분류한다.
+1. 사용자 승인 후 `tc-04` answer wording focused fix active plan을 작성한다.
+2. `tc-04` focused smoke, full eval, source drift report로 `faithfulness_mean=1.0` 회복 여부를 확인한다.
 3. `tc-04` 처리 후 active plan `docs/exec-plans/active/2026-06-18-tc07-tc15-eval-rule-calibration.md` 완료 여부를 결정한다.
 4. active plan `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`는 실제 사용자 concise trace 표본이 더 쌓인 뒤 재검토한다.
 
