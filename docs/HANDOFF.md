@@ -279,6 +279,14 @@
 - real usage trace review 3차 확인 결과 서버 health는 계속 정상이고 trace 파일 mtime은 `2026-06-12T06:32:19Z`로 이전 checkpoint와 변동이 없다.
 - 최신 집계는 `total_records=61`, `api.query=38`, `api.answer_mode.standard=9`, `api.answer_mode.concise=7`, `post_fix_concise_count=1`, `post_fix_smoke_like_count=1`, `post_fix_non_smoke_count=0`이다.
 - post-fix 이후 실제 사용자 `concise` 표본은 여전히 0건이므로 active plan은 계속 완료하지 않고 유지한다.
+- 모델 품질 개선을 eval-first로 진행하기 위해 `gemma3:12b + top_k=5` 최신 품질 기준선 재측정을 완료했다.
+- 완료 plan은 `docs/exec-plans/completed/2026-06-18-gemma3-quality-baseline-refresh.md`다.
+- 결과 문서는 `docs/references/2026-06-18-gemma3-quality-baseline-refresh-result.md`이고 source drift report는 `docs/references/2026-06-18-gemma3-quality-baseline-source-drift-report.md`다.
+- 최신 서버 full eval report는 `/opt/ragSystem_codex/eval/results/eval_20260618_113500.json`이며 로컬 복사본은 `eval/results/eval_20260618_113500.json`이다.
+- 최신 지표는 `accuracy_mean=0.9783`, `faithfulness_mean=1.0`, `not_found_success_rate=1.0`, `source_recall@k_mean=1.0`, `rag_normalized_source_precision@k_mean=1.0`이다.
+- 최근 23개 `eval.case` trace latency는 mean `11219.67ms`, median `11143.97ms`, p95 `17250.61ms`, max `28507.23ms`다.
+- critical case는 `tc-07`, `tc-15`뿐이며 둘 다 source recall/RAG precision/faithfulness는 `1.0`이다.
+- 다음 품질 개선 후보는 retrieval 변경이나 모델 교체가 아니라 `tc-07`, `tc-15`의 answer wording과 eval rule 정합성 triage다.
 
 ## Working Rules
 
@@ -612,8 +620,9 @@
 
 ## Suggested Next Work
 
-1. active plan `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`에 따라 실제 사용자 concise trace 표본이 더 쌓인 뒤 재검토한다.
-2. 표본이 충분하지 않으면 active plan을 완료하지 말고 open work로 유지한다.
+1. `tc-07`, `tc-15` focused triage active plan을 작성해 answer wording 보강이 맞는지 eval rule 보정이 맞는지 좁힌다.
+2. 구현 변경이 필요하면 사용자 승인 후 별도 RED-GREEN-REFACTOR 계획으로 진행한다.
+3. active plan `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`는 실제 사용자 concise trace 표본이 더 쌓인 뒤 재검토한다.
 
 ## Handoff Prompt
 

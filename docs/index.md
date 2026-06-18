@@ -85,6 +85,8 @@
 - [2026-06-11 Concise 06 Failure Triage Result](./references/2026-06-11-concise-06-failure-triage-result.md)
 - [2026-06-11 Concise 06 Stability Fix Result](./references/2026-06-11-concise-06-stability-fix-result.md)
 - [2026-06-11 Concise Post-Fix Monitoring Result](./references/2026-06-11-concise-post-fix-monitoring-result.md)
+- [2026-06-18 Gemma3 Quality Baseline Refresh Result](./references/2026-06-18-gemma3-quality-baseline-refresh-result.md)
+- [2026-06-18 Gemma3 Quality Baseline Source Drift Report](./references/2026-06-18-gemma3-quality-baseline-source-drift-report.md)
 
 ## Active Work
 
@@ -92,6 +94,7 @@
 
 ## Completed Work
 
+- [Gemma3 Quality Baseline Refresh Plan](./exec-plans/completed/2026-06-18-gemma3-quality-baseline-refresh.md)
 - [Concise Post-Fix Monitoring Plan](./exec-plans/completed/2026-06-11-concise-post-fix-monitoring.md)
 - [Concise 06 Stability Fix Plan](./exec-plans/completed/2026-06-11-concise-06-stability-fix.md)
 - [Concise 06 Failure Triage Plan](./exec-plans/completed/2026-06-10-concise-06-failure-triage.md)
