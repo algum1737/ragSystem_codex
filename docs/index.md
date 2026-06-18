@@ -87,6 +87,7 @@
 - [2026-06-11 Concise Post-Fix Monitoring Result](./references/2026-06-11-concise-post-fix-monitoring-result.md)
 - [2026-06-18 Gemma3 Quality Baseline Refresh Result](./references/2026-06-18-gemma3-quality-baseline-refresh-result.md)
 - [2026-06-18 Gemma3 Quality Baseline Source Drift Report](./references/2026-06-18-gemma3-quality-baseline-source-drift-report.md)
+- [2026-06-18 TC07 TC15 Focused Triage Result](./references/2026-06-18-tc07-tc15-focused-triage-result.md)
 
 ## Active Work
 
@@ -94,6 +95,7 @@
 
 ## Completed Work
 
+- [TC07 TC15 Focused Triage Plan](./exec-plans/completed/2026-06-18-tc07-tc15-focused-triage.md)
 - [Gemma3 Quality Baseline Refresh Plan](./exec-plans/completed/2026-06-18-gemma3-quality-baseline-refresh.md)
 - [Concise Post-Fix Monitoring Plan](./exec-plans/completed/2026-06-11-concise-post-fix-monitoring.md)
 - [Concise 06 Stability Fix Plan](./exec-plans/completed/2026-06-11-concise-06-stability-fix.md)

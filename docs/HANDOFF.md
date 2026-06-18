@@ -287,6 +287,13 @@
 - 최근 23개 `eval.case` trace latency는 mean `11219.67ms`, median `11143.97ms`, p95 `17250.61ms`, max `28507.23ms`다.
 - critical case는 `tc-07`, `tc-15`뿐이며 둘 다 source recall/RAG precision/faithfulness는 `1.0`이다.
 - 다음 품질 개선 후보는 retrieval 변경이나 모델 교체가 아니라 `tc-07`, `tc-15`의 answer wording과 eval rule 정합성 triage다.
+- `tc-07`, `tc-15` focused triage를 완료했다.
+- 완료 plan은 `docs/exec-plans/completed/2026-06-18-tc07-tc15-focused-triage.md`다.
+- 결과 문서는 `docs/references/2026-06-18-tc07-tc15-focused-triage-result.md`다.
+- `tc-07`은 답변이 면책 내용을 충실히 설명하지만 expected keyword의 `면책` 표지어만 직접 포함하지 않아 `0.75`가 됐다.
+- `tc-15`는 사전 통지/공지 없이 가능한 조건을 설명하지만 expected keyword의 `예외`/`불가능`/`부득이`/`긴급` group을 직접 포함하지 않아 `0.75`가 됐다.
+- 두 케이스 모두 답변 품질 결함보다 deterministic eval rule의 동의 표현 허용 부족으로 분류했다.
+- 다음 구현 후보는 `eval/test_cases.json`의 `tc-07`, `tc-15` expected keyword OR group을 좁게 보정하는 것이다. 구현 변경이므로 사용자 승인 후 별도 plan으로 진행한다.
 
 ## Working Rules
 
@@ -620,8 +627,8 @@
 
 ## Suggested Next Work
 
-1. `tc-07`, `tc-15` focused triage active plan을 작성해 answer wording 보강이 맞는지 eval rule 보정이 맞는지 좁힌다.
-2. 구현 변경이 필요하면 사용자 승인 후 별도 RED-GREEN-REFACTOR 계획으로 진행한다.
+1. 사용자 승인 후 `tc-07`, `tc-15` eval rule calibration active plan을 작성하고 `eval/test_cases.json`의 OR group을 좁게 보정한다.
+2. 보정 후 focused score, full eval, source drift report를 다시 실행한다.
 3. active plan `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`는 실제 사용자 concise trace 표본이 더 쌓인 뒤 재검토한다.
 
 ## Handoff Prompt
