@@ -294,6 +294,14 @@
 - `tc-15`는 사전 통지/공지 없이 가능한 조건을 설명하지만 expected keyword의 `예외`/`불가능`/`부득이`/`긴급` group을 직접 포함하지 않아 `0.75`가 됐다.
 - 두 케이스 모두 답변 품질 결함보다 deterministic eval rule의 동의 표현 허용 부족으로 분류했다.
 - 다음 구현 후보는 `eval/test_cases.json`의 `tc-07`, `tc-15` expected keyword OR group을 좁게 보정하는 것이다. 구현 변경이므로 사용자 승인 후 별도 plan으로 진행한다.
+- `tc-07`, `tc-15` eval rule calibration을 진행 중이다.
+- active plan은 `docs/exec-plans/active/2026-06-18-tc07-tc15-eval-rule-calibration.md`다.
+- `eval/test_cases.json`에서 `tc-07` 첫 group을 `["면책", "책임을 부담하지", "책임을 지지", "책임이 없"]`로 확장했고, `tc-15` 예외 group에 `"없이"`, `"예측할 수 없"`, `"통제할 수 없"`을 추가했다.
+- 기존 report 재점수와 새 서버 full eval에서 `tc-07`, `tc-15`는 모두 `answer_accuracy=1.0`, `faithfulness=1.0`으로 회복했다.
+- 새 서버 full eval report는 `/opt/ragSystem_codex/eval/results/eval_20260618_132509.json`이며 로컬 복사본은 `eval/results/eval_20260618_132509.json`이다.
+- 새 지표는 `accuracy_mean=1.0`, `faithfulness_mean=0.9565`, `not_found_success_rate=1.0`, `source_recall@k_mean=1.0`, `rag_normalized_source_precision@k_mean=1.0`이다.
+- full eval 전체는 `tc-04 faithfulness=0.0` 때문에 아직 green이 아니다. `tc-04` 단일 재실행 `/opt/ragSystem_codex/eval/results/eval_tc04_check_20260618_132648.json`에서도 faithfulness failure가 재현됐다.
+- `tc-04`는 이번 rule calibration 대상이 아니며 source recall/RAG precision은 `1.0`이다. 다음 작업은 `tc-04` faithfulness failure triage다.
 
 ## Working Rules
 
@@ -627,9 +635,10 @@
 
 ## Suggested Next Work
 
-1. 사용자 승인 후 `tc-07`, `tc-15` eval rule calibration active plan을 작성하고 `eval/test_cases.json`의 OR group을 좁게 보정한다.
-2. 보정 후 focused score, full eval, source drift report를 다시 실행한다.
-3. active plan `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`는 실제 사용자 concise trace 표본이 더 쌓인 뒤 재검토한다.
+1. `tc-04` faithfulness failure triage를 systematic-debugging 방식으로 진행한다.
+2. `tc-04` 최신 full eval answer, 단일 재실행 answer, retrieved context, faithfulness judge prompt를 비교해 `answer wording`, `faithfulness judge`, `eval rule`, `prompt` 중 원인을 분류한다.
+3. `tc-04` 처리 후 active plan `docs/exec-plans/active/2026-06-18-tc07-tc15-eval-rule-calibration.md` 완료 여부를 결정한다.
+4. active plan `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`는 실제 사용자 concise trace 표본이 더 쌓인 뒤 재검토한다.
 
 ## Handoff Prompt
 

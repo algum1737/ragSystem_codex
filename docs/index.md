@@ -88,9 +88,12 @@
 - [2026-06-18 Gemma3 Quality Baseline Refresh Result](./references/2026-06-18-gemma3-quality-baseline-refresh-result.md)
 - [2026-06-18 Gemma3 Quality Baseline Source Drift Report](./references/2026-06-18-gemma3-quality-baseline-source-drift-report.md)
 - [2026-06-18 TC07 TC15 Focused Triage Result](./references/2026-06-18-tc07-tc15-focused-triage-result.md)
+- [2026-06-18 TC07 TC15 Eval Rule Calibration Result](./references/2026-06-18-tc07-tc15-eval-rule-calibration-result.md)
+- [2026-06-18 TC07 TC15 Eval Rule Calibration Source Drift Report](./references/2026-06-18-tc07-tc15-eval-rule-calibration-source-drift-report.md)
 
 ## Active Work
 
+- [TC07 TC15 Eval Rule Calibration Plan](./exec-plans/active/2026-06-18-tc07-tc15-eval-rule-calibration.md)
 - [Concise Real Usage Trace Review Plan](./exec-plans/active/2026-06-11-concise-real-usage-trace-review.md)
 
 ## Completed Work
