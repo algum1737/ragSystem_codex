@@ -276,6 +276,9 @@
 - real usage trace review 2차 확인 결과 서버 health는 계속 정상이고 trace는 `total_records=61`, `api.query=38`로 증가했다.
 - 다만 `answer_mode=concise` API 표본은 여전히 7건이고, post-fix 이후 실제 사용자 `concise` 표본은 0건이다.
 - active plan은 계속 완료하지 않고 유지한다.
+- real usage trace review 3차 확인 결과 서버 health는 계속 정상이고 trace 파일 mtime은 `2026-06-12T06:32:19Z`로 이전 checkpoint와 변동이 없다.
+- 최신 집계는 `total_records=61`, `api.query=38`, `api.answer_mode.standard=9`, `api.answer_mode.concise=7`, `post_fix_concise_count=1`, `post_fix_smoke_like_count=1`, `post_fix_non_smoke_count=0`이다.
+- post-fix 이후 실제 사용자 `concise` 표본은 여전히 0건이므로 active plan은 계속 완료하지 않고 유지한다.
 
 ## Working Rules
 

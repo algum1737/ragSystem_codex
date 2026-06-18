@@ -120,3 +120,39 @@ post_fix_non_smoke_count=0
 - post-fix 이후 실제 사용자 `concise` 표본은 아직 없다.
 - 이 plan은 완료하지 않고 active 상태로 유지한다.
 - 추가 prompt 변경, eval case 추가, full eval은 실행하지 않는다.
+
+### 2026-06-18 KST
+
+서버 health는 정상이다.
+
+```text
+ragsystem-api: active
+ragsystem-web: active
+API /health: {"status":"ok","model":"gemma3:12b"}
+Streamlit _stcore/health: ok
+```
+
+운영 trace 집계:
+
+```text
+trace_file=/opt/ragSystem_codex/logs/rag_traces.jsonl
+trace_mtime=2026-06-12T06:32:19Z
+total_records=61
+api.query=38
+api.answer_mode.standard=9
+api.answer_mode.concise=7
+post_fix_concise_count=1
+post_fix_smoke_like_count=1
+post_fix_non_smoke_count=0
+post_fix_answer_length_mean=376.0
+post_fix_total_ms_mean=14664.74
+post_fix_source_count_values=[5]
+```
+
+판단:
+
+- 이전 checkpoint 이후 trace 파일 mtime과 집계가 변하지 않았다.
+- post-fix 이후 실제 사용자 `concise` 표본은 아직 없다.
+- 유일한 post-fix `concise` 표본은 이전 `concise-06` smoke question hash다.
+- 이 plan은 완료하지 않고 active 상태로 유지한다.
+- 추가 prompt 변경, eval case 추가, full eval은 실행하지 않는다.
