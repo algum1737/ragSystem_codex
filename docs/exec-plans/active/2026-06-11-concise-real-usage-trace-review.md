@@ -88,6 +88,48 @@ post_fix_non_smoke_count=0
 - 이 plan은 완료하지 않고 active 상태로 유지한다.
 - 추가 prompt 변경, eval case 추가, full eval은 실행하지 않는다.
 
+### 2026-06-19 14:56 KST
+
+서버 health는 정상이다.
+
+```text
+ragsystem-api: active
+ragsystem-web: active
+API /health: {"status":"ok","model":"gemma3:12b"}
+Streamlit _stcore/health: ok
+```
+
+운영 trace 집계:
+
+```text
+trace_file=/opt/ragSystem_codex/logs/rag_traces.jsonl
+trace_mtime=2026-06-19T11:50:43+09:00
+total_records=351
+api.query=44
+eval.case=307
+api.answer_mode.standard=9
+api.answer_mode.concise=13
+post_2026_06_12_063219Z_concise_count=6
+post_2026_06_12_063219Z_smoke_like_count=3
+post_2026_06_12_063219Z_non_smoke_candidate_count=3
+post_non_smoke_candidate_answer_length_mean=393.00
+post_non_smoke_candidate_total_ms_mean=9220.42
+post_non_smoke_candidate_llm_ms_mean=9099.82
+post_non_smoke_candidate_retrieval_ms_mean=120.41
+post_non_smoke_candidate_source_count_values=[5]
+```
+
+판단:
+
+- 이전 checkpoint 이후 full eval로 `eval.case` trace가 크게 늘었고, `api.query`도 `38 -> 44`로 증가했다.
+- `answer_mode=concise` API 표본은 `7 -> 13`으로 늘었다.
+- 2026-06-12T06:32:19Z 이후 `concise` 6건 중 3건은 같은 question hash가 1분 안에 3회 반복된 smoke-like 표본으로 분류한다.
+- 나머지 3건은 실제 사용자 후보 표본이지만 trace에는 질문/답변 본문이 없으므로 품질 판단을 확정할 수 없다.
+- 후보 3건은 모두 source 5개를 유지했고 answer length는 383~405자로 concise 길이 기준 안에 있다.
+- 후보 3건 평균 total latency는 9220.42ms이고, 병목은 LLM 구간이다.
+- 실제 사용자 후보 표본이 3건뿐이므로 prompt 변경, eval case 추가, full eval은 실행하지 않는다.
+- 이 plan은 완료하지 않고 active 상태로 유지한다.
+
 ### 2026-06-15 KST
 
 서버 health는 정상이다.

@@ -320,6 +320,12 @@
 - real usage trace review 3차 확인 결과 서버 health는 계속 정상이고 trace 파일 mtime은 `2026-06-12T06:32:19Z`로 이전 checkpoint와 변동이 없다.
 - 최신 집계는 `total_records=61`, `api.query=38`, `api.answer_mode.standard=9`, `api.answer_mode.concise=7`, `post_fix_concise_count=1`, `post_fix_smoke_like_count=1`, `post_fix_non_smoke_count=0`이다.
 - post-fix 이후 실제 사용자 `concise` 표본은 여전히 0건이므로 active plan은 계속 완료하지 않고 유지한다.
+- real usage trace review 4차 확인 결과 서버 health는 계속 정상이고 trace 파일 mtime은 `2026-06-19T11:50:43+09:00`이다.
+- 최신 집계는 `total_records=351`, `api.query=44`, `eval.case=307`, `api.answer_mode.standard=9`, `api.answer_mode.concise=13`이다.
+- 2026-06-12T06:32:19Z 이후 `concise` 6건 중 3건은 같은 question hash 3회 반복이라 smoke-like로 분류했고, 나머지 3건은 실제 사용자 후보 표본으로 분류했다.
+- 실제 사용자 후보 3건은 모두 source 5개, answer length 383~405자, 평균 total latency 9220.42ms를 기록했다.
+- trace에는 질문/답변 본문이 없어 품질 판단을 확정할 수 없고 후보 표본도 3건뿐이므로 prompt 변경, eval case 추가, full eval은 실행하지 않는다.
+- active plan은 `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`로 계속 유지한다.
 - 모델 품질 개선을 eval-first로 진행하기 위해 `gemma3:12b + top_k=5` 최신 품질 기준선 재측정을 완료했다.
 - 완료 plan은 `docs/exec-plans/completed/2026-06-18-gemma3-quality-baseline-refresh.md`다.
 - 결과 문서는 `docs/references/2026-06-18-gemma3-quality-baseline-refresh-result.md`이고 source drift report는 `docs/references/2026-06-18-gemma3-quality-baseline-source-drift-report.md`다.
