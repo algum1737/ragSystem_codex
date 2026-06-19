@@ -416,7 +416,20 @@ class RAGEvaluator:
             context_texts,
             context_sources=context_sources,
         )
-        context = "\n\n".join(selected_contexts)
+        context_display: list[str] = []
+        used_context_indexes: set[int] = set()
+        for selected in selected_contexts:
+            source = ""
+            if context_sources:
+                for index, text in enumerate(context_texts):
+                    if index in used_context_indexes or text != selected:
+                        continue
+                    used_context_indexes.add(index)
+                    if index < len(context_sources):
+                        source = context_sources[index]
+                    break
+            context_display.append(f"[출처: {source}]\n{selected}" if source else selected)
+        context = "\n\n".join(context_display)
         prompt = (
             "다음 답변이 참고 문서에만 근거하는지 판단하세요.\n\n"
             f"[참고 문서]\n{context}\n\n"
@@ -425,7 +438,7 @@ class RAGEvaluator:
         )
         try:
             self._get_engine()
-            result = self._llm.predict(prompt)
+            result = self._llm.predict(prompt, temperature=0.0)
             result_upper = result.strip().upper()
             if "YES" in result_upper:
                 return 1.0

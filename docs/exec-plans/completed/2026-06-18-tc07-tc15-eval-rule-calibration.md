@@ -124,16 +124,16 @@
 
 ## Open Work
 
-- `tc-04` faithfulness failure가 full eval과 단일 재실행에서 재현됐다.
-- `tc-04`는 이번 rule calibration 대상이 아니며 source recall/RAG precision은 `1.0`이다.
-- 다음 작업은 `tc-04` faithfulness failure triage다.
+- 없음.
+- `tc-04` faithfulness blocker는 `docs/exec-plans/completed/2026-06-19-faithfulness-judge-stability.md`에서 해결했다.
 
 ## Completion
 
-- 미완료.
-- `tc-07`, `tc-15` target calibration은 성공했다.
-- 하지만 full eval 전체 기준은 `tc-04 faithfulness=0.0` 때문에 green이 아니다.
-- 결과 문서는 `docs/references/2026-06-18-tc07-tc15-eval-rule-calibration-result.md`다.
+- 완료.
+- `tc-07`, `tc-15` target calibration은 유지한다.
+- 최초 full eval은 `tc-04 faithfulness=0.0` 때문에 green이 아니었지만, 후속 judge stability 변경 이후 최종 full eval 전체 기준을 충족했다.
+- 결과 문서: `docs/references/2026-06-18-tc07-tc15-eval-rule-calibration-result.md`
+- 최종 green 근거: `docs/references/2026-06-19-faithfulness-judge-stability-result.md`
 
 ## Validation Result
 
@@ -154,10 +154,17 @@
   - `rag_normalized_source_precision@k_mean=1.0`
   - `tc-07 answer_accuracy=1.0`, `faithfulness=1.0`
   - `tc-15 answer_accuracy=1.0`, `faithfulness=1.0`
-- 실패: full eval faithfulness
+- 해결됨: full eval faithfulness
   - `faithfulness_mean=0.9565`
   - `tc-04 faithfulness=0.0`
   - `tc-04` 단일 재실행 report `/opt/ragSystem_codex/eval/results/eval_tc04_check_20260618_132648.json`에서도 `faithfulness=0.0`
 - 통과: source drift report 생성
   - `docs/references/2026-06-18-tc07-tc15-eval-rule-calibration-source-drift-report.md`
   - critical case는 `tc-04`
+- 통과: 후속 최종 full eval
+  - report: `eval/results/eval_20260619_102404.json`
+  - `accuracy_mean=1.0`
+  - `faithfulness_mean=1.0`
+  - `not_found_success_rate=1.0`
+  - `source_recall@k_mean=1.0`
+  - `rag_normalized_source_precision@k_mean=1.0`

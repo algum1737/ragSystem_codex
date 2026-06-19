@@ -91,14 +91,20 @@
 - [2026-06-18 TC07 TC15 Eval Rule Calibration Result](./references/2026-06-18-tc07-tc15-eval-rule-calibration-result.md)
 - [2026-06-18 TC07 TC15 Eval Rule Calibration Source Drift Report](./references/2026-06-18-tc07-tc15-eval-rule-calibration-source-drift-report.md)
 - [2026-06-18 TC04 Faithfulness Triage Result](./references/2026-06-18-tc04-faithfulness-triage-result.md)
+- [2026-06-19 TC04 Answer Wording Fix Result](./references/2026-06-19-tc04-answer-wording-fix-result.md)
+- [2026-06-19 TC04 Answer Wording Fix Source Drift Report](./references/2026-06-19-tc04-answer-wording-fix-source-drift-report.md)
+- [2026-06-19 Faithfulness Judge Stability Result](./references/2026-06-19-faithfulness-judge-stability-result.md)
+- [2026-06-19 Faithfulness Judge Stability Source Drift Report](./references/2026-06-19-faithfulness-judge-stability-source-drift-report.md)
 
 ## Active Work
 
-- [TC07 TC15 Eval Rule Calibration Plan](./exec-plans/active/2026-06-18-tc07-tc15-eval-rule-calibration.md)
 - [Concise Real Usage Trace Review Plan](./exec-plans/active/2026-06-11-concise-real-usage-trace-review.md)
 
 ## Completed Work
 
+- [Faithfulness Judge Stability Plan](./exec-plans/completed/2026-06-19-faithfulness-judge-stability.md)
+- [TC04 Answer Wording Fix Plan](./exec-plans/completed/2026-06-19-tc04-answer-wording-fix.md)
+- [TC07 TC15 Eval Rule Calibration Plan](./exec-plans/completed/2026-06-18-tc07-tc15-eval-rule-calibration.md)
 - [TC04 Faithfulness Triage Plan](./exec-plans/completed/2026-06-18-tc04-faithfulness-triage.md)
 - [TC07 TC15 Focused Triage Plan](./exec-plans/completed/2026-06-18-tc07-tc15-focused-triage.md)
 - [Gemma3 Quality Baseline Refresh Plan](./exec-plans/completed/2026-06-18-gemma3-quality-baseline-refresh.md)
