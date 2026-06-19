@@ -98,6 +98,18 @@
 - 결과 문서:
   - `docs/references/2026-06-19-tc04-answer-wording-fix-result.md`
   - `docs/references/2026-06-19-faithfulness-judge-stability-result.md`
+- 모델 품질 개선을 위해 hard eval 케이스를 9개 추가했다.
+- `eval/test_cases.json`은 `tc-24`~`tc-32`가 추가되어 총 32개 케이스가 됐다.
+- 새 hard eval baseline original report는 `eval/results/eval_20260619_105835.json`이다.
+- `tc-29`는 answer가 유효하지만 deterministic rule이 `날짜가 없을 경우` 표현을 놓쳐 `expected_keywords`에 `날짜가 없`을 좁게 추가했다.
+- 재채점 report는 `eval/results/eval_20260619_105835_tc29_recalibrated.json`이다.
+- 재채점 기준 지표는 `accuracy_mean=0.9875`, `faithfulness_mean=1.0`, `not_found_success_rate=1.0`, `source_recall@k_mean=1.0`, `rag_normalized_source_precision@k_mean=1.0`이다.
+- hard eval source drift report는 `docs/references/2026-06-19-hard-eval-expansion-source-drift-report.md`이고 critical case는 `tc-30` 1건이다.
+- `tc-30`은 검색 누락이 아니다. 카카오/네이버 유료서비스 환불 근거가 검색됐지만 답변이 카카오 쪽 처리만 설명해 네이버의 `3영업일`, `수납확인`, 동일 방법 환불 불가 시 사전 고지 조건을 빠뜨렸다.
+- 따라서 다음 품질 튜닝은 retrieval/rerank가 아니라 multi-source answer coverage focused fix다.
+- 완료 plan: `docs/exec-plans/completed/2026-06-19-hard-eval-expansion-retrieval-tuning.md`
+- 현재 active plan: `docs/exec-plans/active/2026-06-19-tc30-answer-coverage-fix.md`
+- 결과 문서: `docs/references/2026-06-19-hard-eval-expansion-result.md`
 - Superpowers 연동 프로파일을 ragSystem_codex 하네스 문서에 반영했다. `docs/references/superpowers.md`를 기준으로 Superpowers skill을 사용하되, 사용자 승인, 브랜치 생성, PR/merge 규칙은 `AGENTS.md`를 우선한다.
 - Langfuse 도입 전 단계로 privacy-safe local JSONL trace sink를 구현했다.
 - trace는 기본 off이며 `RAG_TRACE_ENABLED=true`일 때만 기록된다.
@@ -651,11 +663,11 @@
 - `/stats`는 최신 인제스천 후 현재 `count=318`을 반환한다.
 - retrieval-only 기준 검증은 현재 `vector_precision@k_mean=0.4522`, `rag_precision@k_mean=0.5478`로 정상 완료된다.
 - 튜닝 판단은 raw precision보다 `rag_normalized_source_precision@k_mean=0.9891`과 `source_recall@k_mean=0.9891` 중심으로 본다.
-- 최신 full eval 리포트는 `eval/results/eval_20260619_102404.json`에 저장되어 있다.
-- 최신 생성 지표는 `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_rate=0.0435`, `not_found_success_rate=1.0`이다.
-- 최신 정규화 검색 지표는 `rag_normalized_source_precision@k_mean=1.0`, `rag_chunk_precision@k_mean=0.8609`, `source_recall@k_mean=1.0`이다.
-- 현재 평가셋 기준 source drift report critical/watch case는 없다.
-- 현재 active plan은 `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`다.
+- 최신 32개 hard eval 재채점 리포트는 `eval/results/eval_20260619_105835_tc29_recalibrated.json`에 저장되어 있다.
+- 최신 생성 지표는 `accuracy_mean=0.9875`, `faithfulness_mean=1.0`, `not_found_rate=0.0312`, `not_found_success_rate=1.0`이다.
+- 최신 정규화 검색 지표는 `rag_normalized_source_precision@k_mean=1.0`, `rag_chunk_precision@k_mean=0.85`, `source_recall@k_mean=1.0`이다.
+- 현재 평가셋 기준 source drift report critical case는 `tc-30`이고 watch case는 없다.
+- 현재 active plan은 `docs/exec-plans/active/2026-06-19-tc30-answer-coverage-fix.md`와 `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`다.
 - 이전 Cross-Encoder 캐시 반영 리포트는 `eval/results/eval_20260513_100727.json`에 저장되어 있다.
 - 검색/인제스천/평가 경로에 필요한 임베딩 모델 캐시는 준비됐다.
 - Cross-Encoder reranking 캐시도 준비됐다.
@@ -663,9 +675,9 @@
 
 ## Suggested Next Work
 
-1. active plan `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`는 실제 사용자 concise trace 표본이 더 쌓인 뒤 재검토한다.
-2. 새 품질 개선 작업을 시작하려면 먼저 최신 `eval/results/eval_20260619_102404.json`과 `docs/references/2026-06-19-faithfulness-judge-stability-result.md`를 기준선으로 삼는다.
-3. 버그, 테스트 실패, eval 회귀, latency 회귀가 보이면 systematic-debugging 방식으로 원인부터 분류한다.
+1. `docs/exec-plans/active/2026-06-19-tc30-answer-coverage-fix.md`에 따라 `tc-30`의 multi-source answer coverage 원인을 분석한다.
+2. 수정 후보가 필요하면 focused smoke 후 full eval로만 채택한다.
+3. active plan `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`는 실제 사용자 concise trace 표본이 더 쌓인 뒤 재검토한다.
 
 ## Handoff Prompt
 
