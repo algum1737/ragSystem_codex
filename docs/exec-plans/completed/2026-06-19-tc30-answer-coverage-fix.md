@@ -58,16 +58,56 @@
 
 ## Skipped/Not Run
 
-- 아직 미정.
+- Prompt 변경은 실행하지 않았다.
+- Retrieval/rerank 변경은 실행하지 않았다.
+- 운영 API/Web 배포는 실행하지 않았다.
 
 ## Open Work
 
-- 계획 수립 후 원인 분석과 focused smoke가 남아 있다.
+- 없음.
 
 ## Completion
 
-- 미완료.
+- 완료.
+- `tc-30`, `tc-31`은 prompt 문제가 아니라 hard eval question wording과 expected keyword 범위 불일치로 분류했다.
+- `eval/test_cases.json`에서 `tc-30`, `tc-31` 질문을 expected evidence 범위에 맞게 좁혔다.
+- 최종 32개 full eval은 green이다.
+- 결과 문서: `docs/references/2026-06-19-tc30-answer-coverage-result.md`
+- Source drift report: `docs/references/2026-06-19-tc30-answer-coverage-source-drift-report.md`
 
 ## Validation Result
 
-- 미완료.
+- 통과: `git status --short --branch`
+  - 시작 시 `main...origin/main`, clean.
+- 통과: `bash scripts/validate-docs.sh`
+  - `template docs validation passed`
+- 통과: `eval/results/eval_20260619_105835_tc29_recalibrated.json`의 `tc-30` 확인
+  - `answer_accuracy=0.6`
+  - `faithfulness=1.0`
+  - `source_recall_at_k=1.0`
+- 통과: `tc-30` focused smoke 3회
+  - report: `eval/results/eval_tc30_focused_20260619_111500.json`
+  - 3회 모두 `answer_accuracy=0.8`, `faithfulness=1.0`
+- 통과: `tc-30` wording probe 3회
+  - 3회 모두 `answer_accuracy=1.0`, `faithfulness=1.0`
+- 통과: `tc-12`, `tc-31` focused smoke
+  - report: `eval/results/eval_tc12_tc31_focused_20260619_114400.json`
+  - `tc-12`: 3회 모두 `answer_accuracy=1.0`, `faithfulness=1.0`
+  - `tc-31`: 2회 통과, 1회 `answer_accuracy=0.8`
+- 통과: `tc-31` wording probe 3회
+  - 3회 모두 `answer_accuracy=1.0`, `faithfulness=1.0`
+- 부분 통과: 중간 full eval
+  - report: `eval/results/eval_20260619_113433.json`
+  - `accuracy_mean=0.9938`
+  - `faithfulness_mean=0.9688`
+  - failures: `tc-12`, `tc-31`
+- 통과: 최종 full eval
+  - report: `eval/results/eval_20260619_115043.json`
+  - `accuracy_mean=1.0`
+  - `faithfulness_mean=1.0`
+  - `not_found_success_rate=1.0`
+  - `source_recall@k_mean=1.0`
+  - `rag_normalized_source_precision@k_mean=1.0`
+- 통과: 최종 source drift report
+  - critical case: 없음
+  - watch case: 없음
