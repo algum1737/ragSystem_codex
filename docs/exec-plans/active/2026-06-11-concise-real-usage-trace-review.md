@@ -51,9 +51,19 @@
 
 - full eval은 실행하지 않는다. 운영 trace review 범위다.
 
+## Observation Log
+
+- 기존 active plan에 agent loop 하네스 검증 계약을 맞추기 위해 이 섹션을 추가했다.
+- 실제 concise trace review는 아직 active 상태이며, 아래 checkpoints의 관찰 기록을 유지한다.
+
 ## Open Work
 
 - 실제 사용자 concise trace 표본 확보 후 재검토
+
+## Validation Result
+
+- Not run for completion.
+- 이 plan은 실제 사용자 concise trace 표본 확보 전까지 active 상태로 유지한다.
 
 ## Checkpoints
 

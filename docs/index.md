@@ -12,6 +12,7 @@
 
 ## Core Documents
 
+- [AGENT_LOOP.md](./AGENT_LOOP.md)
 - [DESIGN.md](./DESIGN.md)
 - [FRONTEND.md](./FRONTEND.md)
 - [HANDOFF.md](./HANDOFF.md)
@@ -109,6 +110,7 @@
 
 ## Completed Work
 
+- [Agent Loop Harness Migration](./exec-plans/completed/2026-06-24-agent-loop-harness-migration.md)
 - [Hard Eval Second Expansion Plan](./exec-plans/completed/2026-06-24-hard-eval-second-expansion.md)
 - [TC30 Answer Coverage Fix Plan](./exec-plans/completed/2026-06-19-tc30-answer-coverage-fix.md)
 - [Hard Eval Expansion And Retrieval Tuning Plan](./exec-plans/completed/2026-06-19-hard-eval-expansion-retrieval-tuning.md)

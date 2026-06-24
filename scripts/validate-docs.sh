@@ -6,6 +6,7 @@ required_files=(
   "README.md"
   "AGENTS.md"
   "ARCHITECTURE.md"
+  "docs/AGENT_LOOP.md"
   "docs/index.md"
   "docs/DESIGN.md"
   "docs/FRONTEND.md"
@@ -53,6 +54,14 @@ fi
 while IFS= read -r active_plan; do
   if ! grep -q '^## Open Work' "$active_plan"; then
     echo "active exec plan must include Open Work: $active_plan" >&2
+    exit 1
+  fi
+  if ! grep -q '^## Observation Log' "$active_plan"; then
+    echo "active exec plan must include Observation Log: $active_plan" >&2
+    exit 1
+  fi
+  if ! grep -q '^## Validation Result' "$active_plan"; then
+    echo "active exec plan must include Validation Result: $active_plan" >&2
     exit 1
   fi
 done < <(find docs/exec-plans/active -mindepth 1 -maxdepth 1 -type f)
