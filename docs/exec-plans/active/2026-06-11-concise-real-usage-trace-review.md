@@ -198,3 +198,45 @@ post_fix_source_count_values=[5]
 - 유일한 post-fix `concise` 표본은 이전 `concise-06` smoke question hash다.
 - 이 plan은 완료하지 않고 active 상태로 유지한다.
 - 추가 prompt 변경, eval case 추가, full eval은 실행하지 않는다.
+
+### 2026-06-24 11:19 KST
+
+서버 health는 정상이다.
+
+```text
+ragsystem-api: active
+ragsystem-web: active
+API /health: {"status":"ok","model":"gemma3:12b"}
+Streamlit _stcore/health: ok
+```
+
+운영 trace 집계:
+
+```text
+trace_file=/opt/ragSystem_codex/logs/rag_traces.jsonl
+trace_mtime=2026-06-19T15:01:05+09:00
+total_records=352
+api.query=45
+eval.case=307
+api.answer_mode.standard=10
+api.answer_mode.concise=13
+after_2026_06_19_checkpoint_api_query=1
+after_2026_06_19_checkpoint_standard_count=1
+after_2026_06_19_checkpoint_concise_count=0
+post_2026_06_12_063219Z_concise_count=6
+post_2026_06_12_063219Z_smoke_like_count=3
+post_2026_06_12_063219Z_non_smoke_candidate_count=3
+post_non_smoke_candidate_answer_length_mean=393.00
+post_non_smoke_candidate_total_ms_mean=9220.42
+post_non_smoke_candidate_llm_ms_mean=9099.82
+post_non_smoke_candidate_retrieval_ms_mean=120.41
+post_non_smoke_candidate_source_count_values=[5]
+```
+
+판단:
+
+- 이전 checkpoint 이후 trace는 1건 증가했고, 증가분은 `answer_mode=standard` API query다.
+- `answer_mode=concise` API 표본은 `13`건으로 변동이 없다.
+- 2026-06-12T06:32:19Z 이후 실제 사용자 후보 `concise` 표본도 3건으로 변동이 없다.
+- 신규 concise 표본이 없으므로 prompt 변경, eval case 추가, full eval은 실행하지 않는다.
+- 이 plan은 완료하지 않고 active 상태로 유지한다.

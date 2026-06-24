@@ -326,6 +326,11 @@
 - 실제 사용자 후보 3건은 모두 source 5개, answer length 383~405자, 평균 total latency 9220.42ms를 기록했다.
 - trace에는 질문/답변 본문이 없어 품질 판단을 확정할 수 없고 후보 표본도 3건뿐이므로 prompt 변경, eval case 추가, full eval은 실행하지 않는다.
 - active plan은 `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`로 계속 유지한다.
+- real usage trace review 5차 확인 결과 서버 health는 계속 정상이고 trace 파일 mtime은 `2026-06-19T15:01:05+09:00`이다.
+- 최신 집계는 `total_records=352`, `api.query=45`, `eval.case=307`, `api.answer_mode.standard=10`, `api.answer_mode.concise=13`이다.
+- 4차 확인 이후 증가분은 `standard` API query 1건뿐이며 신규 `concise` API 표본은 없다.
+- 2026-06-12T06:32:19Z 이후 실제 사용자 후보 `concise` 표본은 계속 3건이므로 prompt 변경, eval case 추가, full eval은 실행하지 않는다.
+- active plan은 `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`로 계속 유지한다.
 - 모델 품질 개선을 eval-first로 진행하기 위해 `gemma3:12b + top_k=5` 최신 품질 기준선 재측정을 완료했다.
 - 완료 plan은 `docs/exec-plans/completed/2026-06-18-gemma3-quality-baseline-refresh.md`다.
 - 결과 문서는 `docs/references/2026-06-18-gemma3-quality-baseline-refresh-result.md`이고 source drift report는 `docs/references/2026-06-18-gemma3-quality-baseline-source-drift-report.md`다.
