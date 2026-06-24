@@ -58,8 +58,18 @@ hard eval 2차 확장 후 critical로 잡힌 `tc-07`, `tc-28`, `tc-29`, `tc-34`,
 - 아직 focused 반복 실행 전이다.
 - 아직 보정 변경은 적용하지 않았다.
 
+## Observation Log
+
+- 기존 active plan에 agent loop 하네스 검증 계약을 맞추기 위해 이 섹션을 추가했다.
+- 아직 focused 반복 실행 전이며, 실패 원인 분류 작업은 open work로 유지한다.
+
 ## Open Work
 
 - focused 반복 실행
 - 실패 원인 분류
 - 최소 보정 후보 작성
+
+## Validation Result
+
+- Not run for completion.
+- 이 plan은 focused 반복 실행과 실패 원인 분류 전까지 active 상태로 유지한다.

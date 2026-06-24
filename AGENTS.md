@@ -15,8 +15,9 @@
 1. `README.md`
 2. `ARCHITECTURE.md`
 3. `docs/index.md`
-4. `docs/product-specs/terms-rag-system.md`
-5. 관련 `docs/exec-plans/active/*`
+4. `docs/AGENT_LOOP.md`
+5. `docs/product-specs/terms-rag-system.md`
+6. 관련 `docs/exec-plans/active/*`
 
 ## Operating Rules
 
@@ -56,6 +57,7 @@
 
 - 아키텍처 맵: `ARCHITECTURE.md`
 - 문서 인덱스: `docs/index.md`
+- 에이전트 루프: `docs/AGENT_LOOP.md`
 - 제품 명세: `docs/product-specs/terms-rag-system.md`
 - 품질 기준: `docs/QUALITY_SCORE.md`
 - 신뢰성 기준: `docs/RELIABILITY.md`

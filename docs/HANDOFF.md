@@ -8,10 +8,11 @@
 2. `README.md`
 3. `ARCHITECTURE.md`
 4. `docs/index.md`
-5. `docs/PLANS.md`
-6. `docs/product-specs/terms-rag-system.md`
-7. `docs/manual-deployment-guide.md`
-8. `docs/references/quality-baseline-analysis.md`
+5. `docs/AGENT_LOOP.md`
+6. `docs/PLANS.md`
+7. `docs/product-specs/terms-rag-system.md`
+8. `docs/manual-deployment-guide.md`
+9. `docs/references/quality-baseline-analysis.md`
 9. `docs/references/answer-quality-analysis.md`
 10. `docs/references/search-quality-improvement.md`
 11. `docs/references/2026-05-14-work-report.md`
@@ -78,6 +79,8 @@
 
 ## Latest Update
 
+- `docs/agent-loop-harness-migration`에서 Codex agent loop 하네스 업데이트를 적용했다. `docs/AGENT_LOOP.md`가 추가됐고, `/goal`, `/plan`, active exec plan, `docs/HANDOFF.md`의 관계와 RAG/eval tool observation/validation 기록 기준이 `docs/PLANS.md` 및 `scripts/validate-docs.sh`에 반영됐다.
+- 기존 active plan 2개에는 완료 상태를 바꾸지 않고 `Observation Log`와 `Validation Result` 섹션만 추가했다.
 - `tc-07`, `tc-15` eval rule calibration 후속 blocker였던 `tc-04` faithfulness 문제를 최종 정리했다.
 - `tc-04` answer wording prompt 보강은 시도했지만 반복 smoke와 full eval에서 안정적이지 않아 채택하지 않았다.
 - `retriever/engine.py` prompt 변경은 되돌렸고, 최종 prompt 변경은 없다.
