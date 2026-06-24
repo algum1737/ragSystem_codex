@@ -336,6 +336,17 @@
 - 5차 checkpoint 이후 신규 API query와 신규 `concise` 표본은 없다.
 - 2026-06-12T06:32:19Z 이후 실제 사용자 후보 `concise` 표본은 계속 3건이므로 prompt 변경, eval case 추가, full eval은 실행하지 않는다.
 - active plan은 `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`로 계속 유지한다.
+- hard eval 2차 확장을 완료했다.
+- `eval/test_cases.json`은 `tc-33`~`tc-39`가 추가되어 총 39개 케이스가 됐다.
+- 신규 케이스는 위치정보 제3자 제공 통지, 8세 이하 아동 등 보호의무자 권리, 카카오 계정 제한 단계, Daum 게시중단/임시조치, 네이버 유료서비스 금지행위 환불, Daum 무료 서비스 변경 안내, 유료서비스 구독료 인상률 no-answer를 다룬다.
+- 로컬 retrieval-only smoke는 `source_recall@k_mean=1.0`, `rag_normalized_source_precision@k_mean=1.0`, `rag_chunk_precision@k_mean=0.8256`이다.
+- 서버 full eval report는 `eval/results/eval_20260624_151136.json`이다.
+- 서버 full eval 지표는 `accuracy_mean=0.9711`, `faithfulness_mean=1.0`, `not_found_success_rate=1.0`, `source_recall@k_mean=1.0`, `rag_normalized_source_precision@k_mean=1.0`이다.
+- source drift report는 `docs/references/2026-06-24-hard-eval-second-expansion-source-drift-report.md`이고 critical case는 `tc-07`, `tc-28`, `tc-29`, `tc-34`, `tc-37`이다.
+- 실패 5건 모두 source recall/RAG precision/faithfulness는 `1.0`이므로 retrieval/rerank 변경 후보가 아니다.
+- 완료 plan: `docs/exec-plans/completed/2026-06-24-hard-eval-second-expansion.md`
+- 결과 문서: `docs/references/2026-06-24-hard-eval-second-expansion-result.md`
+- 후속 active plan: `docs/exec-plans/active/2026-06-24-hard-eval-second-expansion-failure-triage.md`
 - 모델 품질 개선을 eval-first로 진행하기 위해 `gemma3:12b + top_k=5` 최신 품질 기준선 재측정을 완료했다.
 - 완료 plan은 `docs/exec-plans/completed/2026-06-18-gemma3-quality-baseline-refresh.md`다.
 - 결과 문서는 `docs/references/2026-06-18-gemma3-quality-baseline-refresh-result.md`이고 source drift report는 `docs/references/2026-06-18-gemma3-quality-baseline-source-drift-report.md`다.
@@ -688,11 +699,11 @@
 - `/stats`는 최신 인제스천 후 현재 `count=318`을 반환한다.
 - retrieval-only 기준 검증은 현재 `vector_precision@k_mean=0.4522`, `rag_precision@k_mean=0.5478`로 정상 완료된다.
 - 튜닝 판단은 raw precision보다 `rag_normalized_source_precision@k_mean=0.9891`과 `source_recall@k_mean=0.9891` 중심으로 본다.
-- 최신 32개 hard eval 리포트는 `eval/results/eval_20260619_115043.json`에 저장되어 있다.
-- 최신 생성 지표는 `accuracy_mean=1.0`, `faithfulness_mean=1.0`, `not_found_success_rate=1.0`이다.
-- 최신 정규화 검색 지표는 `rag_normalized_source_precision@k_mean=1.0`, `rag_chunk_precision@k_mean=0.8438`, `source_recall@k_mean=1.0`이다.
-- 현재 평가셋 기준 source drift report critical/watch case는 없다.
-- 현재 active plan은 `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`다.
+- 최신 39개 hard eval 리포트는 `eval/results/eval_20260624_151136.json`에 저장되어 있다.
+- 최신 생성 지표는 `accuracy_mean=0.9711`, `faithfulness_mean=1.0`, `not_found_success_rate=1.0`이다.
+- 최신 정규화 검색 지표는 `rag_normalized_source_precision@k_mean=1.0`, `rag_chunk_precision@k_mean=0.8256`, `source_recall@k_mean=1.0`이다.
+- 현재 평가셋 기준 source drift report critical case는 `tc-07`, `tc-28`, `tc-29`, `tc-34`, `tc-37`이고 watch case는 없다.
+- 현재 active plan은 `docs/exec-plans/active/2026-06-24-hard-eval-second-expansion-failure-triage.md`와 `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`다.
 - 이전 Cross-Encoder 캐시 반영 리포트는 `eval/results/eval_20260513_100727.json`에 저장되어 있다.
 - 검색/인제스천/평가 경로에 필요한 임베딩 모델 캐시는 준비됐다.
 - Cross-Encoder reranking 캐시도 준비됐다.
@@ -700,9 +711,9 @@
 
 ## Suggested Next Work
 
-1. active plan `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`에 따라 실제 사용자 concise trace 표본을 재검토한다.
-2. hard eval 32개 green baseline(`eval/results/eval_20260619_115043.json`)은 다음 품질 튜닝의 기준선으로 유지한다.
-3. 추가 모델 품질 개선은 새 실패 케이스 또는 실제 trace gap이 확인될 때 eval-first 방식으로 진행한다.
+1. active plan `docs/exec-plans/active/2026-06-24-hard-eval-second-expansion-failure-triage.md`에 따라 `tc-07`, `tc-28`, `tc-29`, `tc-34`, `tc-37` focused triage를 진행한다.
+2. 실패 5건은 retrieval/rerank보다 answer coverage, eval rule, question wording 후보로 먼저 분류한다.
+3. active plan `docs/exec-plans/active/2026-06-11-concise-real-usage-trace-review.md`는 신규 concise 표본이 쌓인 뒤 재점검한다.
 
 ## Handoff Prompt
 

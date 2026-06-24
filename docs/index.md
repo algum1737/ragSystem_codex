@@ -99,13 +99,17 @@
 - [2026-06-19 Hard Eval Expansion Source Drift Report](./references/2026-06-19-hard-eval-expansion-source-drift-report.md)
 - [2026-06-19 TC30 Answer Coverage Result](./references/2026-06-19-tc30-answer-coverage-result.md)
 - [2026-06-19 TC30 Answer Coverage Source Drift Report](./references/2026-06-19-tc30-answer-coverage-source-drift-report.md)
+- [2026-06-24 Hard Eval Second Expansion Result](./references/2026-06-24-hard-eval-second-expansion-result.md)
+- [2026-06-24 Hard Eval Second Expansion Source Drift Report](./references/2026-06-24-hard-eval-second-expansion-source-drift-report.md)
 
 ## Active Work
 
+- [Hard Eval Second Expansion Failure Triage Plan](./exec-plans/active/2026-06-24-hard-eval-second-expansion-failure-triage.md)
 - [Concise Real Usage Trace Review Plan](./exec-plans/active/2026-06-11-concise-real-usage-trace-review.md)
 
 ## Completed Work
 
+- [Hard Eval Second Expansion Plan](./exec-plans/completed/2026-06-24-hard-eval-second-expansion.md)
 - [TC30 Answer Coverage Fix Plan](./exec-plans/completed/2026-06-19-tc30-answer-coverage-fix.md)
 - [Hard Eval Expansion And Retrieval Tuning Plan](./exec-plans/completed/2026-06-19-hard-eval-expansion-retrieval-tuning.md)
 - [Faithfulness Judge Stability Plan](./exec-plans/completed/2026-06-19-faithfulness-judge-stability.md)
